@@ -1,0 +1,2108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="作战室">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="theme-color" content="#0d1017">
+<meta name="format-detection" content="telephone=no,email=no,address=no">
+<link id="mf" rel="manifest">
+<link id="ai" rel="apple-touch-icon">
+<title>专升本作战室</title>
+<style>
+:root{
+  --bg:#0d1017; --bg2:#151a24; --bg3:#1d2431; --line:#2a3342;
+  --tx:#e8edf5; --tx2:#9aa7ba; --tx3:#5f6d82;
+  --acc:#5b9dff; --acc2:#7c5cff;
+  --ok:#33d69f; --warn:#ffb020; --bad:#ff5c72;
+  --gold:#ffcf5c; --purple:#c084fc; --cyan:#22d3ee;
+  --r:16px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--tx);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:15px;line-height:1.55;
+  padding-bottom:calc(74px + env(safe-area-inset-bottom));
+  -webkit-font-smoothing:antialiased;
+  overscroll-behavior-y:contain;
+  color-scheme:dark;
+}
+body.light{color-scheme:light}
+body.light{
+  --bg:#f4f6fa; --bg2:#ffffff; --bg3:#eef1f7; --line:#dde3ec;
+  --tx:#141a24; --tx2:#5a6779; --tx3:#8d99ab;
+}
+.wrap{max-width:560px;margin:0 auto;padding:0 14px}
+
+/* ---------- 顶栏 ---------- */
+.hero{
+  padding:calc(18px + env(safe-area-inset-top)) 0 16px;
+  background:radial-gradient(120% 100% at 50% 0%,rgba(91,157,255,.18),transparent 62%);
+  border-bottom:1px solid var(--line);margin-bottom:14px;
+}
+.hero h1{font-size:15px;margin:0 0 12px;font-weight:600;color:var(--tx2);letter-spacing:.5px}
+.dday{display:flex;align-items:baseline;margin-bottom:8px}
+.dday .n{font-size:56px;font-weight:800;letter-spacing:-2px;line-height:1;
+  background:linear-gradient(135deg,#5b9dff,#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dday .u{font-size:14px;color:var(--tx2);margin-left:8px}
+.lvrow{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;margin-bottom:2px}
+.lvbadge{background:linear-gradient(135deg,rgba(91,157,255,.22),rgba(192,132,252,.22));
+  border:1px solid rgba(124,92,255,.4);border-radius:999px;padding:3px 11px;font-weight:600;font-size:12px}
+.minis{display:flex;flex-wrap:wrap;margin:-3px;margin-top:8px;font-size:11.5px;color:var(--tx2)}
+.minis span{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:3px 9px;margin:3px}
+.hero .sub{font-size:12.5px;color:var(--tx3)}
+.stagechip{
+  display:inline-flex;align-items:center;margin-top:12px;
+  background:var(--bg3);border:1px solid var(--line);border-radius:999px;
+  padding:5px 12px;font-size:12.5px;color:var(--tx2);
+}
+.stagechip b{margin-left:6px;color:var(--acc);font-weight:600}
+.bar{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;margin-top:10px}
+.bar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#5b9dff,#7c5cff);transition:width .5s}
+
+/* ---------- 卡片 ---------- */
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:12px}
+.card h2{font-size:13px;margin:0 0 12px;color:var(--tx2);font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.card h2 span{font-weight:400;color:var(--tx3);font-size:12px}
+
+/* ---------- 任务 ---------- */
+.task{
+  display:flex;padding:12px;border-radius:12px;background:var(--bg3);
+  margin-bottom:9px;border:1px solid transparent;transition:.2s;cursor:pointer;
+}
+.task:active{transform:scale(.985)}
+.task.done{opacity:.5}
+.task.done .tt{text-decoration:line-through;color:var(--tx3)}
+.task .ck{
+  flex:0 0 22px;width:22px;height:22px;border-radius:7px;border:2px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:13px;margin:1px 12px 0 0;transition:.2s;
+}
+.task.done .ck{background:var(--ok);border-color:var(--ok);color:#08130e}
+.task .body{flex:1;min-width:0}
+.task .tm{font-size:11.5px;color:var(--tx3);font-variant-numeric:tabular-nums;letter-spacing:.3px}
+.task .tt{font-size:14.5px;font-weight:500;margin-top:2px}
+.task .td{font-size:12px;color:var(--tx2);margin-top:4px}
+.task .td em{color:var(--acc);font-style:normal;font-weight:600}
+.task.mystery{background:linear-gradient(135deg,rgba(124,92,255,.16),rgba(34,211,238,.1));border-color:rgba(124,92,255,.4)}
+.task.live{background:linear-gradient(135deg,rgba(255,92,114,.14),rgba(255,176,32,.08));border-color:rgba(255,92,114,.35)}
+
+/* ---------- 防误选 / iOS 触控 ---------- */
+.task,.btn,nav button,.tabs button,.bd1,details summary,.pg .adj button,.box{
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
+}
+.btn{display:block;width:100%;padding:14px;border-radius:13px;border:0;
+  font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;transition:.2s;
+  background:var(--bg3);color:var(--tx);-webkit-appearance:none;appearance:none}
+.btn:active{transform:scale(.98)}
+.btn.pri{background:linear-gradient(135deg,#5b9dff,#7c5cff);color:#fff;box-shadow:0 6px 22px -8px rgba(91,157,255,.8)}
+.btn.gold{background:linear-gradient(135deg,#ffcf5c,#ff9f43);color:#3a2500;box-shadow:0 6px 22px -8px rgba(255,176,32,.8)}
+.btn:disabled{opacity:.42;cursor:not-allowed;box-shadow:none}
+.btn.sm{padding:9px 14px;font-size:13px;width:auto;display:inline-block;border-radius:10px}
+.btn.done{background:rgba(51,214,159,.16);color:var(--ok);border:1px solid rgba(51,214,159,.4)}
+
+/* 盲盒开出的奖励详情 */
+.pdetail{margin-top:14px;text-align:left;background:rgba(0,0,0,.22);border-radius:12px;padding:12px 13px}
+body.light .pdetail{background:rgba(255,255,255,.6)}
+.pdetail .lb{font-size:11px;color:var(--tx3);letter-spacing:.5px;margin-bottom:3px}
+.pdetail .vl{font-size:13px;color:var(--tx);margin-bottom:11px;line-height:1.6}
+.pdetail .vl:last-child{margin-bottom:0}
+.tiernote{font-size:11px;color:var(--tx3);margin-top:9px;line-height:1.5}
+
+/* ---------- 盲盒 ---------- */
+.box{
+  text-align:center;padding:26px 16px;border-radius:var(--r);
+  background:linear-gradient(160deg,rgba(124,92,255,.2),rgba(255,207,92,.1));
+  border:1px solid rgba(124,92,255,.35);position:relative;overflow:hidden;
+}
+.box .gift{font-size:60px;display:inline-block;animation:sway 2.4s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(-6deg) scale(1)}50%{transform:rotate(6deg) scale(1.08)}}
+.box.shake .gift{animation:shk .1s linear infinite}
+@keyframes shk{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(-4px,2px) rotate(-9deg)}50%{transform:translate(4px,-2px) rotate(7deg)}75%{transform:translate(-3px,-2px) rotate(-5deg)}100%{transform:translate(3px,2px) rotate(9deg)}}
+.box.pop .gift{animation:pop .55s cubic-bezier(.2,1.6,.4,1) forwards}
+@keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.7) rotate(12deg)}100%{transform:scale(1.15) rotate(0)}}
+.prize{font-size:19px;font-weight:700;margin-top:12px}
+.prize .tier{display:block;font-size:12px;font-weight:500;margin-top:6px;letter-spacing:1px}
+.tier-普通{color:var(--tx2)}
+.tier-稀有{color:var(--cyan)}
+.tier-史诗{color:var(--purple)}
+.tier-传说{color:var(--gold);text-shadow:0 0 16px rgba(255,207,92,.7)}
+.spark{position:absolute;width:7px;height:7px;border-radius:99px;pointer-events:none;animation:fly .9s ease-out forwards}
+@keyframes fly{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+
+/* ---------- 进度条 ---------- */
+.pg{margin-bottom:13px}
+.pg .top{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:6px}
+.pg .top b{font-weight:600}
+.pg .top span{color:var(--tx3);font-variant-numeric:tabular-nums}
+.pg .track{height:7px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.pg .track>i{display:block;height:100%;border-radius:99px;transition:width .4s}
+.pg .adj{display:flex;margin-top:7px}
+.pg .adj>*{margin-right:6px}
+.pg .adj>*:last-child{margin-right:0}
+.pg .adj button{
+  flex:0 0 32px;height:28px;border-radius:8px;border:1px solid var(--line);
+  background:var(--bg3);color:var(--tx2);font-size:15px;font-family:inherit;cursor:pointer;
+}
+.pg .adj .num{flex:1;background:var(--bg3);border:1px solid var(--line);border-radius:8px;
+  color:var(--tx);text-align:center;font-size:16px;font-family:inherit;height:28px;padding:0 4px;
+  -webkit-appearance:none;appearance:none;min-width:0}
+
+/* ---------- 阶段时间轴 ---------- */
+.stg{display:flex;padding:13px 0;border-bottom:1px solid var(--line)}
+.stg:last-child{border-bottom:0}
+.stg .dot{flex:0 0 10px;width:10px;height:10px;border-radius:99px;background:var(--line);margin:6px 12px 0 0}
+.stg.now .dot{background:var(--acc);box-shadow:0 0 0 4px rgba(91,157,255,.2)}
+.stg.past .dot{background:var(--ok)}
+.stg .bd{flex:1;min-width:0}
+.stg .nm{font-size:14.5px;font-weight:600}
+.stg.now .nm{color:var(--acc)}
+.stg .dt{font-size:11.5px;color:var(--tx3);margin-top:3px}
+.stg .gl{font-size:12.5px;color:var(--tx2);margin-top:7px;padding-left:0;list-style:none}
+.stg .gl li{padding-left:14px;position:relative;margin-bottom:3px}
+.stg .gl li:before{content:'';position:absolute;left:3px;top:8px;width:4px;height:4px;border-radius:99px;background:var(--tx3)}
+
+/* ---------- 模考 ---------- */
+.mk{display:flex;align-items:center;margin-bottom:9px}
+.mk>*{margin-right:8px}
+.mk>*:last-child{margin-right:0}
+.mk label{flex:0 0 96px;font-size:12.5px;color:var(--tx2)}
+.mk input{flex:1;background:var(--bg3);border:1px solid var(--line);border-radius:10px;
+  color:var(--tx);padding:9px 11px;font-size:16px;font-family:inherit;min-width:0;
+  -webkit-appearance:none;appearance:none}
+.mk .tgt{flex:0 0 auto;font-size:11.5px;color:var(--tx3)}
+textarea{-webkit-appearance:none;appearance:none;font-size:16px !important}
+table.rec{width:100%;border-collapse:collapse;font-size:12.5px}
+table.rec th,table.rec td{padding:8px 4px;text-align:center;border-bottom:1px solid var(--line)}
+table.rec th{color:var(--tx3);font-weight:500;font-size:11.5px}
+
+/* ---------- 底栏 ---------- */
+nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  display:flex;background:rgba(13,16,23,.9);backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);
+}
+body.light nav{background:rgba(255,255,255,.9)}
+nav button{
+  flex:1;background:0;border:0;padding:9px 0 10px;color:var(--tx3);
+  font-size:10.5px;font-family:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;
+  -webkit-appearance:none;appearance:none;
+}
+nav button i{font-size:19px;font-style:normal;line-height:1;display:block;margin-bottom:3px}
+nav button.on{color:var(--acc)}
+
+/* ---------- 杂项 ---------- */
+.muted{color:var(--tx3);font-size:12px}
+.hint{font-size:12px;color:var(--tx3);margin-top:9px;line-height:1.6}
+.row{display:flex}
+.row>*{margin-right:9px}
+.row>*:last-child{margin-right:0}
+.row>*{flex:1}
+.warnbox{background:rgba(255,92,114,.1);border:1px solid rgba(255,92,114,.3);border-radius:12px;
+  padding:11px 13px;font-size:12.5px;color:#ffc4cd;margin-bottom:12px;line-height:1.6}
+.warnbox b{color:#ff8fa0}
+.infobox{background:rgba(91,157,255,.09);border:1px solid rgba(91,157,255,.28);border-radius:12px;
+  padding:11px 13px;font-size:12.5px;color:#c3d9ff;margin-bottom:12px;line-height:1.6}
+body.light .warnbox{color:#a11a2c}
+body.light .infobox{color:#1b4b96}
+.toast{
+  position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);
+  background:rgba(20,26,36,.96);border:1px solid var(--line);color:var(--tx);
+  padding:11px 18px;border-radius:12px;font-size:13.5px;z-index:99;opacity:0;
+  transition:.28s;pointer-events:none;max-width:88%;text-align:center;
+}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.tabs{display:flex;margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tabs button{
+  flex:0 0 auto;padding:7px 14px;border-radius:99px;border:1px solid var(--line);
+  background:var(--bg2);color:var(--tx2);font-size:12.5px;font-family:inherit;cursor:pointer;
+  margin-right:6px;-webkit-appearance:none;appearance:none;
+}
+.tabs button.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+details{background:var(--bg3);border-radius:12px;padding:11px 13px;margin-bottom:9px}
+details summary{font-size:13.5px;font-weight:600;cursor:pointer;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:'▸ ';color:var(--tx3)}
+details[open] summary:before{content:'▾ '}
+details .dc{font-size:12.5px;color:var(--tx2);margin-top:9px;line-height:1.7}
+.stat{display:flex;margin-bottom:12px}
+.stat>div{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:11px;
+  text-align:center;margin-right:9px}
+.stat>div:last-child{margin-right:0}
+.stat .v{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.stat .k{font-size:11px;color:var(--tx3);margin-top:2px}
+
+/* ---------- 养成 ---------- */
+.lvcard{background:linear-gradient(150deg,rgba(91,157,255,.16),rgba(192,132,252,.12));
+  border:1px solid rgba(124,92,255,.32);border-radius:var(--r);padding:15px;margin-bottom:12px}
+.lvcard .nm{font-size:20px;font-weight:800;letter-spacing:-.5px}
+.lvcard .nx{font-size:12px;color:var(--tx2);margin-top:5px}
+.heat{display:grid;grid-template-rows:repeat(7,auto);grid-auto-flow:column;gap:3px;margin-top:4px}
+.heat i{display:block;width:100%;height:0;padding-bottom:100%;border-radius:3px;background:var(--bg3)}
+.heat i.l1{background:rgba(91,157,255,.28)}
+.heat i.l2{background:rgba(91,157,255,.5)}
+.heat i.l3{background:rgba(91,157,255,.72)}
+.heat i.l4{background:#5b9dff;box-shadow:0 0 7px rgba(91,157,255,.75)}
+.heat i.rest{background:rgba(51,214,159,.22)}
+.heatlg{display:flex;align-items:center;flex-wrap:wrap;font-size:10.5px;color:var(--tx3);margin-top:9px;justify-content:flex-end}
+.heatlg i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:3px}
+.heatlg>*{margin-left:3px}
+.badges{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.bd1{background:var(--bg3);border:1px solid var(--line);border-radius:12px;padding:9px 4px;text-align:center;opacity:.34}
+.bd1.on{opacity:1;border-color:rgba(255,207,92,.45);background:linear-gradient(150deg,rgba(255,207,92,.14),rgba(255,159,67,.06))}
+.bd1 .ic{font-size:21px;line-height:1.2}
+.bd1 .nm{font-size:9.5px;color:var(--tx2);margin-top:4px;line-height:1.25}
+.subbar{display:flex;align-items:center;margin-bottom:9px;font-size:12px}
+.subbar>*{margin-right:9px}
+.subbar>*:last-child{margin-right:0}
+.subbar .lb{flex:0 0 62px;color:var(--tx2)}
+.subbar .tk{flex:1;height:8px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.subbar .tk>i{display:block;height:100%;border-radius:99px}
+.subbar .vv{flex:0 0 46px;text-align:right;color:var(--tx3);font-variant-numeric:tabular-nums}
+
+/* ---------- 背包弹层 ---------- */
+.ovl{position:fixed;top:0;left:0;right:0;bottom:0;z-index:90;background:var(--bg);overflow-y:auto;
+  -webkit-overflow-scrolling:touch;display:none}
+.ovl.on{display:block}
+.ovlhd{position:-webkit-sticky;position:sticky;top:0;z-index:2;
+  background:var(--bg);border-bottom:1px solid var(--line);
+  padding:calc(12px + env(safe-area-inset-top)) 14px 12px;
+  display:flex;justify-content:space-between;align-items:center}
+.ovlhd b{font-size:16px}
+.ovlbd{padding:14px 14px calc(28px + env(safe-area-inset-bottom));max-width:560px;margin:0 auto}
+.bagcard{border-radius:14px;padding:13px;margin-bottom:11px;border:1px solid var(--line);background:var(--bg2)}
+.bagcard.t-普通{border-left:3px solid var(--tx3)}
+.bagcard.t-稀有{border-left:3px solid var(--cyan)}
+.bagcard.t-史诗{border-left:3px solid var(--purple)}
+.bagcard.t-传说{border-left:3px solid var(--gold)}
+.bagcard.gone{opacity:.42}
+.bagcard .hd{display:flex;justify-content:space-between;align-items:flex-start}
+.bagcard .ttl{font-size:15px;font-weight:700}
+.bagcard .st{font-size:10.5px;padding:2px 8px;border-radius:99px;white-space:nowrap;
+  border:1px solid var(--line);color:var(--tx3);margin-left:8px}
+.bagcard .st.ok{color:var(--ok);border-color:rgba(51,214,159,.45);background:rgba(51,214,159,.1)}
+.bagcard .st.soon{color:var(--warn);border-color:rgba(255,176,32,.5);background:rgba(255,176,32,.12)}
+.bagcard .st.dead{color:var(--bad);border-color:rgba(255,92,114,.4);background:rgba(255,92,114,.1)}
+.bagcard .meta{font-size:11px;color:var(--tx3);margin-top:4px;letter-spacing:.3px}
+.bagcard .lst{font-size:12px;color:var(--tx2);margin-top:9px;line-height:1.75}
+.bagcard .act{margin-top:11px}
+.bagsec{font-size:12px;color:var(--tx3);letter-spacing:.5px;margin:16px 0 9px}
+</style>
+</head>
+<body>
+
+<div class="hero"><div class="wrap">
+  <h1 id="hello">专升本作战室</h1>
+  <div class="dday"><span class="n" id="totalH">0</span><span class="u">小时已投入</span></div>
+  <div class="lvrow">
+    <span class="lvbadge" id="lvBadge">Lv.1 起步</span>
+    <span class="muted" id="expTx">0 / 400 经验</span>
+  </div>
+  <div class="bar"><i id="expBar" style="width:0"></i></div>
+  <div class="minis" id="minis"></div>
+  <div class="stagechip">当前 <b id="stname">--</b></div>
+</div></div>
+
+<div class="wrap">
+
+<!-- ============ 今天 ============ -->
+<div id="tab-today">
+  <div class="card">
+    <h2><span id="todayLabel">今天</span><span id="restTag"></span></h2>
+    <div id="motto" style="font-size:13.5px;color:var(--tx2);margin:-4px 0 12px"></div>
+    <div id="tasks"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px">
+      <span class="muted">完成度 <b id="prog" style="color:var(--acc)">0/4</b></span>
+      <span class="muted" id="streak"></span>
+    </div>
+    <div class="bar" style="margin-top:8px"><i id="taskbar" style="width:0"></i></div>
+  </div>
+
+  <div class="card">
+    <h2>每日盲盒 <span id="boxHint"></span></h2>
+    <div class="box" id="box">
+      <div class="gift" id="gift">🎁</div>
+      <div class="prize" id="prizeTx">完成任务后开启</div>
+      <div id="prizeDetail" style="display:none"></div>
+      <button class="btn gold" id="openBox" style="margin-top:16px" disabled>🔒 锁定中</button>
+      <button class="btn" id="useBox" style="margin-top:9px;display:none">标记为「已兑现」</button>
+    </div>
+    <div class="hint" style="margin-top:12px;color:var(--acc)" id="boostTag"></div>
+    <div class="hint" id="unusedTag"></div>
+    <button class="btn" id="bagBtn" style="margin-top:9px">🎒 打开奖励背包</button>
+    <details style="margin-top:10px">
+      <summary>奖池里都有什么（7 张卡 · 按放纵力度分层）</summary>
+      <div class="dc" style="padding-top:6px" id="odds"></div>
+      <div class="dc" style="color:var(--tx3);margin-top:10px;border-top:1px solid var(--line);padding-top:9px">
+        <b style="color:var(--tx2)">放纵力度 = 你能放纵到什么程度</b><br>
+        ★☆☆☆☆ 犒劳：一杯奶茶、一份甜品、一集番剧<br>
+        ★★☆☆☆ 补觉：多睡 30 分钟、午睡不设闹钟<br>
+        ★★★☆☆ 提前收工：明天砍掉 1 小时<br>
+        ★★★★☆ 摸鱼 / 小额购物：今晚砍半、50 元随便买<br>
+        ★★★★★ 大额购物 / 全天放假：300 元随便买、一整天不学<br><br>
+        <b style="color:var(--tx2)">稀有度 = 多久能见到一次</b><br>
+        普通 —— 基本每天都能开到（合计 82%）<br>
+        稀有 —— 平均约 7 天一次（合计 15%）<br>
+        史诗 —— 平均约 50 天一次（2%）<br>
+        传说 —— 平均约 100 天一次（1%）<br><br>
+        <b style="color:var(--tx2)">连续打卡的加成</b><br>
+        3 天 ×1.4 · 7 天 ×2.0 · 14 天 ×2.8 · 21 天 ×3.5<br>
+        攒得越久，开出高力度奖励的几率越大。
+      </div>
+    </details>
+    <div class="hint" id="boxLog"></div>
+  </div>
+
+  <div class="card">
+    <h2>今天怎么安排</h2>
+    <div class="hint" style="margin-top:0">
+      <b style="color:var(--tx2)">普通日</b>：07:30 单词 → 13:00-15:30 主课A → 15:30 单词复习 → 19:30-21:00 主课B<br>
+      <b style="color:var(--tx2)">政治直播日</b>：07:30 单词 → 13:00-15:00 主课A → 15:00 单词复习 → 19:30-21:30 政治直播<br>
+      <b style="color:var(--tx2)">周日</b>：全天休息，不排任务<br><br>
+      <b style="color:var(--acc)">三条铁律</b><br>
+      ① <b style="color:var(--tx2)">先课后台</b>：当天的新课/直播课先上完，剩余时间才用来刷题。<br>
+      ② <b style="color:var(--tx2)">不超 5.5h</b>：主课A + 主课B + 单词合计 5.5h 封顶，刷题永远只吃剩余时间。<br>
+      ③ <b style="color:var(--tx2)">主课A 固定、主课B 随机</b>：主线保证进度不乱，盲盒保证每天有新鲜感。<br><br>
+      刷题从 9 月就开始（政治 666 题 + 日语 N3 阅读专项），11 月起转成刷题为主线。
+    </div>
+  </div>
+</div>
+
+<!-- ============ 养成 ============ -->
+<div id="tab-prog" style="display:none">
+  <div class="lvcard" id="lvCard"></div>
+  <div class="infobox" style="margin-top:-4px">
+    <b>等级怎么升</b><br>
+    每学习 1 小时 = 20 经验，每天 4/4 全勤再额外 +30。<br>
+    满勤一天（5.5h）= 140 经验。经验只增不减，中断也不会掉级。
+  </div>
+
+  <div class="card">
+    <h2>累计成果 <span>从 9/21 开始算</span></h2>
+    <div class="stat">
+      <div><div class="v" id="cHours">0</div><div class="k">小时投入</div></div>
+      <div><div class="v" id="cDays">0</div><div class="k">学习天数</div></div>
+      <div><div class="v" id="cWords">0</div><div class="k">新词累计</div></div>
+    </div>
+    <div class="stat" style="margin-bottom:0">
+      <div><div class="v" id="cFull">0</div><div class="k">全勤天数</div></div>
+      <div><div class="v" id="cBox">0</div><div class="k">开盒次数</div></div>
+      <div><div class="v" id="cRare">0</div><div class="k">稀有以上</div></div>
+    </div>
+    <div class="hint" style="margin-top:10px">
+      「小时投入」= 你在「今天」页打勾的任务时长总和，只有真的打勾才算。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>学习日历 <span>最近 8 周</span></h2>
+    <div style="display:flex">
+      <div style="flex:0 0 20px;display:grid;grid-template-rows:repeat(7,auto);gap:3px;
+        font-size:9px;color:var(--tx3);line-height:1">
+        <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span>
+      </div>
+      <div class="heat" id="heat" style="flex:1;margin-left:6px"></div>
+    </div>
+    <div class="heatlg">
+      颜色越亮投入越多 <i style="background:var(--bg3)"></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i>
+      <span style="margin-left:8px">绿格 = 周日休息</span>
+    </div>
+    <div class="hint">每一列是一周（从上到下周一→周日），最右边一列是本周。</div>
+  </div>
+
+  <div class="card">
+    <h2>时间花在哪了 <span>累计小时</span></h2>
+    <div id="subDist"></div>
+    <div class="hint" id="subHint"></div>
+  </div>
+
+  <div class="card">
+    <h2>本周 <span>周一至今</span></h2>
+    <div class="stat" style="margin-bottom:0">
+      <div><div class="v" id="wHours">0</div><div class="k">小时</div></div>
+      <div><div class="v" id="wDays">0</div><div class="k">打卡天数</div></div>
+      <div><div class="v" id="wBox">0</div><div class="k">开盒次数</div></div>
+    </div>
+    <div class="hint" style="margin-top:10px">目标 33h/周（6天 × 5.5h），周日休息</div>
+  </div>
+
+  <div class="card">
+    <h2>奖励背包 <span id="bagCount"></span></h2>
+    <div class="hint" style="margin-top:0;margin-bottom:11px">
+      每天开出的奖励卡都存进背包，每张卡有独立的有效期。<br>
+      在有效期内随时可以兑现，过期作废。
+    </div>
+    <div id="bagPreview"></div>
+    <button class="btn pri" id="bagBtn2" style="margin-top:11px">🎒 打开背包</button>
+  </div>
+
+  <div class="card">
+    <h2>成就墙 <span id="bdCount"></span></h2>
+    <div class="hint" style="margin-top:0;margin-bottom:11px">
+      徽章只增不减，解锁了就永远亮着。<br>
+      灰着的点一下，会告诉你还差多少。
+    </div>
+    <div class="badges" id="badges"></div>
+  </div>
+
+  <div class="card">
+    <h2>各科目推进 <span>手动更新</span></h2>
+    <div class="hint" style="margin-top:0;margin-bottom:12px">
+      这里的数字要你自己填。每上完一节课、刷完一套题，就点一下 <b>+</b>。<br>
+      总章数按你手上教辅的实际情况改（点数字框直接输入）。
+    </div>
+    <div id="pgAll"></div>
+  </div>
+</div>
+
+<!-- ============ 阶段 ============ -->
+<div id="tab-stage" style="display:none">
+  <div class="card">
+    <h2>五阶段总览 <span>共 27 周</span></h2>
+    <div id="stages"></div>
+  </div>
+  <div class="card">
+    <h2>关键节点</h2>
+    <div id="milestones"></div>
+  </div>
+  <div class="card">
+    <h2>风险提示</h2>
+    <div class="warnbox"><b>校考撞期风险</b><br>日语两门校考时间由湛江科技学院自定，若排在 3/27-28，两场考试只能二选一。政治 + 大学语文是两场共用，真撞车损失的是英语 + 汉语言文学学科基础的时间。→ 1月校考时间公布后做决策。</div>
+    <div class="warnbox"><b>汉语言题型</b><br>该科 2024 年起题型改革过，本计划按 2026 年卷面结构排，官方《专业目录及考试要求》发布后需校准。</div>
+    <div class="infobox"><b>体检表</b><br>2027年1月1日起有效，需二级甲等（含）以上医院，报名前上传。</div>
+  </div>
+</div>
+
+<!-- ============ 模考 ============ -->
+<div id="tab-mock" style="display:none">
+  <div class="card">
+    <h2>目标分 vs 省控线</h2>
+    <table class="rec">
+      <tr><th>科目</th><th>满分</th><th>目标</th><th>省控线</th></tr>
+      <tr><td>政治</td><td>100</td><td id="t_zz">75</td><td rowspan="3">三科 130<br><span class="muted">(2024年约150)</span></td></tr>
+      <tr><td>大学语文</td><td>100</td><td id="t_yw">70</td></tr>
+      <tr><td>日语阅读与写作</td><td>100</td><td id="t_yr">70</td></tr>
+      <tr><td>基础日语</td><td>200</td><td id="t_jp">120</td><td>100</td></tr>
+      <tr><td>英语（不学）</td><td>100</td><td>20</td><td rowspan="2">三科 130</td></tr>
+      <tr><td>汉语言文学学科基础</td><td>200</td><td id="t_cn">110</td></tr>
+    </table>
+    <div class="infobox" style="margin:12px 0 0">英语全蒙约 20 分，靠政治 75 + 语文 70 撑起三科线（75+70+20=165 &gt; 150）。日语侧更安全：75+70+70=215 &gt; 150。</div>
+  </div>
+  <div class="card">
+    <h2>录入模考成绩</h2>
+    <div class="mk"><label>日期</label><input type="date" id="mkDate"></div>
+    <div class="mk"><label>政治</label><input type="number" id="mk_zz" placeholder="0-100"><span class="tgt" id="g_zz">/75</span></div>
+    <div class="mk"><label>大学语文</label><input type="number" id="mk_yw" placeholder="0-100"><span class="tgt" id="g_yw">/70</span></div>
+    <div class="mk"><label>日语阅读写作</label><input type="number" id="mk_yr" placeholder="0-100"><span class="tgt" id="g_yr">/70</span></div>
+    <div class="mk"><label>基础日语</label><input type="number" id="mk_jp" placeholder="0-200"><span class="tgt" id="g_jp">/120</span></div>
+    <div class="mk"><label>汉语言学科基础</label><input type="number" id="mk_cn" placeholder="0-200"><span class="tgt" id="g_cn">/110</span></div>
+    <button class="btn pri" id="saveMock" style="margin-top:8px">保存这次模考</button>
+    <div class="hint">建议：11/23-11/29 第一次全科模考 → 决定日语/汉语言取舍。</div>
+  </div>
+  <div class="card">
+    <h2>模考记录 <span id="mockCount"></span></h2>
+    <div id="mockList"></div>
+  </div>
+</div>
+
+<!-- ============ 设置 ============ -->
+<div id="tab-set" style="display:none">
+  <div class="card">
+    <h2>目标分调整 <span>随时可改</span></h2>
+    <div class="mk"><label>政治</label><input type="number" id="s_zz"><span class="tgt">/100</span></div>
+    <div class="mk"><label>大学语文</label><input type="number" id="s_yw"><span class="tgt">/100</span></div>
+    <div class="mk"><label>日语阅读写作</label><input type="number" id="s_yr"><span class="tgt">/100</span></div>
+    <div class="mk"><label>基础日语</label><input type="number" id="s_jp"><span class="tgt">/200</span></div>
+    <div class="mk"><label>汉语言学科基础</label><input type="number" id="s_cn"><span class="tgt">/200</span></div>
+    <button class="btn pri" id="saveTargets" style="margin-top:8px">保存目标分</button>
+  </div>
+
+  <div class="card">
+    <h2>每日任务量 <span>随机区间</span></h2>
+    <div class="mk"><label>新词下限</label><input type="number" id="w_min"></div>
+    <div class="mk"><label>新词上限</label><input type="number" id="w_max"></div>
+    <div class="mk"><label>复习下限</label><input type="number" id="r_min"></div>
+    <div class="mk"><label>复习上限</label><input type="number" id="r_max"></div>
+    <button class="btn pri" id="saveWord" style="margin-top:8px">保存词量区间</button>
+    <div class="hint">默认：新词 10-30（跟识日App一致），复习 0-50（不设下限，抽到 0 就当放假）。</div>
+  </div>
+
+  <div class="card">
+    <h2>数据</h2>
+    <div class="row" style="margin-bottom:9px">
+      <button class="btn" id="exportBtn">导出备份</button>
+      <button class="btn" id="copyBtn">复制到剪贴板</button>
+    </div>
+    <div class="row" style="margin-bottom:9px">
+      <button class="btn" id="importBtn">从下方文本导入</button>
+      <button class="btn" id="clearArea">清空文本框</button>
+    </div>
+    <button class="btn" id="rerollBtn" style="margin-bottom:9px">🎁 重置今日盲盒（重新抽一次）</button>
+    <textarea id="ioArea" style="width:100%;height:100px;background:var(--bg3);border:1px solid var(--line);
+      border-radius:11px;color:var(--tx);padding:10px;font-family:ui-monospace,monospace;resize:vertical"
+      placeholder="点「导出备份」把数据生成到这里 →「复制到剪贴板」存到备忘录。换手机时粘回这里 →「从下方文本导入」"></textarea>
+    <div class="hint" id="lsWarn"></div>
+    <div class="hint">「重置今日盲盒」只清掉今天的开盒记录，不影响打卡、进度和背包里其他卡。</div>
+  </div>
+
+  <div class="card">
+    <h2>兼容性自检</h2>
+    <div id="compat"></div>
+    <button class="btn" id="recheck" style="margin-top:10px">重新检测</button>
+  </div>
+
+  <div class="card">
+    <h2>界面</h2>
+    <div class="row">
+      <button class="btn" id="themeBtn">切换深色/浅色</button>
+      <button class="btn" id="resetBtn">清空所有数据</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>怎么放到 iPhone 上 <span>GitHub Pages</span></h2>
+    <div class="infobox" style="margin-bottom:12px">
+      放上去之后，你的链接是：<br>
+      <b style="color:var(--acc)">https://你的GitHub用户名.github.io/zsb-plan/</b><br>
+      在 iPhone Safari 打开这个链接 → 分享 → 添加到主屏幕，就变成一个全屏 App 图标。
+    </div>
+
+    <details><summary>方式一：网页上传（推荐，手机就能做完）</summary>
+      <div class="dc">
+        <b style="color:var(--tx2)">① 注册 GitHub</b><br>
+        手机浏览器打开 github.com → Sign up，用邮箱注册（免费）。<br><br>
+        <b style="color:var(--tx2)">② 新建仓库</b><br>
+        登录后点右上角 <b>+</b> → <b>New repository</b><br>
+        Repository name 填 <b style="color:var(--acc)">zsb-plan</b>（必须一致，否则链接要改）<br>
+        选 <b>Public</b> → 点 <b>Create repository</b><br><br>
+        <b style="color:var(--tx2)">③ 上传文件</b><br>
+        仓库页面点 <b>Add file</b> → <b>Upload files</b> → 选择你电脑上的
+        <b>index.html</b> → 拉到底点 <b>Commit changes</b><br><br>
+        <b style="color:var(--tx2)">④ 开启 Pages</b><br>
+        仓库页面点 <b>Settings</b> → 左侧找 <b>Pages</b><br>
+        Source 选 <b>Deploy from a branch</b><br>
+        Branch 选 <b>main</b>，目录选 <b>/ (root)</b> → 点 <b>Save</b><br><br>
+        <b style="color:var(--tx2)">⑤ 等 1-2 分钟</b><br>
+        回到 Pages 页面，顶部会出现你的网址，点开就能用了。<br><br>
+        <b style="color:var(--tx2)">⑥ 加到主屏幕</b><br>
+        iPhone 用 <b>Safari</b> 打开网址 → 底部 <b>分享</b> → <b>添加到主屏幕</b>
+      </div>
+    </details>
+
+    <details><summary>方式二：电脑命令行（更快，一步到位）</summary>
+      <div class="dc">
+        这个文件夹里我已经建好 git 仓库并提交了，你只要：<br><br>
+        ① 在 GitHub 上新建一个名为 <b>zsb-plan</b> 的仓库（不要勾选任何初始化文件）<br><br>
+        ② 在 <b>E:\专升本学习计划</b> 目录下打开终端，执行：<br>
+        <code style="display:block;background:var(--bg3);padding:9px;border-radius:8px;margin:7px 0;
+          font-size:11.5px;line-height:1.8;word-break:break-all">
+          git remote add origin https://github.com/你的用户名/zsb-plan.git<br>
+          git push -u origin main
+        </code>
+        ③ 弹出登录时，密码要填 <b>Personal Access Token</b>（不是账号密码）：<br>
+        GitHub → 头像 → Settings → Developer settings → Personal access tokens →
+        Tokens (classic) → Generate new token → 勾选 <b>repo</b> → 生成后复制<br><br>
+        ④ 推送完成后，去仓库 Settings → Pages 开启（同方式一第④步）
+      </div>
+    </details>
+
+    <details><summary>方式三：先打印成纸质版贴墙</summary>
+      <div class="dc">在电脑浏览器里按 Ctrl+P / Cmd+P，选「另存为 PDF」或直接打印。
+      纸质的用来贴墙看阶段目标，手机上的用来每天打卡。</div>
+    </details>
+
+    <details><summary>以后要改内容怎么办？</summary>
+      <div class="dc">
+        改完电脑上的 <b>index.html</b> 后：<br>
+        · 方式一上传的 → 在 GitHub 仓库里点进 index.html → 铅笔图标 → 直接改 → Commit<br>
+        · 方式二上传的 → 在文件夹里执行 <code>git add index.html</code> → <code>git commit -m "更新"</code> → <code>git push</code><br><br>
+        注意：网页上的打卡数据存在手机本地，更新代码<b>不会</b>丢失数据。<br>
+        但换手机或清缓存会丢，所以定期用上面的「导出备份」存一份到备忘录。
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>关于这个计划</h2>
+    <div class="hint" style="margin-top:0">
+      备考周期 2026-09-21 → 2027-03-27，共 27 周。<br>
+      每天 5.5h：单词 1.5h + 两门课 4h，每周 33h，周日全天休息。<br>
+      英语完全放弃（全蒙约20分），靠政治 + 大学语文撑三科线。<br>
+      日语优先（校考），汉语言文学作为第二志愿，11月模考后决定取舍。<br><br>
+      <span class="muted">考试日期为按往年推算的预估值，2027年官方通知发布后请核对。</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<nav>
+  <button data-tab="today" class="on"><i>🎯</i>今天</button>
+  <button data-tab="prog"><i>🌱</i>养成</button>
+  <button data-tab="stage"><i>🗺️</i>阶段</button>
+  <button data-tab="mock"><i>📝</i>模考</button>
+  <button data-tab="set"><i>⚙️</i>设置</button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<!-- ============ 奖励背包 ============ -->
+<div class="ovl" id="bagOvl">
+  <div class="ovlhd">
+    <b>🎒 奖励背包</b>
+    <button class="btn sm" id="bagClose">关闭</button>
+  </div>
+  <div class="ovlbd">
+    <div class="infobox" style="margin-bottom:14px">
+      <b>怎么用</b><br>
+      每张卡有独立有效期，在有效期内随时可以兑现。<br>
+      兑现时点「去兑现」→ 真的去做 → 回来点「标记已用掉」。<br>
+      过期作废，所以别攒太久。
+    </div>
+    <div id="bagBody"></div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   专升本作战室 —— 单文件离线学习计划
+   数据全部存在本地 localStorage，不联网
+   ========================================================= */
+
+var KEY = 'zsb_v1_';
+var $ = function(id){ return document.getElementById(id); };
+
+/* ---------- 固定配置 ---------- */
+var START = new Date('2026-09-21T00:00:00');   /* 备考第 1 天（周一） */
+
+/* 五阶段 */
+var STAGES = [
+  { id:1, name:'启动 + 日语补空白', start:'2026-09-21', end:'2026-11-01', weeks:'W1–W6（6周）',
+    goals:['建三本：生词本 / 错题本 / 作文本',
+           '日语：新经典第三册 1-8 课精学（单词+语法+课文+同步练习册）',
+           '日语：写作从 0 到能写 150 字，每周 1 篇；翻译每天 3 句日译汉',
+           '日语：N3 真题阅读专项（先攻 33/60 的弱项）',
+           '汉语言：古代汉语 + 现代汉语讲义过一遍，配套题同步做',
+           '语文：7 节网课全部看完 + 名句默写第 1 轮',
+           '政治：9 月刷题课 + 10 月空档自主刷《666刷题集》',
+           '刷题：从本月就启动，只吃「课上完之后」的剩余时间',
+           '单词：《考前对策N3词汇》516 → 1044，10月底背完'] },
+
+  { id:2, name:'强化 + 汉语言推进', start:'2026-11-02', end:'2026-11-29', weeks:'W7–W10（4周）',
+    goals:['日语：新经典第三册 9-16 课学完（全书完）',
+           '日语：写作 150 → 300 字；N3 真题分题型第 1 轮',
+           '汉语言：古代文学 + 现代文学讲义过完，第一遍完成',
+           '语文：古文翻译 + 断句专项，名句默写第 2 轮',
+           '政治：跟 11 月大题课（25课时）+ 《大题集》默写',
+           '刷题：本月起转为刷题为主线，《全程刷题一本通》正式开刷',
+           '⭐ W10 末（11/23-11/29）第一次全科模考 → 决定日语/汉语言取舍',
+           '单词：新经典第三册词汇滚动 + N3 真题生词入库'] },
+
+  { id:3, name:'真题期', start:'2026-11-30', end:'2027-01-03', weeks:'W11–W15（5周）',
+    goals:['日语：N3 真题 10 套按套限时刷完（2020.12-2024.12）',
+           '日语：作文累计 10 篇；翻译累计 200 句',
+           '汉语言：《全程刷题一本通》+ 统考真题',
+           '语文：真题 3 套 + 大作文训练',
+           '政治：跟 12 月真题课 + 历年真题',
+           '⭐ 1 月中旬报名（预估），记得体检表',
+           '单词：只复习 + 真题生词，不再开新书'] },
+
+  { id:4, name:'冲刺上', start:'2027-01-04', end:'2027-02-07', weeks:'W16–W20（5周）',
+    goals:['政治：1 月冲刺课 + 2 月时政课',
+           '日语：作文模板库成型（10 大话题）+ 翻译专项 + 阅读提速',
+           '汉语言：《冲刺讲义》+ 默写/字词/断句死记硬背冲刺',
+           '语文：作文素材库 + 默写滚动',
+           '⭐ 湛江科技学院校考时间公布 → 判断是否与统考撞期',
+           '⭐ 春节（2/6 前后）安排低强度：只做背诵滚动，不加新任务',
+           '单词：滚动复习为主'] },
+
+  { id:5, name:'冲刺下 + 全真模考', start:'2027-02-08', end:'2027-03-28', weeks:'W21–W27（7周）',
+    goals:['日语：全真限时模考 3-5 套（150min / 120min 计时）',
+           '汉语言：全真模考 3 套',
+           '语文：全真模考 3 套',
+           '政治：3 月考前技巧课',
+           'W26-W27：只滚动复习 + 背诵 + 错题，不碰新内容',
+           '单词：只复习，不背新词',
+           '⭐ 3/27-28 考试'] }
+];
+
+/* 政治直播课日历（按欢姐课表推算，实际以群通知为准）
+   rate = 该阶段每晚开播的概率（课时数 ÷ 可上课天数），周一到周六生效 */
+var POLITICS = [
+  { s:'2026-09-21', e:'2026-10-04', name:'刷题课',     note:'约10课时 · 待通知上课时间', rate:0.83 },
+  { s:'2026-11-02', e:'2026-11-29', name:'大题课',     note:'约25课时',                rate:1.0  },
+  { s:'2026-11-30', e:'2026-12-27', name:'真题课',     note:'约10课时',                rate:0.42 },
+  { s:'2026-12-28', e:'2027-01-31', name:'冲刺课',     note:'约15课时',                rate:0.5  },
+  { s:'2027-02-01', e:'2027-02-28', name:'时政课',     note:'约3课时',                 rate:0.13 },
+  { s:'2027-03-01', e:'2027-03-27', name:'考前技巧课', note:'约10课时',                rate:0.42 }
+];
+
+/* 主课A：周一至周六固定主线，按阶段切换
+   铁律：先上完课/新课，课上完再刷题，每天总时长不超过 5.5h */
+var MAIN_A = {
+  1:[ { sub:'日语',   task:'新经典第三册 · 精学一课',   desc:'1-8课。先学完单词→语法→课文，剩下的时间刷同步练习册本课习题' },
+      { sub:'汉语言', task:'网课 + 基础考点讲义',        desc:'先看网课/过讲义，剩余时间做讲义配套题（古代汉语 + 现代汉语）' },
+      { sub:'日语',   task:'N3 真题 · 阅读专项',         desc:'阅读 33/60 是弱项。先限时做，再逐句精读，生词全部进生词本' },
+      { sub:'语文',   task:'网课 + 名句默写',            desc:'先把 7 节课看完，剩余时间刷课后练习 + 第 1 轮名句默写' },
+      { sub:'日语',   task:'写作 + 翻译',                desc:'先学范文结构，再动笔。目标从 0 到能写 150 字，每天 3 句日译汉' },
+      { sub:'汉语言', task:'教辅推进 + 刷题',            desc:'先过讲义章节，剩余时间刷对应章节的题' } ],
+
+  2:[ { sub:'日语',   task:'新经典第三册 · 精学一课',   desc:'9-16课。学完即整本书过完，先记语法接续和例句，再刷同步练习册' },
+      { sub:'汉语言', task:'基础考点讲义 · 古代文学',    desc:'先过文学史线索 + 作家作品，剩余时间刷《全程刷题一本通》对应题' },
+      { sub:'日语',   task:'N3 真题 · 语法词汇专项',      desc:'你语法 B 级，性价比最高的提分区。先刷题，错题当天弄懂' },
+      { sub:'语文',   task:'古文翻译 + 断句专项',        desc:'统考该题型 16 分。先看方法，再用徐中玉课内篇目实战' },
+      { sub:'日语',   task:'写作 + 翻译',                desc:'目标 150 → 300 字。先套万能句型写，写完对照范文改' },
+      { sub:'汉语言', task:'基础考点讲义 · 现代文学',    desc:'第一遍收尾。先过讲义，剩余时间刷题，错题标在教辅上' } ],
+
+  3:[ { sub:'日语',   task:'N3 真题 · 按套限时',        desc:'150 分钟计时。做完当天精读，生词全部进生词本' },
+      { sub:'汉语言', task:'全程刷题一本通',             desc:'主客观题一起刷，错题直接标在教辅上' },
+      { sub:'日语',   task:'真题精读 + 错题重做',         desc:'重做上一套的错题，直到能讲出为什么错' },
+      { sub:'语文',   task:'统考真题 + 大作文',          desc:'作文 40 分是语文的大头，必须动笔写' },
+      { sub:'日语',   task:'作文（累计10篇）+ 翻译',      desc:'每篇限时 30 分钟，写不完也算完成，重点是动笔' },
+      { sub:'汉语言', task:'统考真题 + 断句',            desc:'默写、字词解释、断句这三块开始滚动' } ],
+
+  4:[ { sub:'日语',   task:'作文模板库（10大话题）',     desc:'每个话题攒 3-5 个万能句，背到能默写' },
+      { sub:'汉语言', task:'冲刺讲义',                   desc:'按讲义顺序过重点，不再看新内容' },
+      { sub:'日语',   task:'翻译专项 + 阅读提速',         desc:'翻译 25 分要保 15 分以上，阅读开始卡时间' },
+      { sub:'语文',   task:'作文素材 + 默写滚动',         desc:'积累 20 个通用素材，默写进入第 3-4 轮' },
+      { sub:'日语',   task:'半套模考 + 专项补漏',         desc:'按你模考暴露的短板定点补，不平均用力' },
+      { sub:'汉语言', task:'默写 / 字词 / 断句冲刺',      desc:'纯记忆内容，用主动回忆法：先默写再看书' } ],
+
+  5:[ { sub:'日语',   task:'全真限时模考',              desc:'基础日语 150min / 日语阅读与写作 120min，严格计时' },
+      { sub:'汉语言', task:'全真模考',                   desc:'150 分钟计时，按统考卷面结构走一遍' },
+      { sub:'日语',   task:'模考错题精讲 + 重做',         desc:'错题不过夜，当天必须弄懂并重做一遍' },
+      { sub:'语文',   task:'全真模考',                   desc:'120 分钟计时，作文必须写完' },
+      { sub:'日语',   task:'作文 + 翻译保分训练',         desc:'只练最常考的 5 个话题，练到形成肌肉记忆' },
+      { sub:'汉语言', task:'背诵滚动 + 错题重做',         desc:'W26 起只滚动复习，不碰新内容' } ]
+};
+
+/* 主课B：盲盒科目池（按阶段）
+   原则：先保证当天的主课/直播课上完，主课B 用来刷题和补弱项 */
+var POOL_B = {
+  1:['日语 · N3阅读专项','日语 · 同步练习册','日语 · 翻译专项','日语 · 语法复盘',
+     '汉语言 · 讲义配套题','汉语言 · 名句默写','语文 · 古文翻译','语文 · 课后练习',
+     '政治 · 666刷题','错题重做'],
+  2:['日语 · N3语法专项','日语 · 同步练习册','日语 · 翻译专项','日语 · 阅读提速',
+     '汉语言 · 刷题一本通','汉语言 · 名句默写','汉语言 · 字词解释','语文 · 古文断句',
+     '政治 · 大题默写','错题重做'],
+  3:['日语 · N3真题限时','日语 · 同步练习册','日语 · 阅读提速','日语 · 作文',
+     '汉语言 · 统考真题','汉语言 · 刷题一本通','汉语言 · 断句专项','语文 · 真题',
+     '政治 · 历年真题','错题重做'],
+  4:['日语 · 真题错题重做','日语 · 作文模板','日语 · 翻译冲刺','日语 · 阅读提速',
+     '汉语言 · 默写冲刺','汉语言 · 字词冲刺','语文 · 作文素材','政治 · 冲刺课复盘','错题重做'],
+  5:['日语 · 错题重做','日语 · 作文背诵','日语 · 翻译保分','汉语言 · 背诵滚动',
+     '汉语言 · 错题重做','语文 · 默写滚动','政治 · 技巧复盘','错题重做']
+};
+
+/* 盲盒奖池 —— 按「放纵力度」从小到大分层，稀有度越高力度越大
+   p     = 基础概率(%)
+   tier  = 稀有度（普通 / 稀有 / 史诗 / 传说）
+   power = 放纵力度 1-5 星
+   days  = 有效期（天）—— 按卡的内容设计，越需要挑时机的给越久
+   items = 具体能拿到的东西（可挑选）
+   use   = 怎么用、什么时候兑现 */
+var PRIZES = [
+  { p:32, tier:'普通', power:1, days:3, icon:'🍰', name:'犒劳卡',
+    items:['一杯奶茶，不用点最便宜的那款',
+           '一份炸鸡 / 烤串 / 甜品，想吃就吃',
+           '一集番剧，专心看，不边看边学',
+           '一盒冰淇淋，不用算热量'],
+    use:'随时能兑现，所以只给 3 天。挑一个，然后不内疚地享受。' },
+
+  { p:30, tier:'普通', power:2, days:5, icon:'😴', name:'补觉卡',
+    items:['明早多睡 30 分钟',
+           '午睡一次，不设闹钟',
+           '今晚提前 30 分钟上床',
+           '早上不设闹钟，睡到自然醒为止'],
+    use:'补觉得挑不忙的日子，所以给 5 天。睡眠是记忆巩固的关键，这不是偷懒。' },
+
+  { p:20, tier:'普通', power:3, days:7, icon:'🛋️', name:'提前收工卡',
+    items:['任意一天的一个时间块提前 1 小时结束',
+           '把 19:30 的主课B 砍到 20:30',
+           '下午改成 14:00 才开始，上午归你',
+           '单词复习当天免做'],
+    use:'要提前安排，所以给 7 天。用完不用补，第二天照常节奏。' },
+
+  { p:10, tier:'稀有', power:4, days:5, icon:'🐟', name:'摸鱼卡',
+    items:['当天学习时间砍半：5.5h → 2.75h',
+           '砍掉主课B + 单词复习，只保留单词新词和主课A',
+           '或者当天只背单词，其他全部免做',
+           '剩下的时间完全自由，想干嘛干嘛'],
+    use:'挑一天状态最差的时候用，所以给 5 天。不算欠账，连击不断。' },
+
+  { p:5, tier:'稀有', power:4, days:14, icon:'🛍️', name:'购物卡·小',
+    items:['50 元以内随便买',
+           '想喝很久的那杯咖啡 / 那家店',
+           '购物车里躺了很久的小东西',
+           '一本想买但觉得"没必要"的书'],
+    use:'挑东西要时间，所以给 14 天。不用比价，不用汇报，不需要理由。' },
+
+  { p:2, tier:'史诗', power:5, days:30, icon:'💳', name:'购物卡·大',
+    items:['300 元以内随便买',
+           '一直想买但嫌贵的那件',
+           '或者攒着，和「购物卡·小」叠加用',
+           '不用找理由，直接下单'],
+    use:'大额要慢慢挑，所以给 30 天。理直气壮地买那个你加了很久购物车没下手的东西。' },
+
+  { p:1, tier:'传说', power:5, days:30, icon:'👑', name:'欧皇卡',
+    items:['一整天完全放假：不打卡、不看书、不碰单词',
+           '再加 300 元购物额度，随便买',
+           '这一天连击照样不断，进度条也不掉',
+           '想怎么过就怎么过，没有任何附加条件'],
+    use:'全天放假要挑好时机，所以给 30 天。这一天你不欠任何人，心安理得地躺平。' }
+];
+
+/* 稀有度说明（告诉你多久能见到一次） */
+var TIER_INFO = {
+  '普通':'最常见，基本每天都能开到',
+  '稀有':'不常见，连续打卡能明显提高概率',
+  '史诗':'难得，平均约 50 天一次',
+  '传说':'极稀有，平均约 100 天一次'
+};
+
+/* 卡片数据只存名字，渲染时按名字从奖池实时取
+   这样以后改卡片内容（奖励清单、有效期）已开出的卡也会自动更新 */
+/* 卡片改名对照：旧存档里的名字也能正确解析到新卡 */
+var PRIZE_ALIAS = { '小确幸卡':'犒劳卡', '休息卡':'提前收工卡' };
+function findPrize(name){
+  if(!name) return null;
+  name = PRIZE_ALIAS[name] || name;
+  for(var i=0;i<PRIZES.length;i++){
+    if(PRIZES[i].name === name) return PRIZES[i];
+  }
+  return null;
+}
+function resolvePrize(g){
+  if(!g) return null;
+  if(typeof g === 'string') return findPrize(g);
+  var hit = findPrize(g.name);
+  if(hit) return hit;
+  /* 奖池里已经没有这张卡了，退回存档里的旧数据 */
+  return {
+    name:g.name || '未知奖励卡', tier:g.tier || '普通', icon:g.icon || '🎁',
+    power:g.power || 3, days:g.days || 7,
+    items:g.items || (g.get ? [g.get] : ['（这张卡的奖励说明已更新，见奖池清单）']),
+    use:g.use || '在有效期内随时兑现。'
+  };
+}
+
+/* 意外事件（打开 App 时小概率触发） */
+var EVENTS = [
+  { icon:'🎈', name:'系统彩蛋', desc:'什么都不用做，纯粹告诉你：你今天很稳。' },
+  { icon:'🍀', name:'四叶草',   desc:'送你一张「免打卡券」，今天少做一项也不扣连续天数。' },
+  { icon:'☕', name:'深夜补给', desc:'今晚可以点一杯最贵的，算我请。' },
+  { icon:'🎧', name:'耳机时间', desc:'今天学习时可以放你最喜欢的歌单，不设限。' },
+  { icon:'🌙', name:'早退许可', desc:'今天任意一个时间块可以少做 30 分钟。' }
+];
+
+var MOTTOS = [
+  '你只需要今天不放弃。','不是每天都要爆发，是每天都别断。','单词不会背叛你，它只认次数。',
+  '现在多背的每一个词，都是考场上的底气。','慢一点没关系，别停就行。','今天做完这一格，就够了。',
+  '你不需要完美，你需要出现。','日语是你的主场，别让它冷掉。','写作和翻译是空白，也就是最好抢的分。',
+  '英语放弃得很干脆，那就把政治和语文打穿。','现在苦，是因为你在换一个更好的起点。',
+  '别去想 27 周，只想接下来这 2 小时。','状态差也能学 1 小时，比状态好但没学强。',
+  '你不是在熬，你是在攒。','今天开了盲盒吗？'
+];
+
+/* ---------- 数据层 ---------- */
+var mem = {};
+var lsOK = true;
+try { localStorage.setItem(KEY+'t','1'); localStorage.removeItem(KEY+'t'); }
+catch(e){ lsOK = false; }
+
+function get(k, def){
+  var full = KEY + k;
+  try{
+    var raw = lsOK ? localStorage.getItem(full) : mem[full];
+    return raw === null || raw === undefined ? def : JSON.parse(raw);
+  }catch(e){ return def; }
+}
+function set(k, v){
+  var full = KEY + k;
+  var raw = JSON.stringify(v);
+  mem[full] = raw;
+  if(lsOK){ try{ localStorage.setItem(full, raw); }catch(e){ lsOK = false; } }
+}
+
+/* ---------- 日期工具 ---------- */
+function ymd(d){
+  var m = d.getMonth()+1, dd = d.getDate();
+  return d.getFullYear()+'-'+(m<10?'0':'')+m+'-'+(dd<10?'0':'')+dd;
+}
+function parseD(s){
+  var a = s.split('-');
+  return new Date(+a[0], +a[1]-1, +a[2]);
+}
+function dayDiff(a,b){
+  var x = new Date(a.getFullYear(),a.getMonth(),a.getDate());
+  var y = new Date(b.getFullYear(),b.getMonth(),b.getDate());
+  return Math.round((y-x)/86400000);
+}
+function today(){ return new Date(); }
+function isSunday(d){ return d.getDay()===0; }
+
+function stageOf(d){
+  var t = d.getTime();
+  for(var i=0;i<STAGES.length;i++){
+    if(t >= parseD(STAGES[i].start).getTime() && t <= parseD(STAGES[i].end).getTime()+86399000) return STAGES[i];
+  }
+  return t < parseD(STAGES[0].start).getTime() ? STAGES[0] : STAGES[STAGES.length-1];
+}
+function politicsOf(d){
+  var s = ymd(d);
+  for(var i=0;i<POLITICS.length;i++){
+    if(s >= POLITICS[i].s && s <= POLITICS[i].e) return POLITICS[i];
+  }
+  return null;
+}
+/* 是否政治直播日：周一到周六 + 处于上课月份 + 当天抽中开播 + 用户没手动取消 */
+function isLiveDay(d){
+  if(isSunday(d)) return false;
+  var p = politicsOf(d);
+  if(!p) return false;
+  var ds = ymd(d);
+  var off = get('liveoff', {});
+  if(off[ds]) return false;
+  var force = get('liveon', {});
+  if(force[ds]) return true;
+  return seedRand(ds, 'live') < p.rate;
+}
+
+/* ---------- 随机 ---------- */
+function ri(a,b){ return Math.floor(Math.random()*(b-a+1))+a; }
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+/* 带种子的伪随机：同一天同一用途结果固定，重开 App 不跳变 */
+function seedRand(str, salt){
+  var h = 2166136261;
+  var s = str + '|' + salt;
+  for(var i=0;i<s.length;i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return (h >>> 0) / 4294967296;
+}
+function seededInt(str, salt, a, b){
+  return a + Math.floor(seedRand(str, salt) * (b - a + 1));
+}
+function seededPick(str, salt, arr){
+  return arr[Math.floor(seedRand(str, salt) * arr.length) % arr.length];
+}
+
+/* ---------- Toast ---------- */
+var toastT;
+function toast(msg){
+  var el = $('toast');
+  el.textContent = msg;
+  el.classList.add('on');
+  clearTimeout(toastT);
+  toastT = setTimeout(function(){ el.classList.remove('on'); }, 2200);
+}
+
+/* ---------- 今日任务生成 ---------- */
+function buildTasks(d){
+  var ds = ymd(d);
+  var st = stageOf(d);
+  var live = isLiveDay(d);
+  var w = get('word', { min:10, max:30, rmin:0, rmax:50 });
+
+  if(isSunday(d)){
+    return { sunday:true, list:[] };
+  }
+
+  var newW = seededInt(ds, 'nw', w.min, w.max);
+  var revW = seededInt(ds, 'rv', w.rmin, w.rmax);
+
+  /* 主课A 科目（按阶段切换主线） */
+  var a = (MAIN_A[st.id] || MAIN_A[1])[(d.getDay()+6)%7];
+  /* 主课B 盲盒科目 */
+  var pool = POOL_B[st.id] || POOL_B[1];
+  var bSub = seededPick(ds, 'B', pool);
+
+  var list = [];
+
+  list.push({
+    id:'w1', time:'07:30 - 08:30', title:'日语单词 · 新词', sub:'日语·单词', words:newW,
+    desc:'识日App打卡，新词 <em>'+newW+'</em> 个 · 《考前对策N3词汇》',
+    hours:1, key:'w1'
+  });
+  list.push({
+    id:'a', time: live ? '13:00 - 15:00' : '13:00 - 15:30', sub:a.sub,
+    title:'主课A · ' + a.sub + ' · ' + a.task,
+    desc:a.desc + (live ? '（今天有政治直播，压缩半小时）' : ''),
+    hours: live ? 2 : 2.5, key:'a'
+  });
+  list.push({
+    id:'w2', time: live ? '15:00 - 15:30' : '15:30 - 16:00', title:'单词滚动复习', sub:'日语·单词',
+    desc:'艾宾浩斯节点：1 / 3 / 7 / 15 / 30 天前 · 复习量 <em>'+revW+'</em> 个' + (revW===0 ? '（今天抽到 0，放你一马）' : ''),
+    hours:0.5, key:'w2'
+  });
+
+  if(live){
+    var p = politicsOf(d);
+    list.push({
+      id:'b', time:'19:30 - 21:30', live:true, sub:'政治',
+      title:'政治直播 · ' + p.name,
+      desc:'小鹅通学员版 App 或 huanjie666.cn · ' + p.note + ' · 课后 10 分钟整理笔记',
+      hours:2, key:'b'
+    });
+  }else{
+    list.push({
+      id:'b', time:'19:30 - 21:00', mystery:true, sub:bSub.split(' · ')[0],
+      title:'主课B · 盲盒科目',
+      desc:'点一下才知道今晚学什么 · 池子：' + pool.length + ' 个方向',
+      hours:1.5, key:'b'
+    });
+  }
+
+  return { sunday:false, list:list, newW:newW, revW:revW, a:a, bSub:bSub, pool:pool, live:live, stage:st };
+}
+
+/* ---------- 渲染：今天 ---------- */
+function renderToday(){
+  var d = today();
+  var ds = ymd(d);
+  var data = buildTasks(d);
+  var st = stageOf(d);
+
+  $('todayLabel').textContent = (d.getMonth()+1)+'月'+d.getDate()+'日 · '+'日一二三四五六'[d.getDay()];
+  $('restTag').textContent = data.sunday ? '休息日' : ('第 '+weekNo(d)+' 周');
+
+  /* 每日格言 */
+  $('motto').textContent = '「' + seededPick(ds,'motto',MOTTOS) + '」';
+
+  /* 任务 */
+  var done = get('done_'+ds, {});
+  var host = $('tasks');
+  host.innerHTML = '';
+
+  if(data.sunday){
+    host.innerHTML = '<div class="task" style="cursor:default"><div class="ck" style="border:0;background:var(--bg3)">🛋️</div>'+
+      '<div class="body"><div class="tt">今天全天休息</div>'+
+      '<div class="td">每周固定 1 天休息，是计划的一部分，不是偷懒。睡饱、出门走走、把脑子放空。</div></div></div>';
+    $('prog').textContent = '休息日';
+    $('taskbar').style.width = '100%';
+    $('boxHint').textContent = '';
+    renderBox(true);
+    updateStreak();
+    renderStreak();
+    renderHero();
+    return;
+  }
+
+  var totalH = 0, doneH = 0;
+  data.list.forEach(function(t){
+    totalH += t.hours;
+    if(done[t.id]) doneH += t.hours;
+    var el = document.createElement('div');
+    el.className = 'task' + (done[t.id]?' done':'') + (t.mystery?' mystery':'') + (t.live?' live':'');
+    el.innerHTML =
+      '<div class="ck">'+(done[t.id]?'✓':'')+'</div>'+
+      '<div class="body"><div class="tm">⏰ '+t.time+'</div>'+
+      '<div class="tt">'+(t.mystery ? (done[t.id] ? t.title.replace('盲盒科目', data.bSub) : '🎲 '+t.title) : t.title)+'</div>'+
+      '<div class="td">'+t.desc+'</div></div>';
+    el.onclick = function(){
+      if(t.mystery && !done[t.id] && !get('revealed_'+ds, false)){
+        set('revealed_'+ds, true);
+        toast('今晚抽到：' + data.bSub);
+        renderToday();
+        return;
+      }
+      if(done[t.id]){
+        delete done[t.id];
+      }else{
+        done[t.id] = { h:t.hours, s:t.sub, n:t.words || 0 };
+        toast('+' + t.hours + 'h ✓ 累计经验 +' + Math.round(t.hours*20));
+      }
+      set('done_'+ds, done);
+      renderToday();
+    };
+    host.appendChild(el);
+  });
+
+  var n = data.list.filter(function(t){ return done[t.id]; }).length;
+  $('prog').textContent = n + '/' + data.list.length;
+  $('taskbar').style.width = (n/data.list.length*100) + '%';
+
+  /* 政治直播日纠错：真实课表以群通知为准，可手动切换 */
+  var pol = politicsOf(d);
+  var tog = document.createElement('div');
+  if(pol){
+    var isOn = data.live;
+    tog.style.cssText = 'margin-top:10px;display:flex;justify-content:space-between;align-items:center';
+    tog.innerHTML = '<span class="muted">政治「' + pol.name + '」' + (isOn ? '今天有课' : '今天没课') + '</span>';
+    var tb = document.createElement('button');
+    tb.className = 'btn sm';
+    tb.textContent = isOn ? '改成今天没课' : '改成今天有课';
+    tb.onclick = function(){
+      var off = get('liveoff', {}), on = get('liveon', {});
+      if(isOn){ off[ds] = 1; delete on[ds]; }
+      else { on[ds] = 1; delete off[ds]; }
+      set('liveoff', off); set('liveon', on);
+      renderToday();
+    };
+    tog.appendChild(tb);
+    host.appendChild(tog);
+  }
+
+  renderBox(n === data.list.length);
+  updateStreak();
+  renderStreak();
+  renderHero();
+}
+
+function weekNo(d){
+  return Math.floor(dayDiff(START, d)/7) + 1;
+}
+
+function renderStreak(){
+  var s = get('streak', { n:0, last:'' });
+  $('streak').textContent = s.n > 0 ? ('🔥 连续打卡 ' + s.n + ' 天') : '';
+}
+
+function renderBox(unlocked){
+  var d = today(), ds = ymd(d);
+  var got = resolvePrize(get('box_'+ds, null));
+  var used = get('used_'+ds, false);
+  var btn = $('openBox'), useBtn = $('useBox'), box = $('box');
+  var tx = $('prizeTx'), det = $('prizeDetail');
+
+  /* 连击加成提示 */
+  $('boostTag').textContent = boostLabel();
+
+  /* 奖池清单：力度星级 + 具体能拿到什么 + 当前概率 */
+  $('odds').innerHTML = curOdds().map(function(o){
+    var p = o.p;
+    var col = p.tier==='传说'?'var(--gold)':p.tier==='史诗'?'var(--purple)':p.tier==='稀有'?'var(--cyan)':'var(--tx2)';
+    var star = '';
+    for(var i=1;i<=5;i++) star += (i <= p.power ? '★' : '☆');
+    return '<div style="padding:10px 0;border-bottom:1px solid var(--line)">'+
+      '<div style="display:flex;justify-content:space-between;align-items:baseline">'+
+        '<b style="font-size:13px;color:'+col+'">'+p.icon+' '+p.name+
+        ' <span style="font-size:10px;font-weight:400;opacity:.75">'+p.tier+'</span></b>'+
+        '<b style="font-size:12.5px;color:var(--tx);font-variant-numeric:tabular-nums">'+o.pct.toFixed(1)+'%</b>'+
+      '</div>'+
+      '<div style="font-size:11px;color:'+col+';margin-top:3px;letter-spacing:1px">'+
+        '放纵力度 '+star+'</div>'+
+      '<div style="font-size:11.5px;color:var(--tx2);margin-top:5px;line-height:1.7">'+
+        p.items.map(function(x){ return '· '+x; }).join('<br>')+
+      '</div>'+
+    '</div>';
+  }).join('');
+
+  /* 已开出的奖励：具体清单 + 力度 + 怎么用 */
+  if(got){
+    var gcol = got.tier==='传说'?'var(--gold)':got.tier==='史诗'?'var(--purple)':got.tier==='稀有'?'var(--cyan)':'var(--tx2)';
+    var gstar = '';
+    for(var k=1;k<=5;k++) gstar += (k <= (got.power||3) ? '★' : '☆');
+    $('gift').textContent = got.icon;
+    tx.innerHTML = got.name + '<span class="tier tier-'+got.tier+'">'+got.tier+' 稀有度</span>';
+    det.style.display = '';
+    det.className = 'pdetail';
+    det.innerHTML =
+      '<div class="lb">放纵力度</div>' +
+      '<div class="vl" style="color:'+gcol+';letter-spacing:2px;font-size:15px">' + gstar + '</div>' +
+      '<div class="lb">具体奖励（任选其一）</div>' +
+      '<div class="vl">' + (got.items || []).map(function(x){ return '· ' + x; }).join('<br>') + '</div>' +
+      '<div class="lb">怎么用</div>' +
+      '<div class="vl">' + (got.use || '') + '</div>' +
+      '<div class="lb">有效期</div>' +
+      '<div class="vl">获得日起 <b style="color:var(--acc)">' + (got.days || 7) + ' 天</b>内有效' +
+        '（到 ' + ymd(bagExpiry(ds, got.days || 7)) + ' 截止），过期作废。' +
+        '已存进 <b style="color:var(--acc)">🎒 奖励背包</b>，随时可以去用。</div>' +
+      '<div class="tiernote">' + (TIER_INFO[got.tier] || '') + '</div>';
+    btn.disabled = true;
+    btn.textContent = '今日已开启';
+    useBtn.style.display = '';
+    useBtn.className = 'btn' + (used ? ' done' : '');
+    useBtn.textContent = used ? '✓ 已用掉' : '标记为已用掉';
+    useBtn.onclick = function(){
+      set('used_'+ds, !get('used_'+ds, false));
+      renderBox(unlocked); renderBagPreview();
+      toast(get('used_'+ds, false) ? '已用掉，记得真的去做' : '已改回未使用');
+    };
+    $('boxHint').textContent = used ? '已用掉' : '待使用';
+    box.classList.add('pop');
+  }else{
+    box.classList.remove('pop');
+    $('gift').textContent = '🎁';
+    tx.textContent = unlocked ? '今天全部完成了，开吧' : '完成任务后开启';
+    tx.style.color = '';
+    det.style.display = 'none';
+    useBtn.style.display = 'none';
+    $('boxHint').textContent = unlocked ? '已解锁' : '';
+    btn.disabled = !unlocked;
+    btn.textContent = unlocked ? '🎁 开启盲盒' : '🔒 锁定中';
+  }
+
+  /* 背包预览 + 还没用掉的奖励汇总 */
+  renderBagPreview();
+  var bs = bagStats();
+  $('unusedTag').innerHTML = bs.ok
+    ? ('📌 背包里有 <b style="color:var(--acc)">' + bs.ok + '</b> 张卡可用' +
+       (bs.soon ? '，其中 <b style="color:var(--warn)">' + bs.soon + ' 张</b> 今天/明天到期' : '') +
+       '，去背包里挑一张用掉。')
+    : (bs.total ? '背包里的卡都用完了，明天再抽。' : '');
+
+  var logs = get('boxlog', []);
+  $('boxLog').innerHTML = logs.length
+    ? ('最近开到：' + logs.slice(0,5).map(function(x){
+        var pz = resolvePrize(x) || x;
+        return '<span style="color:'+tierColor(pz.tier)+'">' + (pz.icon||'🎁') + pz.name + '</span>';
+      }).join(' · '))
+    : '';
+}
+
+/* 连击加成：连续天数越高，稀有档位权重越大（阶梯式，看得见） */
+var BOOSTS = [
+  { d:21, x:3.5 }, { d:14, x:2.8 }, { d:7, x:2.0 }, { d:3, x:1.4 }, { d:0, x:1.0 }
+];
+function boostOf(){
+  var n = get('streak', { n:0 }).n;
+  for(var i=0;i<BOOSTS.length;i++){ if(n >= BOOSTS[i].d) return BOOSTS[i].x; }
+  return 1;
+}
+function boostLabel(){
+  var n = get('streak', { n:0 }).n, x = boostOf();
+  if(x <= 1) return '连续 3 天起，稀有卡概率翻倍';
+  return '🔥 连续 ' + n + ' 天 · 稀有卡概率 ×' + x.toFixed(1);
+}
+/* 当前实际概率（含连击加成） */
+function curOdds(){
+  var x = boostOf();
+  var w = PRIZES.map(function(p){
+    return (p.tier === '普通') ? p.p : p.p * x;
+  });
+  var total = w.reduce(function(a,b){ return a + b; }, 0);
+  return PRIZES.map(function(p, i){ return { p:p, pct: w[i]/total*100 }; });
+}
+function rollPrize(){
+  var x = boostOf();
+  var w = PRIZES.map(function(p){ return (p.tier === '普通') ? p.p : p.p * x; });
+  var total = w.reduce(function(a,b){ return a + b; }, 0);
+  var r = Math.random() * total;
+  for(var i=0;i<w.length;i++){
+    r -= w[i];
+    if(r <= 0) return PRIZES[i];
+  }
+  return PRIZES[0];
+}
+
+function openBox(){
+  var d = today(), ds = ymd(d);
+  if(get('box_'+ds, null)) return;
+  var box = $('box'), btn = $('openBox');
+  btn.disabled = true;
+  box.classList.add('shake');
+  var n = 0;
+  var iv = setInterval(function(){
+    n++;
+    if(n >= 16){
+      clearInterval(iv);
+      box.classList.remove('shake');
+      var pz = rollPrize();
+      set('box_'+ds, { name: pz.name });      /* 只存名字，渲染时从奖池实时取 */
+      burst();
+      /* 记录开盒次数 */
+      var logs = get('boxlog', []);
+      logs.unshift({ d:ds, name:pz.name });
+      set('boxlog', logs.slice(0,60));
+      renderToday();
+      toast(pz.icon + ' ' + pz.name + ' · ' + pz.tier);
+    }
+  }, 70);
+}
+
+function burst(){
+  var box = $('box');
+  var colors = ['#ffcf5c','#c084fc','#22d3ee','#5b9dff','#33d69f','#ff9f43'];
+  for(var i=0;i<26;i++){
+    var s = document.createElement('span');
+    s.className = 'spark';
+    s.style.background = colors[i % colors.length];
+    s.style.left = '50%'; s.style.top = '38%';
+    var ang = Math.random() * Math.PI * 2;
+    var dist = 60 + Math.random() * 120;
+    s.style.setProperty('--dx', Math.cos(ang)*dist + 'px');
+    s.style.setProperty('--dy', Math.sin(ang)*dist + 'px');
+    box.appendChild(s);
+    (function(el){ setTimeout(function(){ el.remove(); }, 950); })(s);
+  }
+}
+
+/* ---------- 奖励背包 ---------- */
+/* 到期日 = 获得日 + 有效期天数（到期日当天仍可用） */
+function bagExpiry(ds, life){
+  var e = parseD(ds);
+  e.setDate(e.getDate() + life);
+  return e;
+}
+function bagItems(){
+  var out = [];
+  allKeys().forEach(function(k){
+    if(k.indexOf(KEY+'box_') !== 0) return;
+    var ds = k.slice((KEY+'box_').length);
+    var g = resolvePrize(get('box_'+ds, null));
+    if(!g || !g.name) return;
+    var life = g.days || 7;
+    var exp = bagExpiry(ds, life);
+    var left = dayDiff(today(), exp);           /* 剩余天数 */
+    out.push({
+      ds: ds, g: g, exp: exp, life: life, left: left,
+      used: get('used_'+ds, false),
+      dead: left < 0
+    });
+  });
+  out.sort(function(a, b){ return a.ds < b.ds ? 1 : -1; });   /* 新的在前 */
+  return out;
+}
+function bagStats(){
+  var it = bagItems(), ok = 0, soon = 0, used = 0, dead = 0;
+  it.forEach(function(x){
+    if(x.used){ used++; return; }
+    if(x.dead){ dead++; return; }
+    ok++;
+    if(x.left <= 1) soon++;
+  });
+  return { all: it, ok: ok, soon: soon, used: used, dead: dead, total: it.length };
+}
+function tierColor(t){
+  return t==='传说'?'var(--gold)':t==='史诗'?'var(--purple)':t==='稀有'?'var(--cyan)':'var(--tx2)';
+}
+function stars(n){
+  var s = '';
+  for(var i=1;i<=5;i++) s += (i <= n ? '★' : '☆');
+  return s;
+}
+function bagCardHTML(x){
+  var g = x.g;
+  var col = tierColor(g.tier);
+  var st, cls;
+  if(x.used){ st = '已用掉'; cls = ''; }
+  else if(x.dead){ st = '已过期'; cls = 'dead'; }
+  else if(x.left === 0){ st = '今天到期'; cls = 'soon'; }
+  else if(x.left === 1){ st = '明天到期'; cls = 'soon'; }
+  else { st = '还剩 ' + x.left + ' 天'; cls = 'ok'; }
+
+  var h = '<div class="bagcard t-'+g.tier + ((x.used || x.dead) ? ' gone' : '') + '">'+
+    '<div class="hd"><div>'+
+      '<div class="ttl" style="color:'+col+'">'+g.icon+' '+g.name+'</div>'+
+      '<div class="meta">'+g.tier+' 稀有度 · 放纵力度 '+stars(g.power || 3)+'</div>'+
+    '</div><span class="st '+cls+'">'+st+'</span></div>'+
+    '<div class="meta">获得 '+x.ds+' · 有效期 '+x.life+' 天 · 到期 '+ymd(x.exp)+'</div>'+
+    '<div class="lst">' + (g.items || []).map(function(y){ return '· ' + y; }).join('<br>') + '</div>';
+
+  if(!x.used && !x.dead){
+    h += '<div class="act"><button class="btn pri" data-use="'+x.ds+'" style="padding:11px;font-size:13.5px">'+
+      '去兑现 → 标记已用掉</button></div>';
+  }else if(x.used){
+    h += '<div class="act"><button class="btn done" disabled style="padding:11px;font-size:13.5px">✓ 已用掉</button></div>';
+  }else{
+    h += '<div class="act"><button class="btn" disabled style="padding:11px;font-size:13.5px">已过期作废</button></div>';
+  }
+  return h + '</div>';
+}
+function renderBag(){
+  var s = bagStats();
+  var host = $('bagBody');
+  if(!s.total){
+    host.innerHTML = '<div class="muted" style="text-align:center;padding:34px 0">' +
+      '背包是空的。<br>每天完成全部任务后开一个盲盒，奖励就进这里。</div>';
+    return;
+  }
+  var usable = s.all.filter(function(x){ return !x.used && !x.dead; });
+  var used   = s.all.filter(function(x){ return x.used; });
+  var dead   = s.all.filter(function(x){ return !x.used && x.dead; });
+  var h = '';
+  h += '<div class="bagsec">可用（' + usable.length + '）' +
+       (s.soon ? ' · <span style="color:var(--warn)">其中 ' + s.soon + ' 张即将到期</span>' : '') + '</div>';
+  h += usable.length ? usable.map(bagCardHTML).join('')
+                     : '<div class="muted" style="padding:6px 0 14px">暂时没有可用的卡。</div>';
+  if(used.length){ h += '<div class="bagsec">已用掉（' + used.length + '）</div>' + used.map(bagCardHTML).join(''); }
+  if(dead.length){ h += '<div class="bagsec">已过期（' + dead.length + '）</div>' + dead.map(bagCardHTML).join(''); }
+  host.innerHTML = h;
+
+  host.querySelectorAll('button[data-use]').forEach(function(b){
+    b.onclick = function(){
+      var ds = b.dataset.use;
+      set('used_'+ds, true);
+      renderBag(); renderBagPreview(); renderBox(false);
+      toast('已用掉。记得真的去做，这是你挣来的。');
+    };
+  });
+}
+function renderBagPreview(){
+  var s = bagStats();
+  $('bagCount').textContent = s.ok ? ('可用 ' + s.ok + ' 张') : '空';
+  if(!s.total){
+    $('bagPreview').innerHTML = '<div class="muted">还没有奖励卡。完成任务开盲盒就有了。</div>';
+    return;
+  }
+  var byName = {};
+  s.all.forEach(function(x){
+    if(x.used || x.dead) return;
+    var k = x.g.name;
+    byName[k] = byName[k] || { g:x.g, n:0, minLeft:x.left };
+    byName[k].n++;
+    if(x.left < byName[k].minLeft) byName[k].minLeft = x.left;
+  });
+  var keys = Object.keys(byName).sort(function(a,b){
+    return (byName[b].g.power || 0) - (byName[a].g.power || 0);
+  });
+  $('bagPreview').innerHTML = keys.length ? keys.map(function(k){
+    var v = byName[k];
+    return '<div class="subbar"><span class="lb" style="flex:0 0 96px;color:'+tierColor(v.g.tier)+'">'+
+      v.g.icon + ' ' + k + '</span>'+
+      '<span style="flex:1;font-size:12px;color:var(--tx2)">×' + v.n +
+      (v.minLeft <= 1 ? ' <span style="color:var(--warn)">最近一张今天/明天到期</span>' : '') + '</span></div>';
+  }).join('') : '<div class="muted">可用卡已用完。继续攒，明天还有新的。</div>';
+}
+function openBag(){ renderBag(); $('bagOvl').classList.add('on'); window.scrollTo(0, 0); }
+function closeBag(){ $('bagOvl').classList.remove('on'); }
+$('bagBtn').onclick = openBag;
+$('bagBtn2').onclick = openBag;
+$('bagClose').onclick = closeBag;
+
+/* ---------- 渲染：进度 ---------- */
+var PG_DEF = [
+  { g:'jp', k:'j1', name:'新经典第三册',   cur:0,   max:16,  unit:'课' },
+  { g:'jp', k:'j2', name:'N3 真题',        cur:0,   max:10,  unit:'套' },
+  { g:'jp', k:'j3', name:'考前对策N3词汇', cur:516, max:1044,unit:'词' },
+  { g:'jp', k:'j4', name:'日语作文',       cur:0,   max:30,  unit:'篇' },
+  { g:'jp', k:'j5', name:'日译汉翻译',     cur:0,   max:200, unit:'句' },
+  { g:'cn', k:'c1', name:'基础考点讲义',   cur:0,   max:40,  unit:'讲' },
+  { g:'cn', k:'c2', name:'全程刷题一本通', cur:0,   max:40,  unit:'组' },
+  { g:'cn', k:'c3', name:'冲刺讲义',       cur:0,   max:20,  unit:'讲' },
+  { g:'cn', k:'c4', name:'考前必背汇总',   cur:0,   max:20,  unit:'组' },
+  { g:'cn', k:'c5', name:'统考真题',       cur:0,   max:5,   unit:'套' },
+  { g:'yw', k:'y1', name:'网课',           cur:0,   max:7,   unit:'节' },
+  { g:'yw', k:'y2', name:'名句默写轮次',   cur:0,   max:8,   unit:'轮' },
+  { g:'yw', k:'y3', name:'大作文',         cur:0,   max:15,  unit:'篇' },
+  { g:'yw', k:'y4', name:'真题',           cur:0,   max:5,   unit:'套' },
+  { g:'zz', k:'z1', name:'欢姐七阶段',     cur:1,   max:7,   unit:'阶段' }
+];
+var PG_COLOR = { jp:'linear-gradient(90deg,#5b9dff,#22d3ee)', cn:'linear-gradient(90deg,#c084fc,#7c5cff)',
+                 yw:'linear-gradient(90deg,#33d69f,#22d3ee)', zz:'linear-gradient(90deg,#ffb020,#ff5c72)' };
+
+function pgVal(k, def){
+  return get('pg_'+k, def);
+}
+/* ---------- 养成：等级 / 成就 ---------- */
+var LEVELS = [
+  { n:0,     name:'起步' },
+  { n:400,   name:'习惯成型' },
+  { n:1200,  name:'稳定输出' },
+  { n:2600,  name:'进入状态' },
+  { n:4800,  name:'硬核模式' },
+  { n:8000,  name:'冲刺机器' },
+  { n:12000, name:'全面开花' },
+  { n:17000, name:'上岸预备' }
+];
+
+/* 成就徽章
+   cond = 达成条件（写清楚怎么拿）
+   cur/max = 进度，用来看还差多少 */
+var BADGES = [
+  { ic:'🎁', nm:'初次开盒',      cond:'开启第 1 个每日盲盒',            cur:function(s){ return s.boxes; },  max:1 },
+  { ic:'🔥', nm:'连续 7 天',     cond:'连续打卡 7 天（周日休息不算断）', cur:function(s){ return s.best; },   max:7 },
+  { ic:'💎', nm:'连续 30 天',    cond:'连续打卡 30 天',                 cur:function(s){ return s.best; },   max:30 },
+  { ic:'⏱️', nm:'投入 100h',     cond:'累计专注满 100 小时',            cur:function(s){ return s.hours; },  max:100 },
+  { ic:'🏔️', nm:'投入 300h',     cond:'累计专注满 300 小时',            cur:function(s){ return s.hours; },  max:300 },
+  { ic:'🚀', nm:'投入 500h',     cond:'累计专注满 500 小时',            cur:function(s){ return s.hours; },  max:500 },
+  { ic:'📖', nm:'新词累计 5000', cond:'日语新词累计背过 5000 个',        cur:function(s){ return s.words; },  max:5000 },
+  { ic:'✍️', nm:'日语作文 10 篇',cond:'在「各科目推进」里把日语作文记到 10 篇', cur:function(){ return pgVal('j4',0); }, max:10 },
+  { ic:'🎌', nm:'新经典 16 课',  cond:'新经典第三册 16 课全部学完',      cur:function(){ return pgVal('j1',0); }, max:16 },
+  { ic:'📝', nm:'N3 真题 10 套', cond:'N3 真题 10 套全部刷完',          cur:function(){ return pgVal('j2',0); }, max:10 },
+  { ic:'📚', nm:'讲义过完一轮',  cond:'汉语言《基础考点讲义》过完 40 讲', cur:function(){ return pgVal('c1',0); }, max:40 },
+  { ic:'🀄', nm:'语文网课 7 节', cond:'大学语文 7 节网课全部看完',        cur:function(){ return pgVal('y1',0); }, max:7 },
+  { ic:'🏛️', nm:'政治七阶段',   cond:'欢姐政治七轮课全部跟完',          cur:function(){ return pgVal('z1',1); }, max:7 },
+  { ic:'🎲', nm:'开盒 50 次',    cond:'累计开满 50 个盲盒',              cur:function(s){ return s.boxes; },  max:50 },
+  { ic:'👑', nm:'抽到传说卡',    cond:'开出一次「欧皇卡」（基础概率 1%）', cur:function(s){ return s.legend ? 1 : 0; }, max:1 },
+  { ic:'💯', nm:'模考 3 次',     cond:'在「模考」页录入 3 次模考成绩',    cur:function(){ return get('mocks', []).length; }, max:3 }
+];
+
+function computeStats(){
+  var st = { hours:0, days:0, full:0, words:0, boxes:0, rare:0, legend:false,
+             exp:0, bySub:{}, byDay:{}, best:get('bestStreak', 0) };
+  allKeys().forEach(function(k){
+    if(k.indexOf(KEY+'done_') !== 0) return;
+    var ds = k.slice((KEY+'done_').length);
+    var o = get('done_'+ds, {});
+    var ids = Object.keys(o).filter(function(id){ return o[id]; });
+    if(!ids.length) return;
+    var h = 0;
+    ids.forEach(function(id){
+      var v = o[id];
+      var hh = (v && typeof v === 'object') ? (v.h || 0) : 1;
+      var ss = (v && typeof v === 'object' && v.s) ? v.s : '其他';
+      h += hh;
+      st.bySub[ss] = (st.bySub[ss] || 0) + hh;
+      if(v && typeof v === 'object' && v.n) st.words += v.n;
+    });
+    st.hours += h;
+    st.days++;
+    if(ids.length >= 4) st.full++;
+    st.byDay[ds] = h;
+  });
+  var logs = get('boxlog', []);
+  st.boxes = logs.length;
+  st.rare = logs.filter(function(x){
+    var p = resolvePrize(x);
+    return p && p.tier !== '普通';
+  }).length;
+  st.legend = logs.some(function(x){
+    var p = resolvePrize(x);
+    return p && p.tier === '传说';
+  });
+  st.exp = Math.round(st.hours * 20) + st.full * 30;
+  st.level = 1;
+  for(var i = LEVELS.length-1; i >= 0; i--){
+    if(st.exp >= LEVELS[i].n){ st.level = i+1; break; }
+  }
+  st.levelName = LEVELS[st.level-1].name;
+  st.nextAt = LEVELS[st.level] ? LEVELS[st.level].n : null;
+  return st;
+}
+
+function renderHeat(st){
+  var host = $('heat');
+  host.innerHTML = '';
+  var d = new Date();
+  var monday = new Date(d);
+  monday.setDate(d.getDate() - ((d.getDay()+6)%7));
+  var start = new Date(monday);
+  start.setDate(monday.getDate() - 49);
+  for(var i=0;i<56;i++){
+    var cur = new Date(start);
+    cur.setDate(start.getDate() + i);
+    var ds = ymd(cur);
+    var h = st.byDay[ds] || 0;
+    var el = document.createElement('i');
+    if(h > 0){
+      el.className = h >= 5 ? 'l4' : h >= 3.5 ? 'l3' : h >= 2 ? 'l2' : 'l1';
+    }else if(cur.getDay() === 0){
+      el.className = 'rest';
+    }
+    el.title = ds + (h ? ' · ' + h + 'h' : '');
+    host.appendChild(el);
+  }
+}
+
+function renderProg(){
+  var st = computeStats();
+  var prev = LEVELS[st.level-1].n;
+  var pct = st.nextAt ? Math.max(3, Math.min(100, (st.exp - prev)/(st.nextAt - prev)*100)) : 100;
+
+  $('lvCard').innerHTML =
+    '<div class="nm">Lv.' + st.level + ' · ' + st.levelName + '</div>' +
+    '<div class="bar" style="margin-top:11px"><i style="width:' + pct.toFixed(1) + '%"></i></div>' +
+    '<div class="nx">' + (st.nextAt
+        ? ('距离 Lv.' + (st.level+1) + ' 还差 <b style="color:var(--acc)">' + (st.nextAt - st.exp) + '</b> 经验，按每天 5.5h 全勤算约 ' + Math.ceil((st.nextAt - st.exp)/140) + ' 天')
+        : '已满级。你已经是冲刺机器了。') + '</div>' +
+    '<div class="nx" style="color:var(--tx3);margin-top:4px">1 小时 = 20 经验 · 每天 4/4 全勤额外 +30</div>';
+
+  $('cHours').textContent = (Math.round(st.hours*10)/10);
+  $('cDays').textContent  = st.days;
+  $('cWords').textContent = st.words;
+  $('cFull').textContent  = st.full;
+  $('cBox').textContent   = st.boxes;
+  $('cRare').textContent  = st.rare;
+
+  renderHeat(st);
+
+  /* 科目时长分布 */
+  var keys = Object.keys(st.bySub).sort(function(a,b){ return st.bySub[b]-st.bySub[a]; });
+  var maxV = keys.length ? st.bySub[keys[0]] : 1;
+  var colors = { '日语':'linear-gradient(90deg,#5b9dff,#22d3ee)', '日语·单词':'linear-gradient(90deg,#22d3ee,#5b9dff)',
+                 '汉语言':'linear-gradient(90deg,#c084fc,#7c5cff)', '语文':'linear-gradient(90deg,#33d69f,#22d3ee)',
+                 '政治':'linear-gradient(90deg,#ffb020,#ff5c72)' };
+  $('subDist').innerHTML = keys.length ? keys.map(function(k){
+    var v = st.bySub[k];
+    return '<div class="subbar"><span class="lb">'+k+'</span>'+
+      '<span class="tk"><i style="width:'+(v/maxV*100)+'%;background:'+(colors[k]||'linear-gradient(90deg,#5f6d82,#9aa7ba)')+'"></i></span>'+
+      '<span class="vv">'+Math.round(v*10)/10+'h</span></div>';
+  }).join('') : '<div class="muted">还没有记录，今天开始打卡就会长出来。</div>';
+
+  /* 分配是否合理：日语侧 300 分，应该占大头 */
+  if(keys.length){
+    var tot = keys.reduce(function(a,k){ return a + st.bySub[k]; }, 0);
+    var jp = keys.filter(function(k){ return k.indexOf('日语') === 0; })
+                 .reduce(function(a,k){ return a + st.bySub[k]; }, 0);
+    var share = Math.round(jp / tot * 100);
+    $('subHint').innerHTML = '日语合计占 <b style="color:var(--acc)">' + share + '%</b>。' +
+      (share < 45 ? '日语是 300 分的主战场，建议往 50% 以上靠。' :
+       share > 65 ? '日语占得有点多，汉语言文学 200 分也别落下。' :
+       '比例健康，保持。');
+  }else{
+    $('subHint').textContent = '';
+  }
+
+  /* 成就墙：显示进度 + 点一下看达成条件 */
+  var on = 0;
+  $('badges').innerHTML = BADGES.map(function(b, i){
+    var c = 0;
+    try{ c = b.cur(st); }catch(e){ c = 0; }
+    c = Math.max(0, Math.min(b.max, c));
+    var ok = c >= b.max;
+    if(ok) on++;
+    var left = ok ? '' : ('<div style="font-size:9px;color:var(--tx3);margin-top:2px">' +
+      (b.max > 20 ? Math.round(c) + '/' + b.max : c + '/' + b.max) + '</div>');
+    return '<div class="bd1'+(ok?' on':'')+'" data-bi="'+i+'">'+
+      '<div class="ic">'+b.ic+'</div><div class="nm">'+b.nm+'</div>' + left + '</div>';
+  }).join('');
+  $('bdCount').textContent = on + ' / ' + BADGES.length;
+  $('badges').querySelectorAll('[data-bi]').forEach(function(el){
+    el.onclick = function(){
+      var b = BADGES[+el.dataset.bi];
+      var c = 0;
+      try{ c = b.cur(st); }catch(e){ c = 0; }
+      c = Math.max(0, Math.min(b.max, c));
+      var ok = c >= b.max;
+      toast(b.ic + ' ' + b.nm + ' —— ' + b.cond + (ok ? '（已解锁）' : '（进度 ' + Math.round(c) + '/' + b.max + '）'));
+    };
+  });
+
+  /* 本周 */
+  var hrs = 0, days = 0, boxN = 0;
+  for(var i=0;i<7;i++){
+    var d = new Date();
+    d.setDate(d.getDate() - ((d.getDay()+6)%7) + i);
+    var ds = ymd(d);
+    var h = st.byDay[ds] || 0;
+    if(h > 0){ days++; hrs += h; }
+    if(get('box_'+ds, null)) boxN++;
+  }
+  $('wHours').textContent = Math.round(hrs*10)/10;
+  $('wDays').textContent = days;
+  $('wBox').textContent = boxN;
+
+  renderPgList();
+}
+
+/* 各科目推进（手动 +/-） */
+function renderPgList(){
+  var host = $('pgAll');
+  host.innerHTML = '';
+  var groups = { jp:'日语 · 主战场 300分', cn:'汉语言文学 · 200分', yw:'大学语文 · 100分', zz:'政治理论 · 100分' };
+  Object.keys(groups).forEach(function(g){
+    var head = document.createElement('div');
+    head.style.cssText = 'font-size:12px;color:var(--tx3);margin:6px 0 8px;letter-spacing:.5px';
+    head.textContent = groups[g];
+    host.appendChild(head);
+
+    PG_DEF.filter(function(x){ return x.g === g; }).forEach(function(it){
+      var v = pgVal(it.k, it.cur);
+      var p = Math.min(100, Math.round(v / it.max * 100));
+      var el = document.createElement('div');
+      el.className = 'pg';
+      el.innerHTML =
+        '<div class="top"><b>'+it.name+'</b><span>'+v+' / '+it.max+' '+it.unit+' · '+p+'%</span></div>'+
+        '<div class="track"><i style="width:'+p+'%;background:'+PG_COLOR[it.g]+'"></i></div>'+
+        '<div class="adj"><button data-d="-1">−</button>'+
+        '<input class="num" type="number" value="'+v+'" min="0" max="'+it.max+'">'+
+        '<button data-d="1">+</button></div>';
+      var dec = el.querySelector('button[data-d="-1"]');
+      var inc = el.querySelector('button[data-d="1"]');
+      var inp = el.querySelector('.num');
+      function apply(delta){
+        var nv = Math.max(0, Math.min(it.max, pgVal(it.k, it.cur) + delta));
+        set('pg_'+it.k, nv);
+        renderProg();
+      }
+      dec.onclick = function(){ apply(-stepOf(it)); };
+      inc.onclick = function(){ apply(stepOf(it)); };
+      inp.onchange = function(){
+        var nv = Math.max(0, Math.min(it.max, parseInt(inp.value,10) || 0));
+        set('pg_'+it.k, nv);
+        renderProg();
+      };
+      host.appendChild(el);
+    });
+  });
+}
+
+function stepOf(it){
+  if(it.k === 'j3') return 20;      /* 单词按 20 个一档 */
+  if(it.max >= 100) return 10;
+  return 1;
+}
+
+/* ---------- 渲染：阶段 ---------- */
+function renderStages(){
+  var cur = stageOf(today());
+  var host = $('stages');
+  host.innerHTML = '';
+  STAGES.forEach(function(s){
+    var cls = s.id === cur.id ? 'now' : (parseD(s.end) < today() ? 'past' : '');
+    var el = document.createElement('div');
+    el.className = 'stg ' + cls;
+    el.innerHTML = '<div class="dot"></div><div class="bd">'+
+      '<div class="nm">阶段'+s.id+' · '+s.name+'</div>'+
+      '<div class="dt">'+s.start+' → '+s.end+' · '+s.weeks+'</div>'+
+      '<ul class="gl">'+ s.goals.map(function(g){ return '<li>'+g+'</li>'; }).join('') +'</ul>'+
+      '</div>';
+    host.appendChild(el);
+  });
+
+  $('milestones').innerHTML = [
+    ['2026-09-21','计划启动，建三本（生词/错题/作文）'],
+    ['2026-10-31','《考前对策N3词汇》背完 1044'],
+    ['2026-11-01','新经典第三册 1-8 课学完'],
+    ['2026-11-23','⭐ 第一次全科模考 → 决定日语/汉语言取舍'],
+    ['2026-11-29','新经典第三册 16 课全部学完'],
+    ['2027-01-03','N3 真题 10 套刷完第一轮'],
+    ['2027-01-12','⭐ 预计报名开始（以官方通知为准）'],
+    ['2027-01-15','⭐ 湛江科技校考时间公布 → 判断撞期'],
+    ['2027-02-06','春节，低强度：只做背诵滚动'],
+    ['2027-03-01','全真限时模考阶段'],
+    ['2027-03-27','⭐ 考试第 1 天（预估）'],
+    ['2027-03-28','⭐ 考试第 2 天（预估）']
+  ].map(function(m){
+    return '<div style="display:flex;padding:8px 0;border-bottom:1px solid var(--line);font-size:12.5px">'+
+      '<b style="flex:0 0 84px;color:var(--acc);font-variant-numeric:tabular-nums">'+m[0]+'</b>'+
+      '<span style="color:var(--tx2)">'+m[1]+'</span></div>';
+  }).join('');
+}
+
+/* ---------- 渲染：模考 ---------- */
+function targets(){
+  return get('targets', { zz:75, yw:70, yr:70, jp:120, cn:110 });
+}
+function renderMock(){
+  var t = targets();
+  $('t_zz').textContent = t.zz; $('t_yw').textContent = t.yw;
+  $('t_yr').textContent = t.yr; $('t_jp').textContent = t.jp;
+  $('t_cn').textContent = t.cn;
+  $('g_zz').textContent = '/'+t.zz; $('g_yw').textContent = '/'+t.yw;
+  $('g_yr').textContent = '/'+t.yr; $('g_jp').textContent = '/'+t.jp;
+  $('g_cn').textContent = '/'+t.cn;
+
+  var recs = get('mocks', []);
+  $('mockCount').textContent = recs.length ? recs.length + ' 次' : '';
+  if(!recs.length){
+    $('mockList').innerHTML = '<div class="muted">还没有记录。第一次模考建议放在 11/23-11/29。</div>';
+    return;
+  }
+  var html = '<table class="rec"><tr><th>日期</th><th>政治</th><th>语文</th><th>日阅写</th><th>基础日语</th><th>汉语言</th><th></th></tr>';
+  recs.forEach(function(r,i){
+    var jp3 = (r.zz||0) + (r.yw||0) + (r.yr||0);   /* 日语三科 */
+    var cn3 = (r.zz||0) + (r.yw||0);                 /* 汉语言三科（英语按20算） */
+    html += '<tr>'+
+      '<td>'+r.d+'</td>'+
+      '<td'+(r.zz>=t.zz?' style="color:var(--ok)"':'')+'>'+r.zz+'</td>'+
+      '<td'+(r.yw>=t.yw?' style="color:var(--ok)"':'')+'>'+r.yw+'</td>'+
+      '<td'+(r.yr>=t.yr?' style="color:var(--ok)"':'')+'>'+r.yr+'</td>'+
+      '<td'+(r.jp>=t.jp?' style="color:var(--ok)"':'')+'>'+r.jp+'</td>'+
+      '<td'+(r.cn>=t.cn?' style="color:var(--ok)"':'')+'>'+r.cn+'</td>'+
+      '<td><button class="btn sm" data-i="'+i+'" style="padding:4px 9px;font-size:11px">删</button></td>'+
+    '</tr>';
+    html += '<tr><td colspan="7" style="text-align:left;color:var(--tx3);font-size:11.5px;padding-top:0">'+
+      '日语三科 '+jp3+'/130'+(jp3>=130?' ✓':' ✗')+' · 汉语言三科(含英语20) '+(cn3+20)+'/130'+((cn3+20)>=130?' ✓':' ✗')+
+    '</td></tr>';
+  });
+  html += '</table>';
+  $('mockList').innerHTML = html;
+  $('mockList').querySelectorAll('button[data-i]').forEach(function(b){
+    b.onclick = function(){
+      var recs = get('mocks', []);
+      recs.splice(+b.dataset.i, 1);
+      set('mocks', recs);
+      renderMock();
+      toast('已删除');
+    };
+  });
+}
+
+/* ---------- 顶栏（养成面板） ---------- */
+function renderHero(){
+  var d = today();
+  var st = computeStats();
+
+  $('totalH').textContent = (Math.round(st.hours * 10) / 10);
+  $('lvBadge').textContent = 'Lv.' + st.level + ' ' + st.levelName;
+  if(st.nextAt){
+    var prev = LEVELS[st.level-1].n;
+    var p = Math.max(3, Math.min(100, (st.exp - prev)/(st.nextAt - prev)*100));
+    $('expBar').style.width = p.toFixed(1) + '%';
+    $('expTx').textContent = st.exp + ' / ' + st.nextAt + ' 经验';
+  }else{
+    $('expBar').style.width = '100%';
+    $('expTx').textContent = st.exp + ' 经验 · 已满级';
+  }
+
+  var sk = get('streak', { n:0 });
+  $('minis').innerHTML =
+    '<span>🔥 连续 ' + sk.n + ' 天</span>' +
+    '<span>📅 打卡 ' + st.days + ' 天</span>' +
+    '<span>🎯 全勤 ' + st.full + ' 天</span>' +
+    '<span>📖 新词 ' + st.words + '</span>' +
+    '<span>🎁 开盒 ' + st.boxes + '</span>' +
+    '<span>⭐ ' + st.exp + ' 经验</span>';
+
+  var sg = stageOf(d);
+  $('stname').textContent = '阶段' + sg.id + ' · ' + sg.name;
+
+  var h = d.getHours();
+  var greet = h < 5 ? '还没睡？' : h < 11 ? '早上好' : h < 14 ? '中午好' : h < 18 ? '下午好' : h < 23 ? '晚上好' : '夜深了';
+  $('hello').textContent = greet + '，段同学';
+}
+
+/* ---------- 连续打卡 ---------- */
+function updateStreak(){
+  var d = today(), ds = ymd(d);
+  var s = get('streak', { n:0, last:'' });
+  if(s.last === ds) return;
+  var ok;
+  if(isSunday(d)){
+    ok = true;                       /* 休息日不算断，是计划的一部分 */
+  }else{
+    var done = get('done_'+ds, {});
+    ok = Object.keys(done).filter(function(k){ return done[k]; }).length >= 3;
+  }
+  if(!ok) return;
+  var gap = dayDiff(parseD(s.last || '2000-01-01'), d);
+  s.n = (s.last && gap === 1) ? s.n + 1 : 1;
+  s.last = ds;
+  set('streak', s);
+  if(s.n > get('bestStreak', 0)) set('bestStreak', s.n);
+}
+
+/* ---------- 随机事件 ---------- */
+function maybeEvent(){
+  var ds = ymd(today());
+  if(get('evt_'+ds, false)) return;
+  set('evt_'+ds, true);
+  if(Math.random() > 0.18) return;
+  var ev = pick(EVENTS);
+  setTimeout(function(){
+    toast(ev.icon + ' 意外事件：' + ev.name + ' —— ' + ev.desc);
+  }, 1600);
+}
+
+/* ---------- 标签页 ---------- */
+document.querySelectorAll('nav button').forEach(function(b){
+  b.onclick = function(){
+    document.querySelectorAll('nav button').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on');
+    ['today','prog','stage','mock','set'].forEach(function(t){
+      $('tab-'+t).style.display = (t === b.dataset.tab) ? '' : 'none';
+    });
+    if(b.dataset.tab === 'prog') renderProg();
+    if(b.dataset.tab === 'stage') renderStages();
+    if(b.dataset.tab === 'mock') renderMock();
+    if(b.dataset.tab === 'set') fillSettings();
+    window.scrollTo(0,0);
+  };
+});
+
+/* ---------- 设置 ---------- */
+function fillSettings(){
+  var t = targets(), w = get('word', { min:10, max:30, rmin:0, rmax:50 });
+  $('s_zz').value = t.zz; $('s_yw').value = t.yw; $('s_yr').value = t.yr;
+  $('s_jp').value = t.jp; $('s_cn').value = t.cn;
+  $('w_min').value = w.min; $('w_max').value = w.max;
+  $('r_min').value = w.rmin; $('r_max').value = w.rmax;
+  checkCompat();
+}
+$('saveTargets').onclick = function(){
+  set('targets', {
+    zz:+$('s_zz').value||75, yw:+$('s_yw').value||70, yr:+$('s_yr').value||70,
+    jp:+$('s_jp').value||120, cn:+$('s_cn').value||110
+  });
+  toast('目标分已更新');
+  renderMock();
+};
+$('saveWord').onclick = function(){
+  var a = +$('w_min').value, b = +$('w_max').value, c = +$('r_min').value, d = +$('r_max').value;
+  if(b < a) b = a;
+  if(d < c) d = c;
+  set('word', { min:a, max:b, rmin:c, rmax:d });
+  toast('词量区间已更新');
+  renderToday();
+};
+function allKeys(){
+  var ks = [];
+  if(lsOK){ for(var i=0;i<localStorage.length;i++){ var k = localStorage.key(i); if(k && k.indexOf(KEY)===0) ks.push(k); } }
+  Object.keys(mem).forEach(function(k){ if(ks.indexOf(k) < 0) ks.push(k); });
+  return ks;
+}
+function dumpData(){
+  var out = {};
+  allKeys().forEach(function(k){
+    var v = mem[k] !== undefined ? mem[k] : (lsOK ? localStorage.getItem(k) : null);
+    if(v !== null && v !== undefined) out[k] = v;
+  });
+  return JSON.stringify(out);
+}
+$('exportBtn').onclick = function(){
+  $('ioArea').value = dumpData();
+  toast('已生成，点「复制到剪贴板」保存');
+};
+$('copyBtn').onclick = function(){
+  var t = $('ioArea').value || dumpData();
+  $('ioArea').value = t;
+  copyText(t, function(ok){
+    toast(ok ? '已复制，去备忘录粘贴保存' : '复制失败，请长按文本框手动全选复制');
+  });
+};
+/* iOS 兼容的复制：优先 clipboard API，失败退回 execCommand */
+function copyText(t, cb){
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(function(){ cb(true); }, function(){ cb(fallbackCopy(t)); });
+      return;
+    }
+  }catch(e){}
+  cb(fallbackCopy(t));
+}
+function fallbackCopy(t){
+  try{
+    var ta = $('ioArea');
+    ta.value = t;
+    ta.focus();
+    if(ta.setSelectionRange) ta.setSelectionRange(0, t.length);
+    return document.execCommand('copy');
+  }catch(e){ return false; }
+}
+$('clearArea').onclick = function(){ $('ioArea').value = ''; toast('已清空'); };
+/* 重置今日盲盒：只清今天的开盒记录，方便重新体验 */
+$('rerollBtn').onclick = function(){
+  var ds = ymd(today());
+  var logs = get('boxlog', []);
+  var had = get('box_'+ds, null);
+  /* 只移除今天这一条开盒记录，不影响其他天的卡 */
+  var kept = logs.filter(function(x){ return x.d !== ds; });
+  set('boxlog', kept);
+  delete mem[KEY+'box_'+ds];
+  delete mem[KEY+'used_'+ds];
+  if(lsOK){
+    try{ localStorage.removeItem(KEY+'box_'+ds); localStorage.removeItem(KEY+'used_'+ds); }catch(e){}
+  }
+  renderToday();
+  renderBagPreview();
+  renderBag();
+  toast(had ? '已重置，可以再开一次盲盒了' : '今天还没开过盒，直接开就行');
+};
+$('importBtn').onclick = function(){
+  var raw = $('ioArea').value.trim();
+  if(!raw){ toast('文本框是空的，先粘贴备份内容'); return; }
+  try{
+    var o = JSON.parse(raw);
+    var n = 0;
+    Object.keys(o).forEach(function(k){
+      if(k.indexOf(KEY) === 0){
+        mem[k] = o[k];
+        if(lsOK){ try{ localStorage.setItem(k, o[k]); }catch(e){} }
+        n++;
+      }
+    });
+    toast('已导入 ' + n + ' 条记录');
+    renderAll();
+    fillSettings();
+  }catch(e){ toast('导入失败：内容不是有效的备份格式'); }
+};
+
+/* 兼容性自检：把每一项能力直接显示给用户看 */
+function checkCompat(){
+  var rows = [];
+  function add(name, ok, note){
+    rows.push({ n:name, ok:ok, note:note });
+  }
+  var storeOK = false;
+  try{ localStorage.setItem(KEY+'__t','1'); storeOK = localStorage.getItem(KEY+'__t') === '1'; localStorage.removeItem(KEY+'__t'); }catch(e){}
+  add('本地存储（打卡能存住）', storeOK, storeOK ? '' : '当前打开方式不支持，请用「导出备份」手动保存');
+  add('剪贴板复制', !!(navigator.clipboard && navigator.clipboard.writeText), navigator.clipboard ? '' : '已自动降级为长按手动复制');
+  var stand = window.navigator.standalone === true ||
+    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+  add('已添加到主屏幕（全屏运行）', stand, stand ? '' : '在 Safari 里点「分享 → 添加到主屏幕」');
+  add('离线可用', true, '所有代码和数据都在本机，不需要网络');
+  add('深色模式', true, '右上角设置里可切换');
+  add('保存奖励「已兑现」状态', storeOK, '');
+  add('模考成绩 / 进度记录', storeOK, '');
+  add('日期选择器（模考日期）', true, 'iOS 会弹出系统滚轮选择器');
+  $('compat').innerHTML = rows.map(function(r){
+    return '<div style="display:flex;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line)">'+
+      '<span style="flex:0 0 18px;color:'+(r.ok?'var(--ok)':'var(--bad)')+'">'+(r.ok?'✓':'✕')+'</span>'+
+      '<span style="flex:1"><b style="font-size:12.5px;font-weight:500">'+r.n+'</b>'+
+      (r.note ? '<br><span style="font-size:11.5px;color:var(--tx3)">'+r.note+'</span>' : '')+'</span></div>';
+  }).join('');
+}
+$('recheck').onclick = function(){ checkCompat(); toast('已重新检测'); };
+$('lsWarn').innerHTML = lsOK
+  ? '<span style="color:var(--ok)">✓ 本地存储可用</span>，数据会自动保存，不用每次手动导出。'
+  : '<span style="color:var(--bad)">✕ 本地存储不可用</span>，请每次学完用「导出备份 → 复制到剪贴板」保存。';
+
+$('themeBtn').onclick = function(){
+  var l = !get('light', false);
+  set('light', l);
+  document.body.classList.toggle('light', l);
+  toast(l ? '已切浅色' : '已切深色');
+};
+$('resetBtn').onclick = function(){
+  if(!confirm('确定清空所有打卡、进度、模考记录？此操作不可撤销。')) return;
+  allKeys().forEach(function(k){
+    delete mem[k];
+    if(lsOK) localStorage.removeItem(k);
+  });
+  toast('已清空');
+  renderAll();
+};
+$('openBox').onclick = openBox;
+
+/* ---------- 启动 ---------- */
+function renderAll(){
+  renderToday();          /* 内部会刷新顶栏养成面板 */
+  if(!lsOK){
+    setTimeout(function(){ toast('提示：当前打开方式不支持本地存储，请用「设置 → 导出备份」保存数据'); }, 900);
+  }
+}
+
+/* 图标 + manifest（内联生成，离线可用）
+   iOS 的 apple-touch-icon 不认 SVG，所以用 canvas 生成 PNG 再喂给它 */
+function makeIcon(size){
+  try{
+    var c = document.createElement('canvas');
+    c.width = c.height = size;
+    var g = c.getContext('2d');
+    if(!g) return null;
+    var grd = g.createLinearGradient(0, 0, size, size);
+    grd.addColorStop(0, '#5b9dff');
+    grd.addColorStop(1, '#7c5cff');
+    g.fillStyle = grd;
+    if(g.roundRect){ g.beginPath(); g.roundRect(0, 0, size, size, size*0.22); g.fill(); }
+    else { g.fillRect(0, 0, size, size); }
+    g.fillStyle = '#ffffff';
+    g.font = 'bold ' + Math.round(size*0.62) + 'px -apple-system,"PingFang SC",sans-serif';
+    g.textAlign = 'center';
+    g.textBaseline = 'middle';
+    g.fillText('升', size/2, size*0.54);
+    return c.toDataURL('image/png');
+  }catch(e){ return null; }
+}
+(function(){
+  try{
+    var icon180 = makeIcon(180);
+    var icon512 = makeIcon(512) || icon180;
+    if(icon180) $('ai').href = icon180;
+    var mf = {
+      name:'专升本作战室', short_name:'作战室', start_url:'.', display:'standalone',
+      background_color:'#0d1017', theme_color:'#0d1017',
+      icons: icon512 ? [
+        { src:icon512, sizes:'512x512', type:'image/png', purpose:'any' },
+        { src:icon512, sizes:'512x512', type:'image/png', purpose:'maskable' }
+      ] : []
+    };
+    $('mf').href = URL.createObjectURL(new Blob([JSON.stringify(mf)], { type:'application/json' }));
+  }catch(e){}
+})();
+
+if(get('light', false)) document.body.classList.add('light');
+renderAll();
+maybeEvent();
+setInterval(function(){ renderHero(); }, 60000);
+</script>
+</body>
+</html>
