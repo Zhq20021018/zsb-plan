@@ -6,13 +6,14 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="作战室">
+<meta name="apple-mobile-web-app-title" content="知喵">
 <meta name="apple-touch-fullscreen" content="yes">
-<meta name="theme-color" content="#0d1017">
+<meta name="theme-color" content="#1a1030">
 <meta name="format-detection" content="telephone=no,email=no,address=no">
 <link id="mf" rel="manifest">
-<link id="ai" rel="apple-touch-icon">
-<title>专升本作战室</title>
+<link id="ai" rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-180.png">
+<title>知喵</title>
 <style>
 :root{
   --bg:#0d1017; --bg2:#151a24; --bg3:#1d2431; --line:#2a3342;
@@ -78,8 +79,9 @@ body.light{
   margin-bottom:9px;border:1px solid transparent;transition:.2s;cursor:pointer;
 }
 .task:active{transform:scale(.985)}
-.task.done{opacity:.5}
-.task.done .tt{text-decoration:line-through;color:var(--tx3)}
+.task.done{opacity:.62}
+.task.done .tt{color:var(--tx2)}
+.task.done .tt:after{content:' ✓';color:var(--ok)}
 .task .ck{
   flex:0 0 22px;width:22px;height:22px;border-radius:7px;border:2px solid var(--line);
   display:flex;align-items:center;justify-content:center;font-size:13px;margin:1px 12px 0 0;transition:.2s;
@@ -294,12 +296,55 @@ details .dc{font-size:12.5px;color:var(--tx2);margin-top:9px;line-height:1.7}
 .bagcard .lst{font-size:12px;color:var(--tx2);margin-top:9px;line-height:1.75}
 .bagcard .act{margin-top:11px}
 .bagsec{font-size:12px;color:var(--tx3);letter-spacing:.5px;margin:16px 0 9px}
+
+/* ---------- 生词本 ---------- */
+.witem{background:var(--bg3);border:1px solid var(--line);border-radius:12px;padding:11px 12px;margin-bottom:8px}
+.witem .w1{display:flex;justify-content:space-between;align-items:baseline}
+.witem .jp{font-size:16.5px;font-weight:600;letter-spacing:.5px}
+.witem .rd{font-size:11.5px;color:var(--acc);margin-left:8px}
+.witem .mn{font-size:12.5px;color:var(--tx2);margin-top:4px;line-height:1.5}
+.witem .mt{font-size:10.5px;color:var(--tx3);margin-top:6px}
+.witem.off{opacity:.58}
+.pill{font-size:10px;padding:1.5px 7px;border-radius:99px;border:1px solid var(--line);
+  color:var(--tx3);margin-left:5px;white-space:nowrap;display:inline-block}
+.pill.in{color:var(--ok);border-color:rgba(51,214,159,.45);background:rgba(51,214,159,.1)}
+.pill.out{color:var(--warn);border-color:rgba(255,176,32,.45);background:rgba(255,176,32,.1)}
+.pill.on{color:var(--acc);border-color:rgba(91,157,255,.5);background:rgba(91,157,255,.12)}
+.pill.x{color:var(--purple);border-color:rgba(192,132,252,.45);background:rgba(192,132,252,.12)}
+.wact{margin-top:9px}
+.wact button{font-size:11.5px;padding:5px 11px;border-radius:8px;border:1px solid var(--line);
+  background:var(--bg2);color:var(--tx2);font-family:inherit;cursor:pointer;margin-right:6px}
+.wact button:last-child{margin-right:0}
+select{background:var(--bg3);border:1px solid var(--line);border-radius:10px;color:var(--tx);
+  padding:9px 11px;font-size:16px;font-family:inherit;flex:1;min-width:0;
+  -webkit-appearance:none;appearance:none}
+.syncrow{display:flex;align-items:center;font-size:12.5px;padding:7px 0}
+.syncrow .k{flex:0 0 92px;color:var(--tx3)}
+.syncrow .v{flex:1;color:var(--tx2);word-break:break-all}
+
+/* ---------- iPad / 宽屏两栏布局 ---------- */
+@media (min-width: 860px){
+  .wrap{max-width:1120px;padding:0 20px}
+  .hero .wrap{max-width:1120px}
+  .ovlbd{max-width:1120px}
+  #tab-today,#tab-words,#tab-prog,#tab-stage,#tab-mock,#tab-set{
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;
+  }
+  #tab-today>.card,#tab-words>.card,#tab-prog>.card,
+  #tab-stage>.card,#tab-mock>.card,#tab-set>.card{margin-bottom:0}
+  .lvcard,.infobox{margin-bottom:0}
+  .badges{grid-template-columns:repeat(8,1fr)}
+  nav{max-width:1120px;margin:0 auto;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+  nav button{font-size:11.5px;padding:11px 0 12px}
+  nav button i{font-size:21px}
+  .heat{max-width:420px}
+}
 </style>
 </head>
 <body>
 
 <div class="hero"><div class="wrap">
-  <h1 id="hello">专升本作战室</h1>
+  <h1 id="hello">知喵</h1>
   <div class="dday"><span class="n" id="totalH">0</span><span class="u">小时已投入</span></div>
   <div class="lvrow">
     <span class="lvbadge" id="lvBadge">Lv.1 起步</span>
@@ -366,12 +411,92 @@ details .dc{font-size:12.5px;color:var(--tx2);margin-top:9px;line-height:1.7}
       <b style="color:var(--tx2)">普通日</b>：07:30 单词 → 13:00-15:30 主课A → 15:30 单词复习 → 19:30-21:00 主课B<br>
       <b style="color:var(--tx2)">政治直播日</b>：07:30 单词 → 13:00-15:00 主课A → 15:00 单词复习 → 19:30-21:30 政治直播<br>
       <b style="color:var(--tx2)">周日</b>：全天休息，不排任务<br><br>
-      <b style="color:var(--acc)">三条铁律</b><br>
+      <b style="color:var(--acc)">四条铁律</b><br>
       ① <b style="color:var(--tx2)">先课后台</b>：当天的新课/直播课先上完，剩余时间才用来刷题。<br>
-      ② <b style="color:var(--tx2)">不超 5.5h</b>：主课A + 主课B + 单词合计 5.5h 封顶，刷题永远只吃剩余时间。<br>
-      ③ <b style="color:var(--tx2)">主课A 固定、主课B 随机</b>：主线保证进度不乱，盲盒保证每天有新鲜感。<br><br>
+      ② <b style="color:var(--tx2)">不超 5.5h</b>：主课A + 主课B + 单词合计 5.5h 封顶。<br>
+      ③ <b style="color:var(--tx2)">主课A 固定、主课B 随机</b>：主线保证进度不乱，盲盒保证每天有新鲜感。<br>
+      ④ <b style="color:var(--acc)">课本生词只「筛和录」，不当场硬背</b>：一个词要过 5-6 次才记得住，
+      当天那 20 分钟只负责"认识 + 录入"，真正的记住交给识日和下午的生词本滚动。<br><br>
       刷题从 9 月就开始（政治 666 题 + 日语 N3 阅读专项），11 月起转成刷题为主线。
     </div>
+  </div>
+
+  <div class="card">
+    <h2>单词怎么排 <span>每天 20 个新词</span></h2>
+    <div class="hint" style="margin-top:0">
+      <b style="color:var(--tx2)">总量账</b><br>
+      · 新经典第三册 16 课 ≈ 560 个真生词，10 周学完 → 每天约 <b>9 个</b><br>
+      · 识日《考前对策N3词汇》剩 528 个 → 每天约 <b>11 个</b><br>
+      · 合计 <b style="color:var(--acc)">20 个/天</b>，在识日设置的上限内<br><br>
+      <b style="color:var(--tx2)">两套词先合并去重</b><br>
+      课本词和《考前对策》重合度很高，直接并行背是重复劳动。做法：<br>
+      ① 把课本 16 课词表 + 识日里没背完的词，一起粘进「单词 → 批量粘贴」<br>
+      ② App 自动去重、补假名、标考纲等级<br>
+      ③ 「导出给识日」生成 CSV → 导进识日的自定义词本<br>
+      ④ 之后只用识日一个词本，20 个/天<br><br>
+      <b style="color:var(--tx2)">主课A 里的 2.5h 怎么分</b><br>
+      生词 20min（只筛三圈 + 批量录入）→ 语法 45min → 课文 55min（在课文里消化生词）→ 练习册 30min
+    </div>
+  </div>
+</div>
+
+<!-- ============ 生词本 ============ -->
+<div id="tab-words" style="display:none">
+  <div class="card">
+    <h2>生词本 <span id="wStat"></span></h2>
+    <div class="stat">
+      <div><div class="v" id="wTotal">0</div><div class="k">收录总词</div></div>
+      <div><div class="v" id="wIn">0</div><div class="k">考纲内</div></div>
+      <div><div class="v" id="wOut">0</div><div class="k">词表外</div></div>
+    </div>
+    <div class="hint" id="wHint"></div>
+  </div>
+
+  <div class="card">
+    <h2>加一个生词 <span>假名自动带出</span></h2>
+    <div class="mk"><label>日语词</label><input id="wWord" placeholder="例：食べる" autocapitalize="off" autocorrect="off" spellcheck="false"></div>
+    <div class="hint" id="wAuto" style="margin-top:-2px;margin-bottom:9px"></div>
+    <div class="mk"><label>假名</label><input id="wRead" placeholder="自动填充，可手改" autocapitalize="off" autocorrect="off" spellcheck="false"></div>
+    <div class="mk"><label>意思</label><input id="wMean" placeholder="例：吃"></div>
+    <div class="mk"><label>来源</label>
+      <select id="wSrc">
+        <option>课本</option><option>练习册</option><option>N3真题</option><option>其他</option>
+      </select>
+    </div>
+    <button class="btn pri" id="wAdd" style="margin-top:9px">加入生词本</button>
+  </div>
+
+  <div class="card">
+    <h2>批量粘贴 <span>一次贴一批</span></h2>
+    <div class="hint" style="margin-top:0;margin-bottom:9px">
+      一行一个词，格式 <b>日语 假名 意思</b>。空格 / Tab / 逗号分隔都行，假名和意思可以省略（假名会自动补）。<br>
+      <b style="color:var(--acc)">同一个词只收一次</b>，所以重复粘也没关系——课本词和识日词表可以混在一起贴，App 自动去重。
+    </div>
+    <textarea id="wBulk" style="width:100%;height:110px;background:var(--bg3);border:1px solid var(--line);
+      border-radius:11px;color:var(--tx);padding:10px;font-family:ui-monospace,monospace;resize:vertical"
+      placeholder="食べる たべる 吃&#10;飲む のむ 喝&#10;綺麗 きれい 漂亮&#10;出かける"></textarea>
+    <div class="row" style="margin-top:9px">
+      <button class="btn" id="wBulkAdd">批量加入</button>
+      <button class="btn" id="wBulkClear">清空</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>导出给识日 <span id="wExpHint"></span></h2>
+    <div class="hint" style="margin-top:0;margin-bottom:10px">
+      导出的每行是 <b>日语,假名,意思</b>。拿到识日 App 的「自定义词本 → 导入」里用，
+      然后靠识日的艾宾浩斯算法、真人发音、例句去背。
+    </div>
+    <button class="btn pri" id="wExport">生成 CSV 并复制</button>
+    <textarea id="wOutBox" style="width:100%;height:90px;margin-top:9px;background:var(--bg3);
+      border:1px solid var(--line);border-radius:11px;color:var(--tx);padding:10px;
+      font-family:ui-monospace,monospace;resize:vertical" placeholder="点上面按钮生成，然后粘贴到识日"></textarea>
+  </div>
+
+  <div class="card">
+    <h2>我的生词 <span id="wCount"></span></h2>
+    <div class="tabs" id="wFilter" style="margin-bottom:11px"></div>
+    <div id="wList"></div>
   </div>
 </div>
 
@@ -399,6 +524,16 @@ details .dc{font-size:12.5px;color:var(--tx2);margin-top:9px;line-height:1.7}
     <div class="hint" style="margin-top:10px">
       「小时投入」= 你在「今天」页打勾的任务时长总和，只有真的打勾才算。
     </div>
+  </div>
+
+  <div class="card">
+    <h2>生词本 <span id="cVocabTag"></span></h2>
+    <div class="stat" style="margin-bottom:0">
+      <div><div class="v" id="cVocab">0</div><div class="k">收录生词</div></div>
+      <div><div class="v" id="cVocabIn">0</div><div class="k">考纲内</div></div>
+      <div><div class="v" id="cVocabOut">0</div><div class="k">词表外</div></div>
+    </div>
+    <div class="hint" id="cVocabHint"></div>
   </div>
 
   <div class="card">
@@ -531,7 +666,12 @@ details .dc{font-size:12.5px;color:var(--tx2);margin-top:9px;line-height:1.7}
     <div class="mk"><label>复习下限</label><input type="number" id="r_min"></div>
     <div class="mk"><label>复习上限</label><input type="number" id="r_max"></div>
     <button class="btn pri" id="saveWord" style="margin-top:8px">保存词量区间</button>
-    <div class="hint">默认：新词 10-30（跟识日App一致），复习 0-50（不设下限，抽到 0 就当放假）。</div>
+    <div class="hint">
+      <b style="color:var(--tx2)">按新计划，新词建议 18-22（平均 20 个/天）</b><br>
+      依据：课本 16 课约 560 个真生词，10 周学完 → 每天约 9 个；<br>
+      《考前对策》剩 528 个 → 每天约 11 个。合计 20 个/天。<br>
+      复习量 0-50 不设下限，抽到 0 就当放假。
+    </div>
   </div>
 
   <div class="card">
@@ -553,6 +693,49 @@ details .dc{font-size:12.5px;color:var(--tx2);margin-top:9px;line-height:1.7}
   </div>
 
   <div class="card">
+    <h2>云同步 <span>iPhone ↔ iPad</span></h2>
+    <div class="infobox" style="margin-bottom:12px">
+      数据存在你自己的 GitHub 私有 Gist 里，不经过任何第三方。<br>
+      两台设备填同一个 Token 就连上了，之后自动双向同步。
+    </div>
+    <div class="mk"><label>Token</label>
+      <input id="syToken" placeholder="ghp_xxxx（只勾 gist 权限）" autocapitalize="off" autocorrect="off" spellcheck="false">
+    </div>
+    <div class="row" style="margin-top:9px">
+      <button class="btn pri" id="syCreate">创建同步空间</button>
+      <button class="btn" id="syJoin">连接已有</button>
+    </div>
+    <div class="row" style="margin-top:9px">
+      <button class="btn" id="syNow">立即同步</button>
+      <button class="btn" id="syOff">断开</button>
+    </div>
+    <div style="margin-top:12px;border-top:1px solid var(--line);padding-top:10px">
+      <div class="syncrow"><span class="k">状态</span><span class="v" id="syState">未连接</span></div>
+      <div class="syncrow"><span class="k">上次同步</span><span class="v" id="syLast">—</span></div>
+      <div class="syncrow"><span class="k">同步空间</span><span class="v" id="syId">—</span></div>
+    </div>
+    <div class="hint">
+      合并规则：打卡记录取并集（两边打过的勾都不会丢）、科目进度取较大值、连续打卡取较大值、
+      目标分以当前设备为准。所以两台设备轮流用不会互相覆盖。
+    </div>
+    <details style="margin-top:10px"><summary>怎么拿 Token（3 分钟）</summary>
+      <div class="dc">
+        ① GitHub → 右上角头像 → <b>Settings</b><br>
+        ② 左侧拉到最底 → <b>Developer settings</b><br>
+        ③ <b>Personal access tokens</b> → <b>Tokens (classic)</b> → <b>Generate new token (classic)</b><br>
+        ④ Note 填 <b>zhimiao-sync</b>，Expiration 选 <b>No expiration</b><br>
+        ⑤ 权限<b>只勾一个 <code>gist</code></b>，其它全部不要勾<br>
+        ⑥ 点最下面 <b>Generate token</b>，复制那串 <code>ghp_</code> 开头的字符<br>
+        <span style="color:var(--warn)">它只显示这一次，先存到备忘录。</span><br><br>
+        <b style="color:var(--tx2)">两台设备怎么连</b><br>
+        · 第一台：粘贴 Token → 点「创建同步空间」<br>
+        · 第二台：粘贴<b>同一个</b> Token → 点「连接已有」<br>
+        之后打开就自动同步，不用再管。
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
     <h2>兼容性自检</h2>
     <div id="compat"></div>
     <button class="btn" id="recheck" style="margin-top:10px">重新检测</button>
@@ -560,6 +743,14 @@ details .dc{font-size:12.5px;color:var(--tx2);margin-top:9px;line-height:1.7}
 
   <div class="card">
     <h2>界面</h2>
+    <div style="display:flex;align-items:center;margin-bottom:13px">
+      <img id="iconPrev" alt="图标" style="width:76px;height:76px;border-radius:18px;border:1px solid var(--line);flex:0 0 76px">
+      <div style="margin-left:13px;font-size:12.5px;color:var(--tx2);line-height:1.7">
+        <b style="color:var(--tx)">主屏幕图标预览</b><br>
+        名字：<b style="color:var(--acc)">知喵</b><br>
+        <span class="muted">三花猫 · 夜空星星 · 加主屏幕后就是这个样子</span>
+      </div>
+    </div>
     <div class="row">
       <button class="btn" id="themeBtn">切换深色/浅色</button>
       <button class="btn" id="resetBtn">清空所有数据</button>
@@ -583,8 +774,15 @@ details .dc{font-size:12.5px;color:var(--tx2);margin-top:9px;line-height:1.7}
         Repository name 填 <b style="color:var(--acc)">zsb-plan</b>（必须一致，否则链接要改）<br>
         选 <b>Public</b> → 点 <b>Create repository</b><br><br>
         <b style="color:var(--tx2)">③ 上传文件</b><br>
-        仓库页面点 <b>Add file</b> → <b>Upload files</b> → 选择你电脑上的
-        <b>index.html</b> → 拉到底点 <b>Commit changes</b><br><br>
+        仓库页面点 <b>Add file</b> → <b>Upload files</b> → 一次把这 <b>3 个文件</b>全选上：
+        <code style="display:block;background:var(--bg3);padding:8px;border-radius:8px;margin:6px 0;
+          font-size:11.5px;line-height:1.9;word-break:break-all">
+          E:\专升本学习计划\index.html<br>
+          E:\专升本学习计划\icon-180.png<br>
+          E:\专升本学习计划\icon-512.png
+        </code>
+        拉到底点 <b>Commit changes</b><br>
+        <span class="muted">三个一起传。只传 index.html 也能用，但主屏幕图标会变成网页截图。</span><br><br>
         <b style="color:var(--tx2)">④ 开启 Pages</b><br>
         仓库页面点 <b>Settings</b> → 左侧找 <b>Pages</b><br>
         Source 选 <b>Deploy from a branch</b><br>
@@ -622,7 +820,10 @@ details .dc{font-size:12.5px;color:var(--tx2);margin-top:9px;line-height:1.7}
       <div class="dc">
         改完电脑上的 <b>index.html</b> 后：<br>
         · 方式一上传的 → 在 GitHub 仓库里点进 index.html → 铅笔图标 → 直接改 → Commit<br>
-        · 方式二上传的 → 在文件夹里执行 <code>git add index.html</code> → <code>git commit -m "更新"</code> → <code>git push</code><br><br>
+        · 方式二上传的 → 在文件夹里执行 <code>git add .</code> → <code>git commit -m "更新"</code> → <code>git push</code><br><br>
+        <b style="color:var(--tx2)">换了图标也要重新传</b><br>
+        图标是 <code>icon-180.png</code> 和 <code>icon-512.png</code> 两个文件。
+        换图标后重新上传这两个文件，然后在 iPhone 上把主屏幕那个图标<b>删掉重新添加</b>一次，才会更新。<br><br>
         注意：网页上的打卡数据存在手机本地，更新代码<b>不会</b>丢失数据。<br>
         但换手机或清缓存会丢，所以定期用上面的「导出备份」存一份到备忘录。
       </div>
@@ -645,6 +846,7 @@ details .dc{font-size:12.5px;color:var(--tx2);margin-top:9px;line-height:1.7}
 
 <nav>
   <button data-tab="today" class="on"><i>🎯</i>今天</button>
+  <button data-tab="words"><i>📖</i>单词</button>
   <button data-tab="prog"><i>🌱</i>养成</button>
   <button data-tab="stage"><i>🗺️</i>阶段</button>
   <button data-tab="mock"><i>📝</i>模考</button>
@@ -672,12 +874,33 @@ details .dc{font-size:12.5px;color:var(--tx2);margin-top:9px;line-height:1.7}
 
 <script>
 /* =========================================================
-   专升本作战室 —— 单文件离线学习计划
+   知喵 —— 专升本备考 · 单文件离线学习计划
    数据全部存在本地 localStorage，不联网
    ========================================================= */
 
 var KEY = 'zsb_v1_';
 var $ = function(id){ return document.getElementById(id); };
+
+/* JLPT N5-N3 考纲词表（数据来源 OpenJLPT，CC BY-SA 4.0）
+   格式：日语|假名|等级，条目之间用换行分隔；共 3001 词 */
+var JLPT_DATA = [
+    "あさって|あさって|N5\nあそこ|あそこ|N5\nあちら|あちら|N5\nあっち|あっち|N5\nあなた|あなた|N5\nあの|あの|N5\nアパート|アパート|N5\nあびる|あびる|N5\nあまり|あまり|N5\nある|ある|N5\nあれ|あれ|N5\nいい/よい|いい/よい|N5\nいいえ|いいえ|N5\nいかが|いかが|N5\nいくつ|いくつ|N5\nいくら|いくら|N5\nいす|いす|N5\nいちばん|いちばん|N5\nいつ|いつ|N5\nいつも|いつも|N5\nいろいろ|いろいろ|N5\nええ|ええ|N5\nエレベーター|エレベーター|N5\nおいしい|おいしい|N5\nおなか|おなか|N5\nおばあさん|おばあさん|N5\nおまわりさん|おまわりさん|N5\nおもしろい|おもしろい|N5\nお菓子|おかし|N5\nお金|おかね|N5\nお兄さん|おにいさん|N5\nお皿|おさら|N5\nお姉さん|おねえさん|N5\nお手洗い|おてあらい|N5\nお酒|おさけ|N5\nお茶|おちゃ|N5\nお父さん|おとうさん|N5\nお風呂|おふろ|N5\nお弁当|おべんとう|N5\nお母さん|おかあさん|N5\nかかる|かかる|N5\nかぎ|かぎ|N5\nかける|かける|N5\nカップ|カップ|N5\nかばん|かばん|N5\nカメラ|カメラ|N5\nカレー|カレー|N5\nカレンダー|カレンダー|N5\nかわいい|かわいい|N5\nギター|ギター|N5\nきれい|きれい|N5\nキロ/キログラム|キロ/キログラム|N5\nキロ/キロメートル|キロ/キロメートル|N5\nください|ください|N5\nクラス|クラス|N5\nグラム|グラム|N5\nコート|コート|N5\nコーヒー|コーヒー|N5\nここ|ここ|N5\nこちら|こちら|N5\nこっち|こっち|N5\nコップ|コップ|N5\nこの|この|N5\nコピーする|コピーする|N5\nこれ|これ|N5\nこんな|こんな|N5\nさあ|さあ|N5\nさ来年|さらいねん|N5\nしかし|しかし|N5\nじゃ/じゃあ|じゃ/じゃあ|N5\nシャツ|シャツ|N5\nシャワー|シャワー|N5\nしょうゆ|しょうゆ|N5\nスカート|スカート|N5\nすぐに|すぐに|N5\nストーブ|ストーブ|N5\nスプーン|スプーン|N5\nスポーツ|スポーツ|N5\nズボン|ズボン|N5\nスリッパ|スリッパ|N5\nする|する|N5\nセーター|セーター|N5\nせっけん|せっけん|N5\nゼロ|ゼロ|N5\nそうして/そして|そうして/そして|N5\nそこ|そこ|N5\nそちら|そちら|N5\nそっち|そっち|N5\nその|その|N5\nそば|そば|N5\nそれ|それ|N5\nそれから|それから|N5\nそれでは|それでは|N5\nたいへん|たいへん|N5\nたくさん|たくさん|N5\nタクシー|タクシー|N5\nたて|たて|N5\nたばこ|たばこ|N5\nたぶん|たぶん|N5\nだんだん|だんだん|N5\nちゃわん|ちゃわん|N5\nちょうど|ちょうど|N5\nちょっと|ちょっと|N5\nつける|つける|N5\nつまらない|つまらない|N5\nテープ|テープ|N5\nテーブル|テーブル|N5\nテープレコーダー|テープレコーダー|N5\nできる|できる|N5\nテスト|テスト|N5\nでは|では|N5\nデパート|デパート|N5\nでも|でも|N5\nテレビ|テレビ|N5\nドア|ドア|N5\nトイレ|トイレ|N5\nどう|どう|N5\nどうして|どうして|N5\nどうぞ|どうぞ|N5\nどうも|どうも|N5\nどこ|どこ|N5\nどちら|どちら|N5\nどっち|どっち|N5\nとても|とても|N5\nどなた|どなた|N5\nどの|どの|N5\nとり肉|とりにく|N5\nどれ|どれ|N5\nナイフ|ナイフ|N5\nなぜ|なぜ|N5\nなど|など|N5\nなる|なる|N5\nニュース|ニュース|N5\nネクタイ|ネクタイ|N5\nノート|ノート|N5\nパーティー|パーティー|N5\nはい|はい|N5\nはく|はく|N5\nはし|はし|N5\nバス|バス|N5\nバター|バター|N5\nパン|パン|N5\nハンカチ|ハンカチ|N5\nフィルム|フィルム|N5\nプール|プール|N5\nフォーク|フォーク|N5\nふろ|ふろ|N5\nページ|ページ|N5\nベッド|ベッド|N5\nペット|ペット|N5\nペン|ペン|N5\nボールペン|ボールペン|N5\nほか|ほか|N5\nポケット|ポケット|N5\nポスト|ポスト|N5\nボタン|ボタン|N5\nホテル|ホテル|N5\nほんとう|ほんとう|N5\nまずい|まずい|N5\nまた|また|N5\nまだ|まだ|N5\nまっすぐ|まっすぐ|N5\nマッチ|マッチ|N5\nみんな|みんな|N5\nメートル|メートル|N5\nもう|もう|N5\nもう一度|もういちど|N5\nもっと|もっと|N5\nやる|やる|N5\nゆっくりと|ゆっくりと|N5\nよく|よく|N5\nより、ほう|より、ほう|N5\nラジオ|ラジオ|N5\nラジカセ / ラジオカセット|ラジカセ / ラジオカセット|N5\nりっぱ|りっぱ|N5\nレコード|レコード|N5\nレストラン|レストラン|N5\nワイシャツ|ワイシャツ|N5\n悪い|わるい|N5\n飴|あめ|N5\n安い|やすい|N5\n暗い|くらい|N5\n意味|いみ|N5\n易しい|やさしい|N5\n違う|ちがう|N5\n医者|いしゃ|N5\n一|いち|N5\n一つ|ひとつ|N5\n一月|ひとつき|N5\n一昨日|おととい|N5\n一昨年|おととし|N5\n一緒|いっしょ|N5\n一人|ひとり|N5\n一日|いちにち|N5\n引く|ひく|N5\n飲み物|のみもの|N5\n飲む|のむ|N5\n右|みぎ|N5\n雨|あめ|N5\n映画|えいが|N5",
+    "映画館|えいがかん|N5\n泳ぐ|およぐ|N5\n英語|えいご|N5\n駅|えき|N5\n遠い|とおい|N5\n鉛筆|えんぴつ|N5\n塩|しお|N5\n汚い|きたない|N5\n奥さん|おくさん|N5\n押す|おす|N5\n横|よこ|N5\n黄色|きいろ|N5\n黄色い|きいろい|N5\n温い|ぬるい|N5\n音楽|おんがく|N5\n下|した|N5\n下手|へた|N5\n何|なん/なに|N5\n夏|なつ|N5\n夏休み|なつやすみ|N5\n家|いえ|N5\n家族|かぞく|N5\n家庭|かてい|N5\n暇|ひま|N5\n果物|くだもの|N5\n歌|うた|N5\n歌う|うたう|N5\n火曜日|かようび|N5\n花|はな|N5\n花瓶|かびん|N5\n荷物|にもつ|N5\n会う|あう|N5\n会社|かいしゃ|N5\n海|うみ|N5\n灰皿|はいざら|N5\n皆さん|みなさん|N5\n絵|え|N5\n開く|あく|N5\n開ける|あける|N5\n階段|かいだん|N5\n外|そと|N5\n外国|がいこく|N5\n外国人|がいこくじん|N5\n覚える|おぼえる|N5\n角|かど|N5\n学校|がっこう|N5\n学生|がくせい|N5\n楽しい|たのしい|N5\n寒い|さむい|N5\n漢字|かんじ|N5\n甘い|あまい|N5\n丸い/円い|まるい|N5\n眼鏡|めがね|N5\n危ない|あぶない|N5\n机|つくえ|N5\n帰る|かえる|N5\n起きる|おきる|N5\n喫茶店|きっさてん|N5\n休み|やすみ|N5\n休む|やすむ|N5\n吸う|すう|N5\n牛肉|ぎゅうにく|N5\n牛乳|ぎゅうにゅう|N5\n去年|きょねん|N5\n居る|いる|N5\n魚|さかな|N5\n強い|つよい|N5\n教える|おしえる|N5\n教室|きょうしつ|N5\n橋|はし|N5\n狭い|せまい|N5\n曲る|まがる|N5\n勤める|つとめる|N5\n近い|ちかい|N5\n近く|ちかく|N5\n金曜日|きんようび|N5\n銀行|ぎんこう|N5\n九|きゅう / く|N5\n九つ|ここのつ|N5\n九日|ここのか|N5\n空|そら|N5\n靴|くつ|N5\n靴下|くつした|N5\n兄|あに|N5\n兄弟|きょうだい|N5\n警官|けいかん|N5\n軽い|かるい|N5\n結構|けっこう|N5\n結婚|けっこん|N5\n月曜日|げつようび|N5\n嫌|いや|N5\n嫌い|きらい|N5\n建物|たてもの|N5\n犬|いぬ|N5\n見せる|みせる|N5\n見る 観る|みる|N5\n元気|げんき|N5\n玄関|げんかん|N5\n言う|いう|N5\n言葉|ことば|N5\n古い|ふるい|N5\n呼ぶ|よぶ|N5\n戸|と|N5\n五|ご|N5\n五つ|いつつ|N5\n五日|いつか|N5\n午後|ごご|N5\n午前|ごぜん|N5\n後|あと|N5\n後ろ|うしろ|N5\n御飯|ごはん|N5\n交差点|こうさてん|N5\n交番|こうばん|N5\n公園|こうえん|N5\n厚い|あつい|N5\n口|くち|N5\n向こう|むこう|N5\n好き|すき|N5\n広い|ひろい|N5\n紅茶|こうちゃ|N5\n行く|いく|N5\n降りる|おりる|N5\n降る|ふる|N5\n高い|たかい|N5\n国|くに|N5\n黒|くろ|N5\n黒い|くろい|N5\n今|いま|N5\n今月|こんげつ|N5\n今週|こんしゅう|N5\n今朝|けさ|N5\n今日|きょう|N5\n今年|ことし|N5\n今晩|こんばん|N5\n困る|こまる|N5\n左|ひだり|N5\n差す|さす|N5\n砂糖|さとう|N5\n座る|すわる|N5\n細い|ほそい|N5\n財布|さいふ|N5\n咲く|さく|N5\n作る|つくる|N5\n作文|さくぶん|N5\n昨日|きのう|N5\n昨夜|ゆうべ|N5\n撮る|とる|N5\n雑誌|ざっし|N5\n三|さん|N5\n三つ|みっつ|N5\n三日|みっか|N5\n傘|かさ|N5\n山|やま|N5\n散歩|さんぽする|N5\n仕事|しごと|N5\n使う|つかう|N5\n四|し / よん|N5\n四つ|よっつ|N5\n四日|よっか|N5\n始まる|はじまる|N5\n姉|あね|N5\n子供|こども|N5\n止まる|とまる|N5\n死ぬ|しぬ|N5\n私|わたくし|N5\n紙|かみ|N5\n歯|は|N5\n字引|じびき|N5\n持つ|もつ|N5\n時々|ときどき|N5\n時間|じかん|N5\n時計|とけい|N5\n次|つぎ|N5\n耳|みみ|N5\n自転車|じてんしゃ|N5\n自動車|じどうしゃ|N5\n自分|じぶん|N5\n辞書|じしょ|N5\n七|しち / なな|N5\n七つ|ななつ|N5\n七日|なのか|N5\n質問|しつもん|N5\n写真|しゃしん|N5\n車|くるま|N5\n借りる|かりる|N5\n若い|わかい|N5\n弱い|よわい|N5\n取る|とる|N5\n手|て|N5\n手紙|てがみ|N5\n授業|じゅぎょう|N5\n秋|あき|N5\n終る|おわる|N5\n習う|ならう|N5\n住む|すむ|N5\n十|じゅう とお|N5\n十日|とおか|N5\n重い|おもい|N5\n宿題|しゅくだい|N5\n出かける|でかける|N5",
+    "出す|だす|N5\n出る|でる|N5\n出口|でぐち|N5\n春|はる|N5\n初め/始め|はじめ|N5\n初めて|はじめて|N5\n所|ところ|N5\n暑い|あつい|N5\n書く|かく|N5\n女|おんな|N5\n女の子|おんなのこ|N5\n小さい|ちいさい|N5\n小さな|ちいさな|N5\n少し|すこし|N5\n少ない|すくない|N5\n消える|きえる|N5\n消す|けす|N5\n上|うえ|N5\n上げる|あげる|N5\n上手|じょうず|N5\n上着|うわぎ|N5\n丈夫|じょうぶ|N5\n乗る|のる|N5\n色|いろ|N5\n食べる|たべる|N5\n食べ物|たべもの|N5\n食堂|しょくどう|N5\n寝る|ねる|N5\n新しい|あたらしい|N5\n新聞|しんぶん|N5\n辛い|からい|N5\n人|ひと|N5\n図書館|としょかん|N5\n吹く|ふく|N5\n水|みず|N5\n水曜日|すいようび|N5\n晴れ|はれ|N5\n晴れる|はれる|N5\n生まれる|うまれる|N5\n生徒|せいと|N5\n声|こえ|N5\n西|にし|N5\n青|あお|N5\n青い|あおい|N5\n静か|しずか|N5\n赤|あか|N5\n赤い|あかい|N5\n切る|きる|N5\n切手|きって|N5\n切符|きっぷ|N5\n雪|ゆき|N5\n先|さき|N5\n先月|せんげつ|N5\n先週|せんしゅう|N5\n先生|せんせい|N5\n千|せん|N5\n川/河|かわ|N5\n洗う|あらう|N5\n洗濯|せんたく|N5\n前|まえ|N5\n全部|ぜんぶ|N5\n掃除|そうじする|N5\n早い|はやい|N5\n窓|まど|N5\n走る|はしる|N5\n足|あし|N5\n速い|はやい|N5\n村|むら|N5\n多い|おおい|N5\n太い|ふとい|N5\n体|からだ|N5\n待つ|まつ|N5\n貸す|かす|N5\n台所|だいどころ|N5\n大きい|おおきい|N5\n大きな|おおきな|N5\n大学|だいがく|N5\n大好き|だいすき|N5\n大使館|たいしかん|N5\n大丈夫|だいじょうぶ|N5\n大人|おとな|N5\n大勢|おおぜい|N5\n大切|たいせつ|N5\n脱ぐ|ぬぐ|N5\n誰|だれ|N5\n短い|みじかい|N5\n誕生日|たんじょうび|N5\n弾く|ひく|N5\n暖かい|あたたかい|N5\n男|おとこ|N5\n男の子|おとこのこ|N5\n知る|しる|N5\n地下鉄|ちかてつ|N5\n地図|ちず|N5\n池|いけ|N5\n置く|おく|N5\n遅い|おそい|N5\n茶色|ちゃいろ|N5\n着く|つく|N5\n着る|きる|N5\n中|なか|N5\n昼|ひる|N5\n昼御飯|ひるごはん|N5\n朝|あさ|N5\n朝御飯|あさごはん|N5\n町|まち|N5\n長い|ながい|N5\n鳥|とり|N5\n痛い|いたい|N5\n低い|ひくい|N5\n庭|にわ|N5\n弟|おとうと|N5\n締める|しめる|N5\n天気|てんき|N5\n店|みせ|N5\n貼る|はる|N5\n電気|でんき|N5\n電車|でんしゃ|N5\n電話|でんわ|N5\n渡す|わたす|N5\n渡る|わたる|N5\n登る|のぼる|N5\n土曜日|どようび|N5\n冬|ふゆ|N5\n東|ひがし|N5\n答える|こたえる|N5\n頭|あたま|N5\n働く|はたらく|N5\n動物|どうぶつ|N5\n同じ|おなじ|N5\n道|みち|N5\n読む|よむ|N5\n豚肉|ぶたにく|N5\n曇り|くもり|N5\n曇る|くもる|N5\n南|みなみ|N5\n難しい|むずかしい|N5\n二|に|N5\n二つ|ふたつ|N5\n二十歳|はたち|N5\n二十日|はつか|N5\n二人|ふたり|N5\n二日|ふつか|N5\n賑やか|にぎやか|N5\n肉|にく|N5\n日曜日|にちようび|N5\n入る|はいる|N5\n入れる|いれる|N5\n入口|いりぐち|N5\n猫|ねこ|N5\n熱い|あつい|N5\n年|とし|N5\n背|せ|N5\n背広|せびろ|N5\n買い物|かいもの|N5\n買う|かう|N5\n売る|うる|N5\n伯父/叔父|おじいさん|N5\n伯母さん/叔母さん|おばさん|N5\n白|しろ|N5\n白い|しろい|N5\n薄い|うすい|N5\n箱|はこ|N5\n八|はち|N5\n八つ|やっつ|N5\n八日|ようか|N5\n八百屋|やおや|N5\n半|はん|N5\n半分|はんぶん|N5\n煩い|うるさい|N5\n晩|ばん|N5\n晩御飯|ばんごはん|N5\n番号|ばんごう|N5\n疲れる|つかれる|N5\n飛ぶ|とぶ|N5\n飛行機|ひこうき|N5\n鼻|はな|N5\n百|ひゃく|N5\n病院|びょういん|N5\n病気|びょうき|N5\n部屋|へや|N5\n封筒|ふうとう|N5\n風|かぜ|N5\n風邪|かぜ|N5\n服|ふく|N5\n物|もの|N5\n分かる|わかる|N5\n文章|ぶんしょう|N5\n聞く|きく|N5\n並ぶ|ならぶ|N5\n並べる|ならべる|N5\n閉まる|しまる|N5\n閉める|しめる|N5\n辺|へん|N5\n返す|かえす|N5\n便利|べんり|N5\n勉強|べんきょうする|N5\n歩く|あるく|N5\n方|かた|N5\n帽子|ぼうし|N5",
+    "忘れる|わすれる|N5\n忙しい|いそがしい|N5\n北|きた|N5\n本|ほん|N5\n本棚|ほんだな|N5\n磨く|みがく|N5\n妹|いもうと|N5\n毎月|まいげつ/まいつき|N5\n毎週|まいしゅう|N5\n毎朝|まいあさ|N5\n毎日|まいにち|N5\n毎年|まいねん/まいとし|N5\n毎晩|まいばん|N5\n万|まん|N5\n万年筆|まんねんひつ|N5\n無くす|なくす|N5\n名前|なまえ|N5\n明い|あかるい|N5\n明日|あした|N5\n鳴く|なく|N5\n木|き|N5\n木曜日|もくようび|N5\n目|め|N5\n問題|もんだい|N5\n門|もん|N5\n夜|よる|N5\n野菜|やさい|N5\n薬|くすり|N5\n友達|ともだち|N5\n有名|ゆうめい|N5\n遊ぶ|あそぶ|N5\n郵便局|ゆうびんきょく|N5\n夕飯|ゆうはん|N5\n夕方|ゆうがた|N5\n洋服|ようふく|N5\n葉書|はがき|N5\n要る|いる|N5\n欲しい|ほしい|N5\n来る|くる|N5\n来月|らいげつ|N5\n来週|らいしゅう|N5\n来年|らいねん|N5\n頼む|たのむ|N5\n卵|たまご|N5\n立つ|たつ|N5\n留学生|りゅうがくせい|N5\n旅行|りょこう|N5\n両親|りょうしん|N5\n料理|りょうり|N5\n涼しい|すずしい|N5\n緑|みどり|N5\n隣|となり|N5\n冷たい|つめたい|N5\n冷蔵庫|れいぞうこ|N5\n零|れい|N5\n練習|れんしゅうする|N5\n廊下|ろうか|N5\n六|ろく|N5\n六つ|むっつ|N5\n六日|むいか|N5\n話|はなし|N5\n話す|はなす|N5\nあ|あ|N4\nああ|ああ|N4\nあいさつする|あいさつする|N4\nあかちゃん|あかちゃん|N4\nアクセサリー|アクセサリー|N4\nあげる|あげる|N4\nアジア|アジア|N4\nアナウンサー|アナウンサー|N4\nアフリカ|アフリカ|N4\nアメリカ|アメリカ|N4\nアルコール|アルコール|N4\nアルバイト|アルバイト|N4\nあんな|あんな|N4\nいじめる|いじめる|N4\nいただく|いただく|N4\nいっぱい|いっぱい|N4\nいらっしゃる|いらっしゃる|N4\nうかがう|うかがう|N4\nうそ|うそ|N4\nうち|うち|N4\nうまい|うまい|N4\nうれしい|うれしい|N4\nうん|うん|N4\nエスカレーター|エスカレーター|N4\nおいでになる|おいでになる|N4\nオートバイ|オートバイ|N4\nおかげ|おかげ|N4\nおかしい|おかしい|N4\nおっしゃる|おっしゃる|N4\nおつり|おつり|N4\nおもちゃ|おもちゃ|N4\nお金持ち|かねもち/おかねもち|N4\nお見舞い|おみまい|N4\nお祭り|おまつり|N4\nお祝い|おいわい|N4\nお嬢さん|おじょうさん|N4\nお宅|おたく|N4\nお土産|おみやげ|N4\nお礼|おれい|N4\nカーテン|カーテン|N4\nガス|ガス|N4\nガソリン|ガソリン|N4\nガソリンスタンド|ガソリンスタンド|N4\nかっこう|かっこう|N4\nかまう|かまう|N4\nガラス|ガラス|N4\nきっと|きっと|N4\nくださる|くださる|N4\nくれる|くれる|N4\nケーキ|ケーキ|N4\nけがする|けがする|N4\nけれど/けれども|けれど/けれども|N4\nけんかする|けんかする|N4\nこう|こう|N4\nごちそう|ごちそう|N4\nこと|こと|N4\nこのあいだ|このあいだ|N4\nこのごろ|このごろ|N4\nごみ|ごみ|N4\nごらんになる|ごらんになる|N4\nこれから|これから|N4\nコンサート|コンサート|N4\nコンピュータ/コンピューター|コンピュータ/コンピューター|N4\nご存じ|ごぞんじ|N4\nさっき|さっき|N4\nサラダ|サラダ|N4\nサンダル|サンダル|N4\nサンドイッチ|サンドイッチ|N4\nさ来月|さらいげつ|N4\nさ来週|さらいしゅう|N4\nしかる|しかる|N4\nしっかり|しっかり|N4\nしばらく|しばらく|N4\nじゃま|じゃま|N4\nジャム|ジャム|N4\nずいぶん|ずいぶん|N4\nスーツ|スーツ|N4\nスーツケース|スーツケース|N4\nすく|すく|N4\nスクリーン|スクリーン|N4\nすっかり|すっかり|N4\nすっと|すっと|N4\nステーキ|ステーキ|N4\nステレオ|ステレオ|N4\nすばらしい|すばらしい|N4\nすり|すり|N4\nすると|すると|N4\nぜひ|ぜひ|N4\nぜんぜん|ぜんぜん|N4\nそう|そう|N4\nソフト|ソフト|N4\nそれで|それで|N4\nそれに|それに|N4\nそれほど|それほど|N4\nそろそろ|そろそろ|N4\nそんな|そんな|N4\nそんなに|そんなに|N4\nたいてい|たいてい|N4\nタイプ|タイプ|N4\nだから|だから|N4\nたまに|たまに|N4\nだめ|だめ|N4\nチェックする|チェックする|N4\nちっとも|ちっとも|N4\nちゃん|ちゃん|N4\nつき|つき|N4\nつもり|つもり|N4\nテキスト|テキスト|N4\nできるだけ|できるだけ|N4\nテニス|テニス|N4\nとうとう|とうとう|N4\nとこや|とこや|N4\nどんどん|どんどん|N4\nなさる|なさる|N4\nなるべく|なるべく|N4\nなるほど|なるほど|N4\nにおい|におい|N4\nぬれる|ぬれる|N4\nねだん|ねだん|N4\nねっしん|ねっしん|N4\nのど|のど|N4\nパート|パート|N4\nはず|はず|N4\nパソコン|パソコン|N4\nはっきり|はっきり|N4\nハンドバッグ|ハンドバッグ|N4\nピアノ|ピアノ|N4\nひげ|ひげ|N4\nびっくりする|びっくりする|N4\nひどい|ひどい|N4\nビル|ビル|N4\nファックス|ファックス|N4\nぶどう|ぶどう|N4\nプレゼント|プレゼント|N4\nベル|ベル|N4\nほど|ほど|N4\nほとんど|ほとんど|N4\nほめる|ほめる|N4",
+    "まじめ|まじめ|N4\nまず|まず|N4\nまたは|または|N4\nもうすぐ|もうすぐ|N4\nもし|もし|N4\nもちろん|もちろん|N4\nもっとも|もっとも|N4\nもらう|もらう|N4\nやっと|やっと|N4\nやはり/やっぱり|やはり/やっぱり|N4\nよろしい|よろしい|N4\nレジ|レジ|N4\nレポート/リポート|レポート/リポート|N4\nワープロ|ワープロ|N4\n安心|あんしん|N4\n安全|あんぜん|N4\n案内|あんないする|N4\n以下|いか|N4\n以外|いがい|N4\n以上|いじょう|N4\n以内|いない|N4\n意見|いけん|N4\n為|ため|N4\n移る|うつる|N4\n医学|いがく|N4\n育てる|そだてる|N4\n一生懸命|いっしょうけんめい|N4\n一度|いちど|N4\n引き出し|ひきだし|N4\n引き出す|ひきだす|N4\n引っ越す|ひっこす|N4\n運ぶ|はこぶ|N4\n運転|うんてんする|N4\n運転手|うんてんしゅ|N4\n運動|うんどうする|N4\n雲|くも|N4\n泳ぎ方|およぎかた|N4\n遠く|とおく|N4\n遠慮|えんりょする|N4\n汚れる|よごれる|N4\n押し入れ|おしいれ|N4\n億|おく|N4\n屋上|おくじょう|N4\n音|おと|N4\n下げる|さげる|N4\n下りる|おりる|N4\n下る|さがる|N4\n下宿|げしゅく|N4\n下着|したぎ|N4\n家内|かない|N4\n科学|かがく|N4\n火|ひ|N4\n火事|かじ|N4\n花見|はなみ|N4\n課長|かちょう|N4\n過ぎる|すぎる|N4\n会議|かいぎ|N4\n会議室|かいぎしつ|N4\n会場|かいじょう|N4\n会話|かいわ|N4\n回る|まわる|N4\n壊す|こわす|N4\n壊れる|こわれる|N4\n海岸|かいがん|N4\n皆|みな|N4\n確か|たしか|N4\n楽しみ|たのしみ|N4\n楽む|たのしむ|N4\n掛ける|かける|N4\n割れる|われる|N4\n割合|わりあい|N4\n滑る|すべる|N4\n噛む|かむ|N4\n乾く|かわく|N4\n慣れる|なれる|N4\n看護婦|かんごふ|N4\n簡単|かんたん|N4\n間|あいだ|N4\n間に合う|まにあう|N4\n間違える|まちがえる|N4\n関係|かんけい|N4\n危険|きけん|N4\n喜ぶ|よろこぶ|N4\n寄る|よる|N4\n機会|きかい|N4\n帰り|かえり|N4\n気|き|N4\n気持ち|きもち|N4\n気分|きぶん|N4\n汽車|きしゃ|N4\n祈る|いのる|N4\n季節|きせつ|N4\n規則|きそく|N4\n起す|おこす|N4\n技術|ぎじゅつ|N4\n客|きゃく|N4\n久しぶり|ひさしぶり|N4\n急|きゅう|N4\n急ぐ|いそぐ|N4\n急行|きゅうこう|N4\n泣く|なく|N4\n競争|きょうそう|N4\n教育|きょういく|N4\n教会|きょうかい|N4\n興味|きょうみ|N4\n鏡|かがみ|N4\n驚く|おどろく|N4\n近所|きんじょ|N4\n苦い|にがい|N4\n具合|ぐあい|N4\n空く|あく|N4\n空気|くうき|N4\n空港|くうこう|N4\n隅|すみ|N4\n君|きみ|N4\n形|かたち|N4\n景色|けしき|N4\n経験|けいけんする|N4\n経済|けいざい|N4\n計画|けいかくする|N4\n警察|けいさつ|N4\n迎える|むかえる|N4\n決して|けっして|N4\n決める|きめる|N4\n決る|きまる|N4\n血|ち|N4\n堅/硬/固い|かたい|N4\n建てる|たてる|N4\n研究|けんきゅう|N4\n研究室|けんきゅうしつ|N4\n絹|きぬ|N4\n見える|みえる|N4\n見つかる|みつかる|N4\n見つける|みつける|N4\n見物|けんぶつ|N4\n原因|げんいん|N4\n厳しい|きびしい|N4\n故障|こしょうする|N4\n湖|みずうみ|N4\n御主人|ごしゅじん|N4\n交通|こうつう|N4\n光|ひかり|N4\n光る|ひかる|N4\n公務員|こうむいん|N4\n向かう|むかう|N4\n工業|こうぎょう|N4\n工場|こうじょう|N4\n校長|こうちょう|N4\n港|みなと|N4\n考える|かんがえる|N4\n行う|おこなう|N4\n講義|こうぎ|N4\n講堂|こうどう|N4\n郊外|こうがい|N4\n降り出す|ふりだす|N4\n高校|こうこう|N4\n高校生|こうこうせい|N4\n高等学校|こうとうがっこう|N4\n合う|あう|N4\n国際|こくさい|N4\n込む|こむ|N4\n今度|こんど|N4\n今夜|こんや|N4\n差し上げる|さしあげる|N4\n砂|すな|N4\n最近|さいきん|N4\n最後|さいご|N4\n最初|さいしょ|N4\n妻|つま|N4\n済む|すむ|N4\n細かい|こまかい|N4\n坂|さか|N4\n参る|まいる|N4\n産業|さんぎょう|N4\n残る|のこる|N4\n残念|ざんねん|N4\n仕方|しかた|N4\n始める|はじめる|N4\n子|こ|N4\n市|し|N4\n市民|しみん|N4\n思い出す|おもいだす|N4\n思う|おもう|N4\n指|ゆび|N4\n指輪|ゆびわ|N4\n支度|したくする|N4\n枝|えだ|N4\n止む|やむ|N4\n止める|とめる|N4\n糸|いと|N4\n試験|しけん|N4\n試合|しあい|N4\n歯医者|はいしゃ|N4\n事故|じこ|N4\n事務所|じむしょ|N4\n似る|にる|N4\n字|じ|N4\n寺|てら|N4\n時代|じだい|N4\n治る|なおる|N4",
+    "自由|じゆう|N4\n辞典|じてん|N4\n失敗|しっぱい|N4\n写す|うつす|N4\n捨てる|すてる|N4\n社会|しゃかい|N4\n社長|しゃちょう|N4\n謝る|あやまる|N4\n寂しい|さびしい|N4\n取り替える|とりかえる|N4\n手袋|てぶくろ|N4\n手伝う|てつだう|N4\n趣味|しゅみ|N4\n首|くび|N4\n受ける|うける|N4\n受付|うけつけ|N4\n周り|まわり|N4\n拾う|ひろう|N4\n終わり|おわり|N4\n習慣|しゅうかん|N4\n舟|ふね|N4\n集める|あつめる|N4\n集る|あつまる|N4\n住所|じゅうしょ|N4\n十分|じゅうぶん|N4\n柔らかい|やわらかい|N4\n柔道|じゅうどう|N4\n出席|しゅっせきする|N4\n出発|しゅっぱつする|N4\n準備|じゅんびする|N4\n女性|じょせい|N4\n勝つ|かつ|N4\n召し上がる|めしあがる|N4\n将来|しょうらい|N4\n小学校|しょうがっこう|N4\n小説|しょうせつ|N4\n小鳥|ことり|N4\n承知|しょうちする|N4\n招待|しょうたいする|N4\n消しゴム|けしゴム|N4\n焼く|やく|N4\n焼ける|やける|N4\n笑う|わらう|N4\n紹介|しょうかい|N4\n上る|あがる|N4\n乗り換える|のりかえる|N4\n乗り物|のりもの|N4\n場合|ばあい|N4\n場所|ばしょ|N4\n畳|たたみ|N4\n飾る|かざる|N4\n植える|うえる|N4\n触る|さわる|N4\n食事|しょくじする|N4\n食料品|しょくりょうひん|N4\n寝坊|ねぼう|N4\n心|こころ|N4\n心配|しんぱいする|N4\n新聞社|しんぶんしゃ|N4\n森|もり|N4\n深い|ふかい|N4\n申し上げる|もうしあげる|N4\n申す|もうす|N4\n真中|まんなか|N4\n神社|じんじゃ|N4\n親|おや|N4\n親切|しんせつ|N4\n進む|すすむ|N4\n人形|にんぎょう|N4\n人口|じんこう|N4\n尋ねる|たずねる|N4\n水泳|すいえい|N4\n水道|すいどう|N4\n数学|すうがく|N4\n世界|せかい|N4\n世話|せわする|N4\n凄い|すごい|N4\n政治|せいじ|N4\n星|ほし|N4\n正しい|ただしい|N4\n生きる|いきる|N4\n生活|せいかつする|N4\n生産|せいさんする|N4\n盛ん|さかん|N4\n西洋|せいよう|N4\n席|せき|N4\n昔|むかし|N4\n石|いし|N4\n赤ん坊|あかんぼう|N4\n折る|おる|N4\n折れる|おれる|N4\n説明|せつめい|N4\n先輩|せんぱい|N4\n戦争|せんそう|N4\n浅い|あさい|N4\n線|せん|N4\n選ぶ|えらぶ|N4\n祖父|そふ|N4\n祖母|そぼ|N4\n痩せる|やせる|N4\n相談|そうだんする|N4\n草|くさ|N4\n送る|おくる|N4\n騒ぐ|さわぐ|N4\n増える|ふえる|N4\n贈り物|おくりもの|N4\n息子|むすこ|N4\n足す|たす|N4\n足りる|たりる|N4\n続く|つづく|N4\n続ける|つづける|N4\n卒業|そつぎょう|N4\n太る|ふとる|N4\n打つ|うつ|N4\n退院|たいいんする|N4\n代わり|かわり|N4\n台風|たいふう|N4\n大学生|だいがくせい|N4\n大事|だいじ|N4\n大体|だいたい|N4\n大分|だいぶ|N4\n棚|たな|N4\n探す|さがす|N4\n暖房|だんぼう|N4\n男性|だんせい|N4\n知らせる|しらせる|N4\n地震|じしん|N4\n地理|ちり|N4\n恥ずかしい|はずかしい|N4\n致す|いたす|N4\n遅れる|おくれる|N4\n着物|きもの|N4\n中々|なかなか|N4\n中学校|ちゅうがっこう|N4\n昼間|ひるま|N4\n昼休み|ひるやすみ|N4\n注意|ちゅうい|N4\n注射|ちゅうしゃ|N4\n虫|むし|N4\n駐車場|ちゅうしゃじょう|N4\n丁寧|ていねい|N4\n調べる|しらべる|N4\n直す|なおす|N4\n直る|なおる|N4\n珍しい|めずらしい|N4\n通う|かよう|N4\n通る|とおる|N4\n漬ける|つける|N4\n釣る|つる|N4\n泥棒|どろぼう|N4\n適当|てきとう|N4\n天気予報|てんきよほう|N4\n展覧会|てんらんかい|N4\n店員|てんいん|N4\n点|てん|N4\n伝える|つたえる|N4\n田舎|いなか|N4\n電灯|でんとう|N4\n電報|でんぽう|N4\n塗る|ぬる|N4\n途中|とちゅう|N4\n都|と|N4\n都合|つごう|N4\n怒る|おこる|N4\n倒れる|たおれる|N4\n島|しま|N4\n投げる|なげる|N4\n盗む|ぬすむ|N4\n湯|ゆ|N4\n答|こたえ|N4\n踏む|ふむ|N4\n逃げる|にげる|N4\n動く|うごく|N4\n動物園|どうぶつえん|N4\n道具|どうぐ|N4\n特に|とくに|N4\n特急|とっきゅう|N4\n特別|とくべつ|N4\n届ける|とどける|N4\n二階建て|にかいだて|N4\n日|ひ|N4\n日記|にっき|N4\n入院|にゅういんする|N4\n入学|にゅうがくする|N4\n熱|ねつ|N4\n拝見|はいけんする|N4\n背中|せなか|N4\n倍|ばい|N4\n売り場|うりば|N4\n泊まる|とまる|N4\n発音|はつおん|N4\n髪|かみ|N4\n反対|はんたい|N4\n番組|ばんぐみ|N4\n彼|かれ|N4\n彼ら|かれら|N4\n彼女|かのじょ|N4\n悲しい|かなしい|N4\n比べる|くらべる|N4\n非常に|ひじょうに|N4",
+    "飛行場|ひこうじょう|N4\n美しい|うつくしい|N4\n美術館|びじゅつかん|N4\n必ず|かならず|N4\n必要|ひつよう|N4\n表|おもて|N4\n品物|しなもの|N4\n不便|ふべん|N4\n付く|つく|N4\n夫|おっと|N4\n布団|ふとん|N4\n怖い|こわい|N4\n普通|ふつう|N4\n負ける|まける|N4\n部長|ぶちょう|N4\n復習|ふくしゅう|N4\n複雑|ふくざつ|N4\n払う|はらう|N4\n沸かす|わかす|N4\n沸く|わく|N4\n文化|ぶんか|N4\n文学|ぶんがく|N4\n文法|ぶんぽう|N4\n聞こえる|きこえる|N4\n米|こめ|N4\n壁|かべ|N4\n別|べつ|N4\n別れる|わかれる|N4\n変|へん|N4\n変える|かえる|N4\n変わる|かわる|N4\n片付ける|かたづける|N4\n返事|へんじ|N4\n捕まえる|つかまえる|N4\n暮れる|くれる|N4\n包む|つつむ|N4\n放送|ほうそうする|N4\n法律|ほうりつ|N4\n訪ねる|たずねる|N4\n亡くなる|なくなる|N4\n忘れ物|わすれもの|N4\n貿易|ぼうえき|N4\n僕|ぼく|N4\n翻訳|ほんやく|N4\n漫画|まんが|N4\n味|あじ|N4\n味噌|みそ|N4\n眠い|ねむい|N4\n眠る|ねむる|N4\n夢|ゆめ|N4\n無くなる|なくなる|N4\n無理|むり|N4\n娘|むすめ|N4\n鳴る|なる|N4\n毛|け|N4\n木綿|もめん|N4\n戻る|もどる|N4\n役に立つ|やくにたつ|N4\n約束|やくそく|N4\n訳|わけ|N4\n輸出|ゆしゅつする|N4\n輸入|ゆにゅうする|N4\n優しい|やさしい|N4\n遊び|あそび|N4\n予習|よしゅう|N4\n予定|よてい|N4\n予約|よやく|N4\n揺れる|ゆれる|N4\n用|よう|N4\n用意|ようい|N4\n用事|ようじ|N4\n葉|は|N4\n踊り|おどり|N4\n踊る|おどる|N4\n落す|おとす|N4\n落る|おちる|N4\n利用|りよう|N4\n理由|りゆう|N4\n裏|うら|N4\n立てる|たてる|N4\n留守|るす|N4\n旅館|りょかん|N4\n両方|りょうほう|N4\n力|ちから|N4\n林|はやし|N4\n例えば|たとえば|N4\n冷える|ひえる|N4\n冷房|れいぼう|N4\n歴史|れきし|N4\n連れる|つれる|N4\n連絡|れんらく|N4\n腕|うで|N4\nアイスクリーム|アイスクリーム|N3\nあいにく|あいにく|N3\nアイロン|アイロン|N3\nアウト|アウト|N3\nあした|あした|N3\nあちこち|あちこち|N3\nあっ|あっ|N3\nあと|あと|N3\nあらゆる|あらゆる|N3\nありがとう|ありがとう|N3\nあるいは|あるいは|N3\nアルバム|アルバム|N3\nあんなに|あんなに|N3\nあんまり|あんまり|N3\nいい|いい|N3\nいえ|いえ|N3\nいけない|いけない|N3\nいずれ|いずれ|N3\nいたずら|いたずら|N3\nいただきます|いただきます|N3\nいち|いち|N3\nいつか|いつか|N3\nいつでも|いつでも|N3\nいつまでも|いつまでも|N3\nいらいら|いらいら|N3\nいらっしゃい|いらっしゃい|N3\nいわゆる|いわゆる|N3\nインク|インク|N3\nウイスキー|ウイスキー|N3\nうがい|うがい|N3\nうなる|うなる|N3\nうるさい|うるさい|N3\nエネルギー|エネルギー|N3\nエンジン|エンジン|N3\nオーバー|オーバー|N3\nおじいさん|おじいさん|N3\nおしゃべり|おしゃべり|N3\nおそらく|おそらく|N3\nオフィス|オフィス|N3\nおまえ|おまえ|N3\nおめでとう|おめでとう|N3\nおや|おや|N3\nおよそ|およそ|N3\nお互い|おたがい|N3\nお昼|おひる|N3\nお腹|おなか|N3\nカー|カー|N3\nカード|カード|N3\nがっかり|がっかり|N3\nかなり|かなり|N3\nかもしれない|かもしれない|N3\nかわいそう|かわいそう|N3\nかわいらしい|かわいらしい|N3\nきちんと|きちんと|N3\nきつい|きつい|N3\nキャプテン|キャプテン|N3\nキャンプ|キャンプ|N3\nキロ|キロ|N3\nぐっすり|ぐっすり|N3\nクラシック|クラシック|N3\nグラス|グラス|N3\nグランド|グランド|N3\nクリーム|クリーム|N3\nクリスマス|クリスマス|N3\nグループ|グループ|N3\nケース|ケース|N3\nゲーム|ゲーム|N3\nけち|けち|N3\nコーチ|コーチ|N3\nコード|コード|N3\nゴール|ゴール|N3\nコピー|コピー|N3\nごめんなさい|ごめんなさい|N3\nこれら|これら|N3\nこんなに|こんなに|N3\nこんにちは|こんにちは|N3\nコンピューター|コンピューター|N3\nサービス|サービス|N3\nサイン|サイン|N3\nざっと|ざっと|N3\nさっぱり|さっぱり|N3\nさて|さて|N3\nジーンズ|ジーンズ|N3\nジェット機|ジェットき|N3\nしかも|しかも|N3\nしきりに|しきりに|N3\nしたがって|したがって|N3\nじっと|じっと|N3\nしばしば|しばしば|N3\nしまい|（終わり）|N3\nしまう|（終わる）|N3\nしまった|（感）|N3\nじゃあ|じゃあ|N3\nしゃべる|しゃべる|N3\nジュース|ジュース|N3\nスイッチ|スイッチ|N3\nスープ|スープ|N3\nスキー|スキー|N3\nスケート|スケート|N3\nすごい|すごい|N3\nスター|スター|N3\nスタイル|スタイル|N3\nスタンド|スタンド|N3\nずっと|ずっと|N3\nすてき|すてき|N3\nすなわち|すなわち|N3\nスピーチ|スピーチ|N3\nすみません|（感）|N3",
+    "セット|セット|N3\nセンター|センター|N3\nそこで|そこで|N3\nそして|そして|N3\nそっくり|そっくり|N3\nそっと|そっと|N3\nそのうち|そのうち|N3\nそのまま|そのまま|N3\nソファー|ソファー|N3\nそれぞれ|それぞれ|N3\nそれでも|それでも|N3\nそれとも|それとも|N3\nタイプライター|タイプライター|N3\nダイヤ|ダイヤ|N3\nタオル|タオル|N3\nだけど|だけど|N3\nただ|ただ|N3\nだって|だって|N3\nたっぷり|たっぷり|N3\nたとえ|たとえ|N3\nたびたび|たびたび|N3\nたまらない|たまらない|N3\nダンス|ダンス|N3\nチーズ|チーズ|N3\nチーム|チーム|N3\nチャンス|チャンス|N3\nちゃんと|ちゃんと|N3\nちょうだい|ちょうだい|N3\nつまり|つまり|N3\nで|で|N3\nデート|デート|N3\nですから|ですから|N3\nデモ|デモ|N3\nテント|テント|N3\nどうか|どうか|N3\nどうしても|どうしても|N3\nどこか|どこか|N3\nところが|ところが|N3\nところで|ところで|N3\nトップ|トップ|N3\nとにかく|とにかく|N3\nドライブ|ドライブ|N3\nトラック|トラック|N3\nドラマ|ドラマ|N3\nトランプ|トランプ|N3\nドレス|ドレス|N3\nとん|（1000|N3\nとんでもない|とんでもない|N3\nどんな|どんな|N3\nどんなに|どんなに|N3\nトンネル|トンネル|N3\nなお|なお|N3\nなかなか|なかなか|N3\nなぜなら|なぜなら|N3\nなにも|なにも|N3\nにっこり|にっこり|N3\nね|（感）|N3\nノック|ノック|N3\nのんびり|のんびり|N3\nパーセント|パーセント|N3\nバイオリン|バイオリン|N3\nハイキング|ハイキング|N3\nパイプ|パイプ|N3\nパイロット|パイロット|N3\nはさみ|はさみ|N3\nパス|パス|N3\nパスポート|パスポート|N3\nバッグ|バッグ|N3\nばったり|ばったり|N3\nバン|バン|N3\nハンサム|ハンサム|N3\nビール|ビール|N3\nピクニック|ピクニック|N3\nびっくり|びっくり|N3\nぴったり|ぴったり|N3\nビデオ|ビデオ|N3\nピン|ピン|N3\nふと|（副）|N3\nプラス|プラス|N3\nプラン|プラン|N3\nブレーキ|ブレーキ|N3\nプロ|プロ|N3\nベルト|ベルト|N3\nペンキ|ペンキ|N3\nベンチ|ベンチ|N3\nボーイ|ボーイ|N3\nボート|ボート|N3\nホーム|ホーム|N3\nボール|ボール|N3\nほぼ|ほぼ|N3\nぼんやり|ぼんやり|N3\nまあ|まあ|N3\nマーケット|マーケット|N3\nマイク|マイク|N3\nまさか|まさか|N3\nまさに|まさに|N3\nマスター|マスター|N3\nますます|ますます|N3\nママ|ママ|N3\nまるで|まるで|N3\nミス|ミス|N3\nミルク|ミルク|N3\nメモ|メモ|N3\nメンバー|メンバー|N3\nもしも|もしも|N3\nやがて|やがて|N3\nやはり|やはり|N3\nやや|やや|N3\nユーモア|ユーモア|N3\nゆっくり|ゆっくり|N3\nよい|よい|N3\nヨーロッパ|ヨーロッパ|N3\nヨット|ヨット|N3\nより|より|N3\nよると|よると|N3\nよろしく|（感）|N3\nライター|ライター|N3\nラケット|ラケット|N3\nレポート|レポート|N3\nロケット|ロケット|N3\nワイン|ワイン|N3\nわがまま|わがまま|N3\nわざと|わざと|N3\n哀れ|あわれ|N3\n愛|あい|N3\n愛する|あいする|N3\n愛情|あいじょう|N3\n挨拶|あいさつ|N3\n悪口|わるくち|N3\n悪魔|あくま|N3\n握る|にぎる|N3\n握手|あくしゅ|N3\n扱う|あつかう|N3\n或|ある|N3\n安定|あんてい|N3\n暗記|あんき|N3\n案|あん|N3\n以前|いぜん|N3\n以来|いらい|N3\n位|くらい|N3\n位置|いち|N3\n依頼|いらい|N3\n偉大|いだい|N3\n囲む|かこむ|N3\n委員|いいん|N3\n意外|いがい|N3\n意志|いし|N3\n意思|いし|N3\n意識|いしき|N3\n椅子|いす|N3\n為る|する|N3\n異なる|ことなる|N3\n異常|いじょう|N3\n移す|うつす|N3\n移動|いどう|N3\n維持|いじ|N3\n胃|い|N3\n衣服|いふく|N3\n違い|ちがい|N3\n違いない|ちがいない|N3\n違反|いはん|N3\n医師|いし|N3\n医療|いりょう|N3\n育つ|そだつ|N3\n一家|いっか|N3\n一言|ひとこと|N3\n一時|いちじ|N3\n一種|いっしゅ|N3\n一瞬|いっしゅん|N3\n一人一人|ひとりひとり|N3\n一生|いっしょう|N3\n一層|いっそう|N3\n一体|いったい|N3\n一致|いっち|N3\n一度に|いちどに|N3\n一般|いっぱん|N3\n一番|いちばん|N3\n一方|いっぽう|N3\n稲|いね|N3\n印|しるし|N3\n印刷|いんさつ|N3\n印象|いんしょう|N3\n引っ張る|ひっぱる|N3\n引退|いんたい|N3\n引用|いんよう|N3\n陰|かげ|N3\n隠す|かくす|N3\n隠れる|かくれる|N3\n宇宙|うちゅう|N3\n羽|はね|N3\n嘘|うそ|N3\n噂|うわさ|N3\n運|うん|N3\n餌|えさ|N3\n営業|えいぎょう|N3\n影|かげ|N3\n影響|えいきょう|N3\n栄養|えいよう|N3\n永遠|えいえん|N3\n永久|えいきゅう|N3",
+    "泳ぎ|およぎ|N3\n衛星|えいせい|N3\n鋭い|するどい|N3\n越える|こえる|N3\n越す|こす|N3\n円|えん|N3\n延期|えんき|N3\n援助|えんじょ|N3\n演技|えんぎ|N3\n演説|えんぜつ|N3\n演奏|えんそう|N3\n炎|ほのお|N3\n煙|けむり|N3\n猿|さる|N3\n縁|ふち|N3\n汚染|おせん|N3\n奥|おく|N3\n応じる|おうじる|N3\n横切る|よこぎる|N3\n横断|おうだん|N3\n王|おう|N3\n王子|おうじ|N3\n王様|おうさま|N3\n沖|おき|N3\n屋根|やね|N3\n恩|おん|N3\n温暖|おんだん|N3\n温度|おんど|N3\n穏やか|おだやか|N3\n下さる|くださる|N3\n下す|おろす|N3\n下り|くだり|N3\n化学|かがく|N3\n化粧|けしょう|N3\n何か|なにか|N3\n何で|なんで|N3\n何でも|なんでも|N3\n何とか|なんとか|N3\n価格|かかく|N3\n価値|かち|N3\n加える|くわえる|N3\n加わる|くわわる|N3\n加減|かげん|N3\n可|か|N3\n可能|かのう|N3\n嫁|よめ|N3\n家具|かぐ|N3\n家事|かじ|N3\n家賃|やちん|N3\n科目|かもく|N3\n歌手|かしゅ|N3\n河|かわ|N3\n火災|かさい|N3\n火曜|かよう|N3\n稼ぐ|かせぐ|N3\n菓子|かし|N3\n課|か|N3\n過ごす|すごす|N3\n過去|かこ|N3\n我々|われわれ|N3\n我慢|がまん|N3\n画家|がか|N3\n芽|め|N3\n会|かい|N3\n会員|かいいん|N3\n会計|かいけい|N3\n会合|かいごう|N3\n解く|とく|N3\n解ける|とける|N3\n解決|かいけつ|N3\n解釈|かいしゃく|N3\n回|かい|N3\n回す|まわす|N3\n回り|まわり|N3\n回復|かいふく|N3\n快適|かいてき|N3\n怪我|けが|N3\n改善|かいぜん|N3\n海外|かいがい|N3\n灰|はい|N3\n絵画|かいが|N3\n開始|かいし|N3\n外す|はずす|N3\n外交|がいこう|N3\n外出|がいしゅつ|N3\n咳|せき|N3\n害|がい|N3\n街|まち|N3\n拡大|かくだい|N3\n格好|かっこう|N3\n確かめる|たしかめる|N3\n確実|かくじつ|N3\n確認|かくにん|N3\n覚ます|さます|N3\n覚める|さめる|N3\n覚悟|かくご|N3\n革|かわ|N3\n学|がく|N3\n学ぶ|まなぶ|N3\n学期|がっき|N3\n学者|がくしゃ|N3\n学習|がくしゅう|N3\n学問|がくもん|N3\n楽|らく|N3\n額|がく|N3\n掛かる|かかる|N3\n割る|わる|N3\n活気|かっき|N3\n活動|かつどう|N3\n活用|かつよう|N3\n株|かぶ|N3\n刈る|かる|N3\n勘|かん|N3\n勘定|かんじょう|N3\n勧める|すすめる|N3\n完成|かんせい|N3\n完全|かんぜん|N3\n完了|かんりょう|N3\n患者|かんじゃ|N3\n感じ|かんじ|N3\n感じる|かんじる|N3\n感覚|かんかく|N3\n感謝|かんしゃ|N3\n感情|かんじょう|N3\n感心|かんしん|N3\n感動|かんどう|N3\n換える|かえる|N3\n歓迎|かんげい|N3\n汗|あせ|N3\n環境|かんきょう|N3\n監督|かんとく|N3\n管|くだ|N3\n管理|かんり|N3\n缶|かん|N3\n観客|かんきゃく|N3\n観光|かんこう|N3\n観察|かんさつ|N3\n間違い|まちがい|N3\n関する|かんする|N3\n関心|かんしん|N3\n関連|かんれん|N3\n丸|まる|N3\n丸い|まるい|N3\n含む|ふくむ|N3\n岸|きし|N3\n岩|いわ|N3\n願い|ねがい|N3\n願う|ねがう|N3\n企業|きぎょう|N3\n喜び|よろこび|N3\n器用|きよう|N3\n基|もと|N3\n基づく|もとづく|N3\n基本|きほん|N3\n奇妙|きみょう|N3\n嬉しい|うれしい|N3\n寄付|きふ|N3\n希望|きぼう|N3\n幾つ|いくつ|N3\n幾ら|いくら|N3\n旗|はた|N3\n既に|すでに|N3\n期間|きかん|N3\n期待|きたい|N3\n機械|きかい|N3\n機関|きかん|N3\n機嫌|きげん|N3\n機能|きのう|N3\n帰宅|きたく|N3\n気に入る|きにいる|N3\n気の毒|きのどく|N3\n気温|きおん|N3\n気候|きこう|N3\n気付く|きづく|N3\n気味|きみ|N3\n記憶|きおく|N3\n記事|きじ|N3\n記者|きしゃ|N3\n記入|きにゅう|N3\n記念|きねん|N3\n記録|きろく|N3\n貴重|きちょう|N3\n起こる|おこる|N3\n輝く|かがやく|N3\n鬼|おに|N3\n宜しい|よろしい|N3\n技師|ぎし|N3\n疑う|うたがう|N3\n疑問|ぎもん|N3\n義務|ぎむ|N3\n議員|ぎいん|N3\n議会|ぎかい|N3\n議長|ぎちょう|N3\n議論|ぎろん|N3\n詰める|つめる|N3\n逆|ぎゃく|N3\n逆らう|さからう|N3\n丘|おか|N3\n休暇|きゅうか|N3\n休憩|きゅうけい|N3",
+    "及ぼす|およぼす|N3\n吸収|きゅうしゅう|N3\n急激|きゅうげき|N3\n急速|きゅうそく|N3\n救う|すくう|N3\n救助|きゅうじょ|N3\n求める|もとめる|N3\n球|きゅう|N3\n級|きゅう|N3\n給料|きゅうりょう|N3\n旧|きゅう|N3\n牛|うし|N3\n去る|さる|N3\n居間|いま|N3\n居眠り|いねむり|N3\n巨大|きょだい|N3\n許す|ゆるす|N3\n許可|きょか|N3\n供給|きょうきゅう|N3\n競技|きょうぎ|N3\n共に|ともに|N3\n共通|きょうつう|N3\n共同|きょうどう|N3\n協力|きょうりょく|N3\n叫ぶ|さけぶ|N3\n境|さかい|N3\n強調|きょうちょう|N3\n強盗|ごうとう|N3\n強力|きょうりょく|N3\n恐れる|おそれる|N3\n恐ろしい|おそろしい|N3\n恐怖|きょうふ|N3\n教科書|きょうかしょ|N3\n教師|きょうし|N3\n教授|きょうじゅ|N3\n狂う|くるう|N3\n胸|むね|N3\n局|きょく|N3\n極|ごく|N3\n玉|たま|N3\n僅か|わずか|N3\n勤め|つとめ|N3\n禁煙|きんえん|N3\n禁止|きんし|N3\n筋|すじ|N3\n筋肉|きんにく|N3\n緊張|きんちょう|N3\n近頃|ちかごろ|N3\n近代|きんだい|N3\n金|かね|N3\n金額|きんがく|N3\n金庫|きんこ|N3\n金持ち|かねもち|N3\n金銭|きんせん|N3\n金属|きんぞく|N3\n金融|きんゆう|N3\n金曜|きんよう|N3\n銀|ぎん|N3\n句|く|N3\n区別|くべつ|N3\n苦しい|くるしい|N3\n苦しむ|くるしむ|N3\n苦手|にがて|N3\n苦痛|くつう|N3\n苦労|くろう|N3\n具体|ぐたい|N3\n空き|あき|N3\n偶|たま|N3\n偶々|たまたま|N3\n偶然|ぐうぜん|N3\n繰り返す|くりかえす|N3\n訓|くん|N3\n訓練|くんれん|N3\n軍|ぐん|N3\n軍隊|ぐんたい|N3\n係|かかり|N3\n傾向|けいこう|N3\n刑事|けいじ|N3\n型|かた|N3\n契約|けいやく|N3\n掲示|けいじ|N3\n敬意|けいい|N3\n景気|けいき|N3\n経つ|たつ|N3\n経営|けいえい|N3\n経由|けいゆ|N3\n繋ぐ|つなぐ|N3\n計|けい|N3\n計る|はかる|N3\n計算|けいさん|N3\n警告|けいこく|N3\n芸術|げいじゅつ|N3\n迎え|むかえ|N3\n劇|げき|N3\n劇場|げきじょう|N3\n撃つ|うつ|N3\n激しい|はげしい|N3\n欠ける|かける|N3\n欠陥|けっかん|N3\n欠席|けっせき|N3\n欠点|けってん|N3\n決まり|きまり|N3\n決心|けっしん|N3\n決定|けってい|N3\n穴|あな|N3\n結ぶ|むすぶ|N3\n結果|けっか|N3\n結局|けっきょく|N3\n結論|けつろん|N3\n月|つき|N3\n月曜|げつよう|N3\n健康|けんこう|N3\n券|けん|N3\n喧嘩|けんか|N3\n嫌う|きらう|N3\n建設|けんせつ|N3\n建築|けんちく|N3\n憲法|けんぽう|N3\n検査|けんさ|N3\n検討|けんとう|N3\n権利|けんり|N3\n県|けん|N3\n肩|かた|N3\n見る|みる|N3\n見解|けんかい|N3\n見事|みごと|N3\n見送り|みおくり|N3\n見当|けんとう|N3\n見舞い|みまい|N3\n賢い|かしこい|N3\n軒|けん|N3\n鍵|かぎ|N3\n元|もと|N3\n原|はら|N3\n減らす|へらす|N3\n減る|へる|N3\n現す|あらわす|N3\n現れ|あらわれ|N3\n現れる|あらわれる|N3\n現金|げんきん|N3\n現在|げんざい|N3\n現実|げんじつ|N3\n現象|げんしょう|N3\n現場|げんば|N3\n現状|げんじょう|N3\n現代|げんだい|N3\n言わば|いわば|N3\n言語|げんご|N3\n諺|ことわざ|N3\n限る|かぎる|N3\n限界|げんかい|N3\n個人|こじん|N3\n呼吸|こきゅう|N3\n故郷|こきょう|N3\n虎|とら|N3\n誇り|ほこり|N3\n雇う|やとう|N3\n互い|たがい|N3\n後者|こうしゃ|N3\n御|お|N3\n語|ご|N3\n語る|かたる|N3\n語学|ごがく|N3\n誤り|あやまり|N3\n誤解|ごかい|N3\n交換|こうかん|N3\n交際|こうさい|N3\n候補|こうほ|N3\n光景|こうけい|N3\n公平|こうへい|N3\n効く|きく|N3\n効果|こうか|N3\n向かい|むかい|N3\n向く|むく|N3\n向ける|むける|N3\n喉|のど|N3\n好み|このみ|N3\n好む|このむ|N3\n幸い|さいわい|N3\n幸せ|しあわせ|N3\n幸運|こううん|N3\n幸福|こうふく|N3\n広がる|ひろがる|N3\n広告|こうこく|N3\n攻撃|こうげき|N3\n更に|さらに|N3\n構う|かまう|N3\n構成|こうせい|N3\n硬い|かたい|N3\n硬貨|こうか|N3\n考え|かんがえ|N3\n考慮|こうりょ|N3\n航空|こうくう|N3\n行き|いき|N3\n行儀|ぎょうぎ|N3\n行動|こうどう|N3\n講演|こうえん|N3\n貢献|こうけん|N3\n降ろす|おろす|N3\n香り|かおり|N3",
+    "高価|こうか|N3\n高速|こうそく|N3\n合わせる|あわせる|N3\n合格|ごうかく|N3\n合計|ごうけい|N3\n合図|あいず|N3\n濠|ほり|N3\n豪華|ごうか|N3\n克服|こくふく|N3\n国家|こっか|N3\n国会|こっかい|N3\n国境|こっきょう|N3\n国語|こくご|N3\n国民|こくみん|N3\n穀物|こくもつ|N3\n黒板|こくばん|N3\n腰|こし|N3\n骨|ほね|N3\n骨折|こっせつ|N3\n頃|ころ|N3\n今に|いまに|N3\n今にも|いまにも|N3\n今回|こんかい|N3\n今後|こんご|N3\n困難|こんなん|N3\n婚約|こんやく|N3\n根|ね|N3\n混雑|こんざつ|N3\n混乱|こんらん|N3\n左右|さゆう|N3\n差|さ|N3\n差別|さべつ|N3\n砂漠|さばく|N3\n鎖|くさり|N3\n座席|ざせき|N3\n再び|ふたたび|N3\n最も|もっとも|N3\n最高|さいこう|N3\n最終|さいしゅう|N3\n最中|さいちゅう|N3\n最低|さいてい|N3\n才能|さいのう|N3\n済ませる|すませる|N3\n祭|まつり|N3\n裁判|さいばん|N3\n際|さい|N3\n材料|ざいりょう|N3\n罪|つみ|N3\n財産|ざいさん|N3\n作家|さっか|N3\n作業|さぎょう|N3\n作曲|さっきょく|N3\n作品|さくひん|N3\n作物|さくもつ|N3\n作法|さほう|N3\n昨|さく|N3\n桜|さくら|N3\n札|さつ|N3\n殺す|ころす|N3\n皿|さら|N3\n参加|さんか|N3\n参考|さんこう|N3\n賛成|Uӣ[い|N3\n酸素|さんそ|N3\n残す|のこす|N3\n残り|のこり|N3\n伺う|うかがう|N3\n使用|しよう|N3\n刺激|しげき|N3\n始まり|はじまり|N3\n姉妹|しまい|N3\n姿|すがた|N3\n市場|いちば|N3\n思い出|おもいで|N3\n思わず|おもわず|N3\n思想|しそう|N3\n指す|さす|N3\n指導|しどう|N3\n支える|ささえる|N3\n支給|しきゅう|N3\n支出|ししゅつ|N3\n支店|してん|N3\n支配|しはい|N3\n支払|しはらい|N3\n支払う|しはらう|N3\n止す|よす|N3\n死亡|しぼう|N3\n氏|し|N3\n至る|いたる|N3\n詩|し|N3\n詩人|しじん|N3\n試し|ためし|N3\n試す|ためす|N3\n資源|しげん|N3\n資本|しほん|N3\n飼う|かう|N3\n事|こと|N3\n事件|じけん|N3\n事実|じじつ|N3\n事情|じじょう|N3\n事態|じたい|N3\n事務|じむ|N3\n似合う|にあう|N3\n持ち上げる|もちあげる|N3\n時|とき|N3\n時期|じき|N3\n時刻|じこく|N3\n次々|つぎつぎ|N3\n次第|しだい|N3\n示す|しめす|N3\n自殺|じさつ|N3\n自身|じしん|N3\n自然|しぜん|N3\n自動|じどう|N3\n自慢|じまん|N3\n辞める|やめる|N3\n式|しき|N3\n叱る|しかる|N3\n失う|うしなう|N3\n失業|しつぎょう|N3\n失望|しつぼう|N3\n質|しつ|N3\n実|み|N3\n実に|じつに|N3\n実は|じつは|N3\n実験|じっけん|N3\n実現|じつげん|N3\n実行|じっこう|N3\n実際|じっさい|N3\n実施|じっし|N3\n芝居|しばい|N3\n芝生|しばふ|N3\n者|もの|N3\n邪魔|じゃま|N3\n借金|しゃっきん|N3\n主に|おもに|N3\n主義|しゅぎ|N3\n主張|しゅちょう|N3\n主婦|しゅふ|N3\n主要|しゅよう|N3\n取り上げる|とりあげる|N3\n取れる|とれる|N3\n守る|まもる|N3\n手間|てま|N3\n手術|しゅじゅつ|N3\n手段|しゅだん|N3\n手伝い|てつだい|N3\n手品|てじな|N3\n種|たね|N3\n種類|しゅるい|N3\n酒|さけ|N3\n首相|しゅしょう|N3\n首都|しゅと|N3\n受け取る|うけとる|N3\n需要|じゅよう|N3\n収める|おさめる|N3\n収穫|しゅうかく|N3\n収入|しゅうにゅう|N3\n周囲|しゅうい|N3\n宗教|しゅうきょう|N3\n就く|つく|N3\n就職|しゅうしょく|N3\n州|しゅう|N3\n修正|しゅうせい|N3\n修理|しゅうり|N3\n終|おわり|N3\n終える|おえる|N3\n臭い|くさい|N3\n週|しゅう|N3\n週間|しゅうかん|N3\n集まり|あつまり|N3\n集団|しゅうだん|N3\n集中|しゅうちゅう|N3\n住宅|じゅうたく|N3\n住民|じゅうみん|N3\n従う|したがう|N3\n従兄弟|いとこ|N3\n渋滞|じゅうたい|N3\n縦|たて|N3\n重視|じゅうし|N3\n重大|じゅうだい|N3\n重要|じゅうよう|N3\n銃|じゅう|N3\n宿|やど|N3\n宿泊|しゅくはく|N3\n祝い|いわい|N3\n祝う|いわう|N3\n出会い|であい|N3\n出会う|であう|N3\n出身|しゅっしん|N3\n出版|しゅっぱん|N3\n出来るだけ|できるだけ|N3\n出来事|できごと|N3\n述べる|のべる|N3\n瞬間|しゅんかん|N3\n順|じゅん|N3\n順調|じゅんちょう|N3\n順番|じゅんばん|N3\n処理|しょり|N3\n所為|せい|N3",
+    "署名|しょめい|N3\n書斎|しょさい|N3\n書物|しょもつ|N3\n書類|しょるい|N3\n助ける|たすける|N3\n助手|じょしゅ|N3\n女王|じょおう|N3\n女子|じょし|N3\n女優|じょゆう|N3\n徐々に|じょじょに|N3\n除く|のぞく|N3\n傷|きず|N3\n勝ち|かち|N3\n商人|しょうにん|N3\n商売|しょうばい|N3\n商品|しょうひん|N3\n奨学金|しょうがくきん|N3\n小屋|こや|N3\n小麦|こむぎ|N3\n小包|こづつみ|N3\n少々|しょうしょう|N3\n少しも|すこしも|N3\n少女|しょうじょ|N3\n少年|しょうねん|N3\n床|ゆか|N3\n承認|しょうにん|N3\n招く|まねく|N3\n昇る|のぼる|N3\n松|まつ|N3\n消費|しょうひ|N3\n消防|しょうぼう|N3\n症状|しょうじょう|N3\n省く|はぶく|N3\n章|しょう|N3\n笑い|わらい|N3\n笑顔|えがお|N3\n衝突|しょうとつ|N3\n証明|しょうめい|N3\n詳しい|くわしい|N3\n象|ぞう|N3\n賞|しょう|N3\n障害|しょうがい|N3\n上京|じょうきょう|N3\n上達|じょうたつ|N3\n上等|じょうとう|N3\n乗せる|のせる|N3\n乗客|じょうきゃく|N3\n冗談|じょうだん|N3\n城|しろ|N3\n場|ば|N3\n場面|ばめん|N3\n常に|つねに|N3\n常識|じょうしき|N3\n情報|じょうほう|N3\n条件|じょうけん|N3\n状況|じょうきょう|N3\n状態|じょうたい|N3\n譲る|ゆずる|N3\n植物|しょくぶつ|N3\n職|しょく|N3\n職業|しょくぎょう|N3\n触れる|ふれる|N3\n食う|くう|N3\n食卓|しょくたく|N3\n食品|しょくひん|N3\n食物|しょくもつ|N3\n食欲|しょくよく|N3\n食料|しょくりょう|N3\n食糧|しょくりょう|N3\n尻|しり|N3\n伸ばす|のばす|N3\n伸びる|のびる|N3\n信じる|しんじる|N3\n信仰|しんこう|N3\n信号|しんごう|N3\n信用|しんよう|N3\n信頼|しんらい|N3\n審判|しんぱん|N3\n心臓|しんぞう|N3\n心理|しんり|N3\n慎重|しんちょう|N3\n振る|ふる|N3\n新た|あらた|N3\n新鮮|しんせん|N3\n深刻|しんこく|N3\n申し込む|もうしこむ|N3\n申し訳|もうしわけ|N3\n真っ赤|まっか|N3\n真っ直ぐ|まっすぐ|N3\n真剣|しんけん|N3\n真似|まね|N3\n真面目|まじめ|N3\n神|かみ|N3\n神経|しんけい|N3\n親しい|したしい|N3\n親戚|しんせき|N3\n親友|しんゆう|N3\n診察|しんさつ|N3\n身|み|N3\n身体|しんたい|N3\n身長|しんちょう|N3\n進める|すすめる|N3\n進学|しんがく|N3\n進歩|しんぽ|N3\n針|はり|N3\n震える|ふるえる|N3\n人間|にんげん|N3\n人気|にんき|N3\n人工|じんこう|N3\n人込み|ひとごみ|N3\n人種|じんしゅ|N3\n人生|じんせい|N3\n人物|じんぶつ|N3\n人類|じんるい|N3\n塵|ごみ|N3\n図|ず|N3\n図書|としょ|N3\n推薦|すいせん|N3\n水準|すいじゅん|N3\n睡眠|すいみん|N3\n遂に|ついに|N3\n酔う|よう|N3\n随分|ずいぶん|N3\n数|かず|N3\n数える|かぞえる|N3\n数字|すうじ|N3\n世の中|よのなか|N3\n世間|せけん|N3\n世紀|せいき|N3\n是非|ぜひ|N3\n制限|せいげん|N3\n制度|せいど|N3\n勢い|いきおい|N3\n性|せい|N3\n性格|せいかく|N3\n成る|なる|N3\n成功|せいこう|N3\n成人|せいじん|N3\n成績|せいせき|N3\n成長|せいちょう|N3\n政府|せいふ|N3\n整理|せいり|N3\n正|せい|N3\n正確|せいかく|N3\n正午|しょうご|N3\n正式|せいしき|N3\n正直|しょうじき|N3\n清潔|せいけつ|N3\n生|せい|N3\n生き物|いきもの|N3\n生じる|しょうじる|N3\n生まれ|うまれ|N3\n生地|きじ|N3\n生物|せいぶつ|N3\n生命|せいめい|N3\n盛り|さかり|N3\n精々|せいぜい|N3\n精神|せいしん|N3\n製造|せいぞう|N3\n製品|せいひん|N3\n請求|せいきゅう|N3\n青年|せいねん|N3\n税金|ぜいきん|N3\n石炭|せきたん|N3\n石油|せきゆ|N3\n積もる|つもる|N3\n積極的|せっきょくてき|N3\n責める|せめる|N3\n責任|せきにん|N3\n跡|あと|N3\n切れ|きれ|N3\n切れる|きれる|N3\n設計|せっけい|N3\n設備|せつび|N3\n節|ふし|N3\n節約|せつやく|N3\n説|せつ|N3\n絶対|ぜったい|N3\n絶滅|ぜつめつ|N3\n舌|した|N3\n先ず|まず|N3\n先日|せんじつ|N3\n占める|しめる|N3\n専攻|せんこう|N3\n川|かわ|N3\n戦い|たたかい|N3\n戦う|たたかう|N3\n泉|いずみ|N3\n船|ふね|N3\n選手|せんしゅ|N3\n選択|せんたく|N3\n前者|ぜんしゃ|N3\n前進|ぜんしん|N3\n善|ぜん|N3\n全|ぜん|N3\n全く|まったく|N3\n全て|すべて|N3\n全員|ぜんいん|N3\n全国|ぜんこく|N3\n全然|ぜんぜん|N3",
+    "全体|ぜんたい|N3\n粗|あら|N3\n粗末|そまつ|N3\n素|もと|N3\n素晴らしい|すばらしい|N3\n組|くみ|N3\n組む|くむ|N3\n組合|くみあい|N3\n組織|そしき|N3\n訴える|うったえる|N3\n鼠|ねずみ|N3\n双子|ふたご|N3\n想像|そうぞう|N3\n操作|そうさ|N3\n巣|す|N3\n相手|あいて|N3\n相続|そうぞく|N3\n相当|そうとう|N3\n装置|そうち|N3\n霜|しも|N3\n騒ぎ|さわぎ|N3\n騒音|そうおん|N3\n増す|ます|N3\n増加|ぞうか|N3\n贈る|おくる|N3\n側|そば|N3\n息|いき|N3\n束|たば|N3\n速度|そくど|N3\n続き|つづき|N3\n袖|そで|N3\n存在|そんざい|N3\n孫|まご|N3\n尊敬|そんけい|N3\n尊重|そんちょう|N3\n損|そん|N3\n損害|そんがい|N3\n他|た|N3\n他人|たにん|N3\n多少|たしょう|N3\n多分|たぶん|N3\n太陽|たいよう|N3\n駄目|だめ|N3\n体育|たいいく|N3\n体温|たいおん|N3\n対|たい|N3\n対する|たいする|N3\n対象|たいしょう|N3\n帯|おび|N3\n怠ける|なまける|N3\n態度|たいど|N3\n替える|かえる|N3\n滞在|たいざい|N3\n袋|ふくろ|N3\n貸し|かし|N3\n退屈|たいくつ|N3\n逮捕|たいほ|N3\n代金|だいきん|N3\n代表|だいひょう|N3\n代理|だいり|N3\n台|だい|N3\n大いに|おおいに|N3\n大した|たいした|N3\n大家|おおや|N3\n大会|たいかい|N3\n大気|たいき|N3\n大使|たいし|N3\n大臣|だいじん|N3\n大戦|たいせん|N3\n大抵|たいてい|N3\n大統領|だいとうりょう|N3\n大半|たいはん|N3\n大部分|だいぶぶん|N3\n大変|たいへん|N3\n大陸|たいりく|N3\n題|だい|N3\n宅|たく|N3\n叩く|たたく|N3\n達する|たっする|N3\n奪う|うばう|N3\n谷|たに|N3\n誰か|だれか|N3\n単なる|たんなる|N3\n単に|たんに|N3\n単位|たんい|N3\n単語|たんご|N3\n単純|たんじゅん|N3\n担当|たんとう|N3\n端|はし|N3\n誕生|たんじょう|N3\n団体|だんたい|N3\n弾|たま|N3\n断る|ことわる|N3\n段|だん|N3\n男の人|おとこのひと|N3\n男子|だんし|N3\n値|ね|N3\n値段|ねだん|N3\n知らせ|しらせ|N3\n知恵|ちえ|N3\n知事|ちじ|N3\n知識|ちしき|N3\n知能|ちのう|N3\n地|ち|N3\n地位|ちい|N3\n地域|ちいき|N3\n地下|ちか|N3\n地球|ちきゅう|N3\n地区|ちく|N3\n地平線|ちへいせん|N3\n地方|ちほう|N3\n遅刻|ちこく|N3\n茶|ちゃ|N3\n中央|ちゅうおう|N3\n中学|ちゅうがく|N3\n中古|ちゅうこ|N3\n中止|ちゅうし|N3\n中心|ちゅうしん|N3\n仲|なか|N3\n仲間|なかま|N3\n昼食|ちゅうしょく|N3\n注|ちゅう|N3\n注ぐ|そそぐ|N3\n注文|ちゅうもん|N3\n注目|ちゅうもく|N3\n虫歯|むしば|N3\n駐車|ちゅうしゃ|N3\n著者|ちょしゃ|N3\n貯金|ちょきん|N3\n張る|はる|N3\n眺め|ながめ|N3\n眺める|ながめる|N3\n調査|ちょうさ|N3\n調子|ちょうし|N3\n長期|ちょうき|N3\n頂く|いただく|N3\n頂上|ちょうじょう|N3\n直|じき|N3\n直ちに|ただちに|N3\n直に|じかに|N3\n直接|ちょくせつ|N3\n沈む|しずむ|N3\n追い付く|おいつく|N3\n追う|おう|N3\n痛み|いたみ|N3\n通じる|つうじる|N3\n通す|とおす|N3\n通り|とおり|N3\n通り過ぎる|とおりすぎる|N3\n通過|つうか|N3\n通学|つうがく|N3\n通行|つうこう|N3\n通信|つうしん|N3\n掴む|つかむ|N3\n停留所|ていりゅうじょ|N3\n定期|ていき|N3\n底|そこ|N3\n抵抗|ていこう|N3\n提案|ていあん|N3\n提出|ていしゅつ|N3\n程|ほど|N3\n程度|ていど|N3\n諦める|あきらめる|N3\n泥|どろ|N3\n敵|てき|N3\n笛|ふえ|N3\n適する|てきする|N3\n適切|てきせつ|N3\n適度|てきど|N3\n適用|てきよう|N3\n溺れる|おぼれる|N3\n哲学|てつがく|N3\n徹底|てってい|N3\n徹夜|てつや|N3\n鉄|てつ|N3\n鉄道|てつどう|N3\n典型|てんけい|N3\n天候|てんこう|N3\n天然|てんねん|N3\n転ぶ|ころぶ|N3\n伝統|でんとう|N3\n田|た|N3\n電子|でんし|N3\n兎|うさぎ|N3\n吐く|はく|N3\n登山|とざん|N3\n途端|とたん|N3\n都会|とかい|N3\n都市|とし|N3\n努力|どりょく|N3\n度|たび|N3\n土|つち|N3\n土産|みやげ|N3\n土地|とち|N3\n土曜|どよう|N3\n倒す|たおす|N3\n党|とう|N3\n凍る|こおる|N3\n刀|かたな|N3\n塔|とう|N3",
+    "投票|とうひょう|N3\n灯|ひ|N3\n当たる|あたる|N3\n当てる|あてる|N3\n当時|とうじ|N3\n等|など|N3\n等しい|ひとしい|N3\n答案|とうあん|N3\n到着|とうちゃく|N3\n豆|まめ|N3\n頭痛|ずつう|N3\n働き|はたらき|N3\n動かす|うごかす|N3\n動詞|どうし|N3\n同一|どういつ|N3\n同時|どうじ|N3\n同様|どうよう|N3\n同僚|どうりょう|N3\n道徳|どうとく|N3\n道路|どうろ|N3\n得る|える|N3\n得意|とくい|N3\n特徴|とくちょう|N3\n毒|どく|N3\n独り|ひとり|N3\n独身|どくしん|N3\n独特|どくとく|N3\n独立|どくりつ|N3\n読み|よみ|N3\n読書|どくしょ|N3\n突然|とつぜん|N3\n届く|とどく|N3\n曇|くもり|N3\n内|うち|N3\n内容|ないよう|N3\n謎|なぞ|N3\n鍋|なべ|N3\n縄|なわ|N3\n二十|はたち|N3\n匂い|におい|N3\n日光|にっこう|N3\n日常|にちじょう|N3\n日中|にっちゅう|N3\n日付|ひづけ|N3\n日本|にっぽん|N3\n日曜|にちよう|N3\n入場|にゅうじょう|N3\n任せる|まかせる|N3\n認める|みとめる|N3\n濡れる|ぬれる|N3\n寧ろ|むしろ|N3\n熱心|ねっしん|N3\n熱帯|ねったい|N3\n熱中|ねっちゅう|N3\n年間|ねんかん|N3\n年寄|としより|N3\n年月|としつき|N3\n年代|ねんだい|N3\n年中|ねんじゅう|N3\n年齢|ねんれい|N3\n燃える|もえる|N3\n悩む|なやむ|N3\n濃い|こい|N3\n納得|なっとく|N3\n能|のう|N3\n能力|のうりょく|N3\n農家|のうか|N3\n農業|のうぎょう|N3\n農民|のうみん|N3\n波|なみ|N3\n破る|やぶる|N3\n破産|はさん|N3\n馬|うま|N3\n馬鹿|ばか|N3\n俳優|はいゆう|N3\n配達|はいたつ|N3\n梅|うめ|N3\n梅雨|つゆ|N3\n売れる|うれる|N3\n博士|はかせ|N3\n博物館|はくぶつかん|N3\n拍手|はくしゅ|N3\n爆発|ばくはつ|N3\n莫大|ばくだい|N3\n肌|はだ|N3\n畑|はたけ|N3\n発見|はっけん|N3\n発行|はっこう|N3\n発車|はっしゃ|N3\n発達|はったつ|N3\n発展|はってん|N3\n発表|はっぴょう|N3\n発明|はつめい|N3\n髪の毛|かみのけ|N3\n罰する|ばっする|N3\n抜く|ぬく|N3\n抜ける|ぬける|N3\n判断|はんだん|N3\n半ば|なかば|N3\n反抗|はんこう|N3\n板|いた|N3\n犯罪|はんざい|N3\n犯人|はんにん|N3\n販売|はんばい|N3\n範囲|はんい|N3\n飯|めし|N3\n否|いや|N3\n否定|ひてい|N3\n彼等|かれら|N3\n悲しむ|かなしむ|N3\n悲劇|ひげき|N3\n批判|ひはん|N3\n批評|ひひょう|N3\n比較|ひかく|N3\n疲れ|つかれ|N3\n皮|かわ|N3\n秘密|ひみつ|N3\n被る|かぶる|N3\n被害|ひがい|N3\n費用|ひよう|N3\n避ける|さける|N3\n非常|ひじょう|N3\n飛ばす|とばす|N3\n飛び出す|とびだす|N3\n飛行|ひこう|N3\n備える|そなえる|N3\n微笑む|ほほえむ|N3\n微妙|びみょう|N3\n美人|びじん|N3\n膝|ひざ|N3\n必ずしも|かならずしも|N3\n必死|ひっし|N3\n筆|ふで|N3\n紐|ひも|N3\n氷|こおり|N3\n表す|あらわす|N3\n表現|ひょうげん|N3\n表情|ひょうじょう|N3\n表面|ひょうめん|N3\n評価|ひょうか|N3\n評判|ひょうばん|N3\n描く|えがく|N3\n秒|びょう|N3\n品|しな|N3\n貧しい|まずしい|N3\n瓶|びん|N3\n不|ふ|N3\n不安|ふあん|N3\n不可|ふか|N3\n不幸|ふこう|N3\n不思議|ふしぎ|N3\n不自由|ふじゆう|N3\n不正|ふせい|N3\n不足|ふそく|N3\n不平|ふへい|N3\n不満|ふまん|N3\n不利|ふり|N3\n付き合い|つきあい|N3\n付ける|つける|N3\n夫人|ふじん|N3\n夫婦|ふうふ|N3\n婦人|ふじん|N3\n布|ぬの|N3\n普段|ふだん|N3\n父親|ちちおや|N3\n腐る|くさる|N3\n負け|まけ|N3\n武器|ぶき|N3\n舞台|ぶたい|N3\n部分|ぶぶん|N3\n風景|ふうけい|N3\n風呂|ふろ|N3\n幅|はば|N3\n服装|ふくそう|N3\n腹|はら|N3\n覆う|おおう|N3\n仏|ほとけ|N3\n物音|ものおと|N3\n物価|ぶっか|N3\n物語|ものがたり|N3\n物事|ものごと|N3\n物質|ぶっしつ|N3\n物理|ぶつり|N3\n分|ぶ|N3\n分ける|わける|N3\n分析|ぶんせき|N3\n分野|ぶんや|N3\n粉|こな|N3\n雰囲気|ふんいき|N3\n文|ぶん|N3\n文句|もんく|N3\n文字|もじ|N3\n文明|ぶんめい|N3\n塀|へい|N3\n平ら|たいら|N3\n平均|へいきん|N3\n平等|びょうどう|N3\n平和|へいわ|N3\n柄|え|N3\n閉じる|とじる|N3",
+    "癖|くせ|N3\n別に|べつに|N3\n別れ|わかれ|N3\n変化|へんか|N3\n変更|へんこう|N3\n辺り|あたり|N3\n便|びん|N3\n便り|たより|N3\n弁当|べんとう|N3\n保証|ほしょう|N3\n保存|ほぞん|N3\n捕まる|つかまる|N3\n歩道|ほどう|N3\n墓|はか|N3\n暮らし|くらし|N3\n暮らす|くらす|N3\n暮れ|くれ|N3\n母親|ははおや|N3\n包み|つつみ|N3\n報告|ほうこく|N3\n宝|たから|N3\n宝石|ほうせき|N3\n抱える|かかえる|N3\n抱く|いだく|N3\n放す|はなす|N3\n方々|かたがた|N3\n方向|ほうこう|N3\n方法|ほうほう|N3\n法|ほう|N3\n泡|あわ|N3\n褒める|ほめる|N3\n訪問|ほうもん|N3\n豊か|ゆたか|N3\n豊富|ほうふ|N3\n飽きる|あきる|N3\n望み|のぞみ|N3\n望む|のぞむ|N3\n棒|ぼう|N3\n冒険|ぼうけん|N3\n防ぐ|ふせぐ|N3\n吠える|ほえる|N3\n頬|ほほ|N3\n本人|ほんにん|N3\n本当|ほんと|N3\n本物|ほんもの|N3\n幕|まく|N3\n又|また|N3\n末|すえ|N3\n万一|まんいち|N3\n満ちる|みちる|N3\n満足|まんぞく|N3\n味方|みかた|N3\n未だ|まだ|N3\n未来|みらい|N3\n魅力|みりょく|N3\n妙|みょう|N3\n務め|つとめ|N3\n夢中|むちゅう|N3\n無|ぶ|N3\n無し|なし|N3\n無視|むし|N3\n無事|ぶじ|N3\n無駄|むだ|N3\n無料|むりょう|N3\n霧|きり|N3\n名|な|N3\n名人|めいじん|N3\n命|いのち|N3\n命じる|めいじる|N3\n命令|めいれい|N3\n明かり|あかり|N3\n明ける|あける|N3\n明らか|あきらか|N3\n明確|めいかく|N3\n明後日|みょうごにち|N3\n迷子|まいご|N3\n迷惑|めいわく|N3\n滅多に|めったに|N3\n免許|めんきょ|N3\n綿|めん|N3\n面|めん|N3\n面倒|めんどう|N3\n模様|もよう|N3\n毛布|もうふ|N3\n木曜|もくよう|N3\n黙る|だまる|N3\n目的|もくてき|N3\n目標|もくひょう|N3\n勿論|もちろん|N3\n尤も|もっとも|N3\n戻す|もどす|N3\n貰う|もらう|N3\n問い|とい|N3\n夜中|よなか|N3\n夜明け|よあけ|N3\n野|の|N3\n厄介|やっかい|N3\n役|やく|N3\n役割|やくわり|N3\n約|やく|N3\n愉快|ゆかい|N3\n油|あぶら|N3\n唯|ただ|N3\n唯一|ゆいいつ|N3\n優れる|すぐれる|N3\n優秀|ゆうしゅう|N3\n優勝|ゆうしょう|N3\n勇気|ゆうき|N3\n友|とも|N3\n友情|ゆうじょう|N3\n友人|ゆうじん|N3\n有る|ある|N3\n有効|ゆうこう|N3\n有能|ゆうのう|N3\n有利|ゆうり|N3\n誘う|さそう|N3\n郵便|ゆうびん|N3\n夕べ|ゆうべ|N3\n予期|よき|N3\n予算|よさん|N3\n予測|よそく|N3\n予報|よほう|N3\n予防|よぼう|N3\n余り|あまり|N3\n余分|よぶん|N3\n余裕|よゆう|N3\n与える|あたえる|N3\n預ける|あずける|N3\n幼い|おさない|N3\n容易|ようい|N3\n曜日|ようび|N3\n様|よう|N3\n様々|さまざま|N3\n様子|ようす|N3\n用いる|もちいる|N3\n用心|ようじん|N3\n要するに|ようするに|N3\n要求|ようきゅう|N3\n要素|ようそ|N3\n要点|ようてん|N3\n陽気|ようき|N3\n浴びる|あびる|N3\n翼|つばさ|N3\n裸|はだか|N3\n来|らい|N3\n頼る|たよる|N3\n雷|かみなり|N3\n嵐|あらし|N3\n利益|りえき|N3\n利口|りこう|N3\n履く|はく|N3\n理解|りかい|N3\n理想|りそう|N3\n裏切る|うらぎる|N3\n離す|はなす|N3\n離れる|はなれる|N3\n離婚|りこん|N3\n陸|りく|N3\n率|りつ|N3\n立ち上がる|たちあがる|N3\n立場|たちば|N3\n立派|りっぱ|N3\n流す|ながす|N3\n流れ|ながれ|N3\n流れる|ながれる|N3\n流行|りゅうこう|N3\n留める|とめる|N3\n留学|りゅうがく|N3\n旅|たび|N3\n両替|りょうがえ|N3\n料金|りょうきん|N3\n量|りょう|N3\n輪|わ|N3\n涙|なみだ|N3\n例|れい|N3\n冷静|れいせい|N3\n礼|れい|N3\n礼儀|れいぎ|N3\n列|れつ|N3\n列車|れっしゃ|N3\n劣る|おとる|N3\n恋|こい|N3\n恋人|こいびと|N3\n連れ|つれ|N3\n連想|れんそう|N3\n連続|れんぞく|N3\n労働|ろうどう|N3\n老い|おい|N3\n老人|ろうじん|N3\n論じる|ろんじる|N3\n論争|ろんそう|N3\n論文|ろんぶん|N3\n話し合う|はなしあう|N3\n話題|わだい|N3\n脇|わき|N3\n湾|わん|N3\n埃|ほこり|N3\n罹る|かかる|N3\n籠|かご|N3\n贅沢|ぜいたく|N3",
+    "轢く|ひく|N3"
+].join("\n");
 
 /* ---------- 固定配置 ---------- */
 var START = new Date('2026-09-21T00:00:00');   /* 备考第 1 天（周一） */
@@ -747,14 +970,14 @@ var POLITICS = [
 /* 主课A：周一至周六固定主线，按阶段切换
    铁律：先上完课/新课，课上完再刷题，每天总时长不超过 5.5h */
 var MAIN_A = {
-  1:[ { sub:'日语',   task:'新经典第三册 · 精学一课',   desc:'1-8课。先学完单词→语法→课文，剩下的时间刷同步练习册本课习题' },
+  1:[ { sub:'日语',   task:'新经典第三册 · 精学一课',   desc:'1-8课，2.5h 这样分：生词20min(只筛三圈+批量录入，不硬背) → 语法45min → 课文55min(在课文里消化生词) → 练习册30min' },
       { sub:'汉语言', task:'网课 + 基础考点讲义',        desc:'先看网课/过讲义，剩余时间做讲义配套题（古代汉语 + 现代汉语）' },
       { sub:'日语',   task:'N3 真题 · 阅读专项',         desc:'阅读 33/60 是弱项。先限时做，再逐句精读，生词全部进生词本' },
       { sub:'语文',   task:'网课 + 名句默写',            desc:'先把 7 节课看完，剩余时间刷课后练习 + 第 1 轮名句默写' },
       { sub:'日语',   task:'写作 + 翻译',                desc:'先学范文结构，再动笔。目标从 0 到能写 150 字，每天 3 句日译汉' },
       { sub:'汉语言', task:'教辅推进 + 刷题',            desc:'先过讲义章节，剩余时间刷对应章节的题' } ],
 
-  2:[ { sub:'日语',   task:'新经典第三册 · 精学一课',   desc:'9-16课。学完即整本书过完，先记语法接续和例句，再刷同步练习册' },
+  2:[ { sub:'日语',   task:'新经典第三册 · 精学一课',   desc:'9-16课。同样：生词20min(筛+录) → 语法45min → 课文55min → 练习册30min。学完即整本书过完' },
       { sub:'汉语言', task:'基础考点讲义 · 古代文学',    desc:'先过文学史线索 + 作家作品，剩余时间刷《全程刷题一本通》对应题' },
       { sub:'日语',   task:'N3 真题 · 语法词汇专项',      desc:'你语法 B 级，性价比最高的提分区。先刷题，错题当天弄懂' },
       { sub:'语文',   task:'古文翻译 + 断句专项',        desc:'统考该题型 16 分。先看方法，再用徐中玉课内篇目实战' },
@@ -929,6 +1152,7 @@ function set(k, v){
   var raw = JSON.stringify(v);
   mem[full] = raw;
   if(lsOK){ try{ localStorage.setItem(full, raw); }catch(e){ lsOK = false; } }
+  if(k !== 'sync') syncSoon();     /* 数据变了，稍后自动推送到云端 */
 }
 
 /* ---------- 日期工具 ---------- */
@@ -1007,7 +1231,7 @@ function buildTasks(d){
   var ds = ymd(d);
   var st = stageOf(d);
   var live = isLiveDay(d);
-  var w = get('word', { min:10, max:30, rmin:0, rmax:50 });
+  var w = get('word', { min:18, max:22, rmin:0, rmax:50 });
 
   if(isSunday(d)){
     return { sunday:true, list:[] };
@@ -1025,8 +1249,8 @@ function buildTasks(d){
   var list = [];
 
   list.push({
-    id:'w1', time:'07:30 - 08:30', title:'日语单词 · 新词', sub:'日语·单词', words:newW,
-    desc:'识日App打卡，新词 <em>'+newW+'</em> 个 · 《考前对策N3词汇》',
+    id:'w1', time:'07:30 - 08:30', title:'识日 App · 新词 + 复习', sub:'日语·单词', words:newW,
+    desc:'新词 <em>'+newW+'</em> 个（合并词本：课本词 + 考前对策）+ 全部待复习 · 1 小时内做完',
     hours:1, key:'w1'
   });
   list.push({
@@ -1036,8 +1260,8 @@ function buildTasks(d){
     hours: live ? 2 : 2.5, key:'a'
   });
   list.push({
-    id:'w2', time: live ? '15:00 - 15:30' : '15:30 - 16:00', title:'单词滚动复习', sub:'日语·单词',
-    desc:'艾宾浩斯节点：1 / 3 / 7 / 15 / 30 天前 · 复习量 <em>'+revW+'</em> 个' + (revW===0 ? '（今天抽到 0，放你一马）' : ''),
+    id:'w2', time: live ? '15:00 - 15:30' : '15:30 - 16:00', title:'生词本滚动', sub:'日语·单词',
+    desc:'过「单词」页：先看课本当课的 A 堆生词，再按加入时间往前滚 · 今天抽到 <em>'+revW+'</em> 个' + (revW===0 ? '（抽到 0，放你一马）' : ''),
     hours:0.5, key:'w2'
   });
 
@@ -1094,16 +1318,27 @@ function renderToday(){
   }
 
   var totalH = 0, doneH = 0;
+  var revealed = get('revealed_'+ds, false);
   data.list.forEach(function(t){
     totalH += t.hours;
     if(done[t.id]) doneH += t.hours;
+    /* 盲盒科目：一旦揭示就固定显示抽到的科目，不再藏起来 */
+    var shown = t.mystery && (revealed || done[t.id]);
+    var title = t.mystery
+      ? (shown ? ('主课B · ' + data.bSub) : '🎲 主课B · 点一下抽取今晚的科目')
+      : t.title;
+    var badge = (t.mystery && shown && !done[t.id])
+      ? '<span style="font-size:10px;color:var(--purple);border:1px solid rgba(124,92,255,.5);border-radius:99px;padding:1px 7px;margin-left:6px;vertical-align:1px">已抽定</span>'
+      : '';
     var el = document.createElement('div');
     el.className = 'task' + (done[t.id]?' done':'') + (t.mystery?' mystery':'') + (t.live?' live':'');
     el.innerHTML =
       '<div class="ck">'+(done[t.id]?'✓':'')+'</div>'+
       '<div class="body"><div class="tm">⏰ '+t.time+'</div>'+
-      '<div class="tt">'+(t.mystery ? (done[t.id] ? t.title.replace('盲盒科目', data.bSub) : '🎲 '+t.title) : t.title)+'</div>'+
-      '<div class="td">'+t.desc+'</div></div>';
+      '<div class="tt">'+title+badge+'</div>'+
+      '<div class="td">'+(t.mystery && shown
+        ? '已抽定，晚上按这个执行。点右边方框完成打卡。'
+        : t.desc)+'</div></div>';
     el.onclick = function(){
       if(t.mystery && !done[t.id] && !get('revealed_'+ds, false)){
         set('revealed_'+ds, true);
@@ -1466,6 +1701,454 @@ $('bagBtn').onclick = openBag;
 $('bagBtn2').onclick = openBag;
 $('bagClose').onclick = closeBag;
 
+/* =========================================================
+   生词本
+   ========================================================= */
+/* 考纲词表：OpenJLPT N5-N3（CC BY-SA 4.0），格式「日语|假名|等级」换行分隔 */
+var JLPT_MAP = null, JLPT_READ = null;
+function jlptIndex(){
+  if(JLPT_MAP) return JLPT_MAP;
+  JLPT_MAP = {};
+  if(!JLPT_DATA) return JLPT_MAP;
+  var lines = JLPT_DATA.split('\n');
+  for(var i = 0; i < lines.length; i++){
+    var p = lines[i].split('|');
+    if(p[0]) JLPT_MAP[p[0]] = { r: p[1] || p[0], lv: p[2] || '' };
+  }
+  return JLPT_MAP;
+}
+/* 假名反查：词表里有些词只收假名形（きれい），用户却输汉字形（綺麗），
+   反过来也有：词表收汉字形（お金），用户输假名（おかね）——这层兜住后一种 */
+function jlptReadIndex(){
+  if(JLPT_READ) return JLPT_READ;
+  JLPT_READ = {};
+  var idx = jlptIndex();
+  Object.keys(idx).forEach(function(w){
+    var r = idx[w].r;
+    if(r && !JLPT_READ[r]) JLPT_READ[r] = idx[w];
+  });
+  return JLPT_READ;
+}
+function jlptLookup(word){
+  if(!word) return null;
+  var idx = jlptIndex();
+  if(idx[word]) return idx[word];
+  var ri = jlptReadIndex();
+  if(ri[word]) return ri[word];
+  return null;
+}
+function isKana(s){
+  return /^[\u3040-\u309F\u30A0-\u30FF\u30FC\u30FB\u3005]+$/.test(s || '');
+}
+function escH(s){
+  return String(s === null || s === undefined ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function getWords(){ return get('words', {}); }
+function setWords(w){ set('words', w); }
+
+/* 加入一个词 → {ok} / {dup} / null */
+function addWord(word, read, mean, src){
+  word = (word || '').trim();
+  if(!word) return null;
+  var w = getWords();
+  if(w[word]) return { dup: true, word: word, rec: w[word] };
+  var hit = jlptLookup(word);
+  w[word] = {
+    r: (read || '').trim() || (hit ? hit.r : ''),
+    m: (mean || '').trim(),
+    s: src || '其他',
+    lv: hit ? hit.lv : '',
+    on: !!hit,        /* 词表外默认不背，可手动提升 */
+    x: false,         /* 是否已导出给识日 */
+    t: Date.now()
+  };
+  setWords(w);
+  return { ok: true, rec: w[word], hit: !!hit };
+}
+
+/* 解析批量文本：一行一个词，支持空格 / Tab / 逗号分隔 */
+function parseBulk(text){
+  var out = [];
+  (text || '').split(/\r?\n/).forEach(function(line){
+    line = line.trim();
+    if(!line) return;
+    var parts = line.split(/[\t,，;；|]+|\s+/).filter(function(x){ return x !== ''; });
+    if(!parts.length) return;
+    var word = parts[0], rest = parts.slice(1), read = '';
+    if(rest.length && isKana(rest[0])){ read = rest[0]; rest = rest.slice(1); }
+    out.push({ word: word, read: read, mean: rest.join(' ') });
+  });
+  return out;
+}
+
+var W_FILTER = 'all';
+var W_FILTERS = [
+  { k:'all',  n:'全部' },
+  { k:'on',   n:'必背' },
+  { k:'out',  n:'未收录' },
+  { k:'pend', n:'待导出' }
+];
+function wStats(){
+  var w = getWords(), ks = Object.keys(w);
+  var inN = 0, onN = 0, pend = 0;
+  ks.forEach(function(k){
+    if(w[k].lv) inN++;
+    if(w[k].on) onN++;
+    if(w[k].on && !w[k].x) pend++;
+  });
+  return { total: ks.length, inN: inN, out: ks.length - inN, on: onN, pend: pend, map: w, keys: ks };
+}
+function renderWords(){
+  var s = wStats();
+  $('wTotal').textContent = s.total;
+  $('wIn').textContent = s.inN;
+  $('wOut').textContent = s.out;
+  $('wStat').textContent = s.total ? ('必背 ' + s.on + ' · 待导出 ' + s.pend) : '';
+  $('wHint').innerHTML = s.total
+    ? ('已收录 <b style="color:var(--acc)">' + s.total + '</b> 个，考纲内 <b style="color:var(--ok)">' + s.inN + '</b> 个' +
+       (s.out ? '，词表未收录 <b style="color:var(--warn)">' + s.out + '</b> 个（默认不背）' : '') +
+       '。' + (s.pend ? '还有 <b style="color:var(--acc)">' + s.pend + '</b> 个没导出给识日。' : '全部已导出给识日。') +
+       (s.out ? '<br><span class="muted">词表是 JLPT 官方 N5-N3 共 3001 词，抽查常见词命中率约 93%。' +
+                '误判的可以在「未收录」里一键全部提升。</span>' : ''))
+    : '还没有生词。做题时遇到就随手加进来，假名会自动补上。';
+
+  var host = $('wFilter');
+  host.innerHTML = W_FILTERS.map(function(f){
+    var n = f.k === 'all' ? s.total : f.k === 'on' ? s.on : f.k === 'out' ? s.out : s.pend;
+    return '<button data-f="' + f.k + '"' + (W_FILTER === f.k ? ' class="on"' : '') + '>' + f.n + ' ' + n + '</button>';
+  }).join('');
+  host.querySelectorAll('button[data-f]').forEach(function(b){
+    b.onclick = function(){ W_FILTER = b.dataset.f; renderWords(); };
+  });
+
+  var keys = s.keys.filter(function(k){
+    var r = s.map[k];
+    if(W_FILTER === 'on') return r.on;
+    if(W_FILTER === 'out') return !r.lv;
+    if(W_FILTER === 'pend') return r.on && !r.x;
+    return true;
+  }).sort(function(a, b){ return (s.map[b].t || 0) - (s.map[a].t || 0); });
+
+  $('wCount').textContent = keys.length ? keys.length + ' 个' : '';
+  /* 看「词表未收录」时给一个批量提升的出口 */
+  var bulkBar = '';
+  if(W_FILTER === 'out' && keys.length){
+    bulkBar = '<button class="btn" id="wPromoteAll" style="margin-bottom:11px;padding:11px;font-size:13px">' +
+      '把这里 ' + keys.length + ' 个词全部提升为必背</button>';
+  }
+  $('wList').innerHTML = bulkBar + (keys.length ? keys.map(function(k){
+    var r = s.map[k];
+    var lv = r.lv ? '<span class="pill in">考纲内 ' + r.lv + '</span>' : '<span class="pill out">词表未收录</span>';
+    var on = r.on ? '<span class="pill on">必背</span>' : '<span class="pill">不背</span>';
+    var ex = r.x ? '<span class="pill x">已导出</span>' : '';
+    return '<div class="witem' + (r.on ? '' : ' off') + '">' +
+      '<div class="w1"><div><span class="jp">' + escH(k) + '</span>' +
+        (r.r ? '<span class="rd">' + escH(r.r) + '</span>' : '') + '</div><div>' + lv + '</div></div>' +
+      (r.m ? '<div class="mn">' + escH(r.m) + '</div>' : '') +
+      '<div class="mt">来源：' + escH(r.s || '其他') + on + ex + '</div>' +
+      '<div class="wact">' +
+        '<button data-a="toggle" data-k="' + escH(k) + '">' + (r.on ? '设为不背' : '提升为必背') + '</button>' +
+        '<button data-a="del" data-k="' + escH(k) + '">删除</button>' +
+      '</div></div>';
+  }).join('') : '<div class="muted">这个筛选下没有词。</div>');
+
+  var pa = $('wPromoteAll');
+  if(pa){
+    pa.onclick = function(){
+      var w = getWords(), n = 0;
+      keys.forEach(function(k){ if(w[k] && !w[k].on){ w[k].on = true; n++; } });
+      setWords(w); renderWords(); renderVocabStats();
+      toast('已把 ' + n + ' 个词提升为必背');
+    };
+  }
+
+  $('wList').querySelectorAll('button[data-a]').forEach(function(b){
+    b.onclick = function(){
+      var w = getWords(), k = b.dataset.k;
+      if(!w[k]) return;
+      if(b.dataset.a === 'del'){ delete w[k]; toast('已删除「' + k + '」'); }
+      else { w[k].on = !w[k].on; toast(w[k].on ? '「' + k + '」已设为必背' : '「' + k + '」已设为不背'); }
+      setWords(w);
+      renderWords(); renderVocabStats();
+    };
+  });
+  $('wExpHint').textContent = s.pend ? ('待导出 ' + s.pend + ' 个') : (s.on ? '已全部导出' : '');
+}
+function renderVocabStats(){
+  var s = wStats();
+  $('cVocab').textContent = s.total;
+  $('cVocabIn').textContent = s.inN;
+  $('cVocabOut').textContent = s.out;
+  $('cVocabTag').textContent = s.total ? ('必背 ' + s.on) : '';
+  $('cVocabHint').innerHTML = s.total
+    ? ('假名自动带出、自动标考纲等级。待导出给识日：<b style="color:var(--acc)">' + s.pend + '</b> 个。')
+    : '去「单词」页把做题遇到的生词加进来。';
+}
+function exportWords(){
+  var s = wStats();
+  var keys = s.keys.filter(function(k){ return s.map[k].on; });
+  if(!keys.length){ toast('还没有「必背」的词可以导出'); return; }
+  keys.sort(function(a, b){ return (s.map[a].t || 0) - (s.map[b].t || 0); });
+  var csv = keys.map(function(k){
+    var r = s.map[k];
+    return [k, r.r || '', String(r.m || '').replace(/[\r\n,]/g, ' ')].join(',');
+  }).join('\n');
+  $('wOutBox').value = csv;
+  var w = getWords();
+  keys.forEach(function(k){ if(w[k]) w[k].x = true; });
+  setWords(w);
+  copyText(csv, function(ok){
+    renderWords(); renderVocabStats();
+    toast(ok ? ('已复制 ' + keys.length + ' 个词，去识日导入')
+             : ('已生成 ' + keys.length + ' 个词，长按文本框手动复制'));
+  });
+}
+$('wWord').oninput = function(){
+  var v = $('wWord').value.trim();
+  if(!v){ $('wAuto').innerHTML = ''; return; }
+  var hit = jlptLookup(v);
+  if(hit){
+    $('wRead').value = hit.r;
+    $('wAuto').innerHTML = '<span style="color:var(--ok)">✓ 考纲内 ' + hit.lv + '</span> · 假名已自动填入';
+  }else{
+    $('wAuto').innerHTML = '<span style="color:var(--warn)">词表未收录</span>（可能是 N2+ 或超纲，也可能只是词表用假名形收录）· 加入后默认「不背」';
+  }
+};
+$('wAdd').onclick = function(){
+  var r = addWord($('wWord').value, $('wRead').value, $('wMean').value, $('wSrc').value);
+  if(!r){ toast('先填日语词'); return; }
+  if(r.dup){ toast('「' + r.word + '」已经在生词本里了'); return; }
+  $('wWord').value = ''; $('wRead').value = ''; $('wMean').value = ''; $('wAuto').innerHTML = '';
+  renderWords(); renderVocabStats();
+  toast(r.hit ? ('已加入（考纲内 ' + r.rec.lv + '）') : '已加入（词表外，默认不背）');
+};
+$('wBulkAdd').onclick = function(){
+  var list = parseBulk($('wBulk').value);
+  if(!list.length){ toast('文本框是空的'); return; }
+  var src = $('wSrc').value, ok = 0, dup = 0;
+  list.forEach(function(x){
+    var r = addWord(x.word, x.read, x.mean, src);
+    if(!r) return;
+    if(r.dup) dup++; else ok++;
+  });
+  $('wBulk').value = '';
+  renderWords(); renderVocabStats();
+  toast('加入 ' + ok + ' 个' + (dup ? '，跳过重复 ' + dup + ' 个' : ''));
+};
+$('wBulkClear').onclick = function(){ $('wBulk').value = ''; };
+$('wExport').onclick = exportWords;
+
+/* =========================================================
+   云同步（GitHub 私有 Gist）
+   ========================================================= */
+var SYNC_BUSY = false, SYNC_TIMER = null, SYNC_HASH = '';
+var GIST_FILE = 'zhimiao-data.json';
+
+function syncCfg(){ return get('sync', null); }
+function setSyncCfg(c){ set('sync', c); }
+function ghHeaders(tk){
+  return { 'Authorization': 'Bearer ' + tk, 'Accept': 'application/vnd.github+json',
+           'Content-Type': 'application/json' };
+}
+function collectRaw(){
+  var out = {};
+  allKeys().forEach(function(k){
+    var v = mem[k] !== undefined ? mem[k] : (lsOK ? localStorage.getItem(k) : null);
+    if(v !== null && v !== undefined) out[k] = v;
+  });
+  return out;
+}
+function applyRaw(obj){
+  Object.keys(obj).forEach(function(k){
+    if(k.indexOf(KEY) !== 0) return;
+    mem[k] = obj[k];
+    if(lsOK){ try{ localStorage.setItem(k, obj[k]); }catch(e){} }
+  });
+}
+/* 语义合并：打卡并集、进度取大、配置以本地为准 */
+function mergeVal(full, aRaw, bRaw){
+  var a, b;
+  try{ a = aRaw === undefined ? undefined : JSON.parse(aRaw); }catch(e){ a = undefined; }
+  try{ b = bRaw === undefined ? undefined : JSON.parse(bRaw); }catch(e){ b = undefined; }
+  if(a === undefined) return b;
+  if(b === undefined) return a;
+  var k = full.replace(KEY, '');
+  if(k.indexOf('done_') === 0 && a && b && typeof a === 'object' && typeof b === 'object'){
+    var o = {};
+    Object.keys(a).forEach(function(x){ o[x] = a[x]; });
+    Object.keys(b).forEach(function(x){ if(!o[x]) o[x] = b[x]; });
+    return o;
+  }
+  if(k === 'words' && a && b && typeof a === 'object' && typeof b === 'object'){
+    var o2 = {};
+    Object.keys(a).forEach(function(x){ o2[x] = a[x]; });
+    Object.keys(b).forEach(function(x){
+      if(!o2[x]) o2[x] = b[x];
+      else if(!o2[x].m && b[x].m) o2[x].m = b[x].m;
+    });
+    return o2;
+  }
+  if(k === 'boxlog'){
+    var seen = {}, out = [];
+    (a || []).concat(b || []).forEach(function(x){
+      if(x && x.d && !seen[x.d]){ seen[x.d] = 1; out.push(x); }
+    });
+    out.sort(function(p, q){ return p.d < q.d ? 1 : -1; });
+    return out.slice(0, 150);
+  }
+  if(k.indexOf('pg_') === 0) return Math.max(+a || 0, +b || 0);
+  if(k === 'bestStreak') return Math.max(+a || 0, +b || 0);
+  if(k === 'streak'){
+    var an = (a && a.n) || 0, bn = (b && b.n) || 0;
+    return an >= bn ? a : b;
+  }
+  if(k.indexOf('used_') === 0) return !!(a || b);
+  if(k.indexOf('box_') === 0) return a || b;
+  return a;   /* targets / word / light 等配置以当前设备为准 */
+}
+function mergeData(local, remote){
+  var out = {}, ks = {};
+  Object.keys(local).forEach(function(k){ ks[k] = 1; });
+  Object.keys(remote).forEach(function(k){ ks[k] = 1; });
+  Object.keys(ks).forEach(function(k){
+    var v = mergeVal(k, local[k], remote[k]);
+    if(v !== undefined) out[k] = JSON.stringify(v);
+  });
+  return out;
+}
+function fmtTime(ts){
+  if(!ts) return '—';
+  var d = new Date(ts), p = function(n){ return (n < 10 ? '0' : '') + n; };
+  return (d.getMonth() + 1) + '月' + d.getDate() + '日 ' + p(d.getHours()) + ':' + p(d.getMinutes());
+}
+function setSyncUI(state, last, id){
+  if(state !== null) $('syState').textContent = state;
+  if(last !== null) $('syLast').textContent = last;
+  if(id !== null) $('syId').textContent = id;
+}
+function syncPull(silent){
+  var c = syncCfg();
+  if(!c || !c.token || !c.gistId){ if(!silent) toast('先创建或连接同步空间'); return; }
+  if(SYNC_BUSY) return;
+  SYNC_BUSY = true;
+  setSyncUI('同步中…', null, null);
+  fetch('https://api.github.com/gists/' + c.gistId, { headers: ghHeaders(c.token) })
+    .then(function(r){
+      if(r.status === 401) throw new Error('Token 无效或已过期');
+      if(r.status === 404) throw new Error('找不到同步空间');
+      if(!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(g){
+      var f = g.files && g.files[GIST_FILE];
+      var remote = {};
+      if(f && f.content){ try{ remote = JSON.parse(f.content); }catch(e){ remote = {}; } }
+      var merged = mergeData(collectRaw(), remote);
+      applyRaw(merged);
+      var body = JSON.stringify({ files: {} });
+      body = JSON.stringify({ files: (function(){ var o = {}; o[GIST_FILE] = { content: JSON.stringify(merged) }; return o; })() });
+      SYNC_HASH = body;
+      return fetch('https://api.github.com/gists/' + c.gistId, {
+        method: 'PATCH', headers: ghHeaders(c.token), body: body
+      });
+    })
+    .then(function(r){
+      if(!r.ok) throw new Error('写回失败 HTTP ' + r.status);
+      c.last = Date.now(); setSyncCfg(c);
+      setSyncUI('已同步', fmtTime(c.last), c.gistId);
+      renderAll(); renderWords(); renderBagPreview(); renderBag();
+      if(!silent) toast('同步完成');
+    })
+    .catch(function(e){
+      setSyncUI('失败：' + e.message, null, null);
+      if(!silent) toast('同步失败：' + e.message);
+    })
+    .then(function(){ SYNC_BUSY = false; });
+}
+function syncPush(){
+  var c = syncCfg();
+  if(!c || !c.token || !c.gistId) return;
+  if(SYNC_BUSY) return;
+  var data = collectRaw();
+  var body = JSON.stringify({ files: (function(){ var o = {}; o[GIST_FILE] = { content: JSON.stringify(data) }; return o; })() });
+  if(body === SYNC_HASH) return;         /* 没变化就不推，省 API 额度 */
+  SYNC_BUSY = true;
+  setSyncUI('上传中…', null, null);
+  fetch('https://api.github.com/gists/' + c.gistId, {
+    method: 'PATCH', headers: ghHeaders(c.token), body: body
+  }).then(function(r){
+    if(!r.ok) throw new Error('HTTP ' + r.status);
+    SYNC_HASH = body;
+    c.last = Date.now(); setSyncCfg(c);
+    setSyncUI('已同步', fmtTime(c.last), c.gistId);
+  }).catch(function(e){
+    setSyncUI('上传失败：' + e.message, null, null);
+  }).then(function(){ SYNC_BUSY = false; });
+}
+function syncSoon(){
+  if(!syncCfg()) return;
+  clearTimeout(SYNC_TIMER);
+  SYNC_TIMER = setTimeout(syncPush, 6000);
+}
+$('syCreate').onclick = function(){
+  var tk = $('syToken').value.trim();
+  if(!tk){ toast('先粘贴 Token'); return; }
+  if(!/^(ghp_|github_pat_)/.test(tk)){ toast('Token 应该以 ghp_ 或 github_pat_ 开头'); return; }
+  setSyncUI('创建中…', null, null);
+  var files = {}; files[GIST_FILE] = { content: JSON.stringify(collectRaw()) };
+  fetch('https://api.github.com/gists', {
+    method: 'POST', headers: ghHeaders(tk),
+    body: JSON.stringify({ description: '知喵 · 专升本备考数据（请勿删除）', public: false, files: files })
+  }).then(function(r){
+    if(r.status === 401) throw new Error('Token 无效');
+    if(r.status === 403) throw new Error('Token 权限不足，确认勾了 gist');
+    if(!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  }).then(function(g){
+    setSyncCfg({ token: tk, gistId: g.id, last: Date.now() });
+    setSyncUI('已连接', fmtTime(Date.now()), g.id);
+    toast('同步空间已创建，去另一台设备点「连接已有」');
+  }).catch(function(e){
+    setSyncUI('创建失败：' + e.message, null, null);
+    toast('创建失败：' + e.message);
+  });
+};
+$('syJoin').onclick = function(){
+  var tk = $('syToken').value.trim();
+  if(!tk){ toast('先粘贴 Token'); return; }
+  setSyncUI('查找中…', null, null);
+  fetch('https://api.github.com/gists?per_page=100', { headers: ghHeaders(tk) })
+    .then(function(r){
+      if(r.status === 401) throw new Error('Token 无效');
+      if(!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(list){
+      var hit = null;
+      (list || []).forEach(function(g){
+        if(g.files && g.files[GIST_FILE]) hit = g;
+      });
+      if(!hit) throw new Error('没找到同步空间，请先在另一台设备点「创建同步空间」');
+      setSyncCfg({ token: tk, gistId: hit.id, last: 0 });
+      setSyncUI('已连接', '—', hit.id);
+      toast('已连接，正在拉取数据…');
+      syncPull(false);
+    })
+    .catch(function(e){
+      setSyncUI('连接失败：' + e.message, null, null);
+      toast('连接失败：' + e.message);
+    });
+};
+$('syNow').onclick = function(){ syncPull(false); };
+$('syOff').onclick = function(){
+  if(!syncCfg()){ toast('当前没有连接'); return; }
+  setSyncCfg(null);
+  setSyncUI('未连接', '—', '—');
+  $('syToken').value = '';
+  toast('已断开。本地数据不受影响。');
+};
+
 /* ---------- 渲染：进度 ---------- */
 var PG_DEF = [
   { g:'jp', k:'j1', name:'新经典第三册',   cur:0,   max:16,  unit:'课' },
@@ -1679,6 +2362,7 @@ function renderProg(){
   $('wDays').textContent = days;
   $('wBox').textContent = boxN;
 
+  renderVocabStats();
   renderPgList();
 }
 
@@ -1887,9 +2571,10 @@ document.querySelectorAll('nav button').forEach(function(b){
   b.onclick = function(){
     document.querySelectorAll('nav button').forEach(function(x){ x.classList.remove('on'); });
     b.classList.add('on');
-    ['today','prog','stage','mock','set'].forEach(function(t){
+    ['today','words','prog','stage','mock','set'].forEach(function(t){
       $('tab-'+t).style.display = (t === b.dataset.tab) ? '' : 'none';
     });
+    if(b.dataset.tab === 'words') renderWords();
     if(b.dataset.tab === 'prog') renderProg();
     if(b.dataset.tab === 'stage') renderStages();
     if(b.dataset.tab === 'mock') renderMock();
@@ -1900,11 +2585,16 @@ document.querySelectorAll('nav button').forEach(function(b){
 
 /* ---------- 设置 ---------- */
 function fillSettings(){
-  var t = targets(), w = get('word', { min:10, max:30, rmin:0, rmax:50 });
+  var t = targets(), w = get('word', { min:18, max:22, rmin:0, rmax:50 });
   $('s_zz').value = t.zz; $('s_yw').value = t.yw; $('s_yr').value = t.yr;
   $('s_jp').value = t.jp; $('s_cn').value = t.cn;
   $('w_min').value = w.min; $('w_max').value = w.max;
   $('r_min').value = w.rmin; $('r_max').value = w.rmax;
+  var c = syncCfg();
+  $('syToken').value = (c && c.token) ? c.token : '';
+  setSyncUI(c ? '已连接' : '未连接',
+            c && c.last ? fmtTime(c.last) : '—',
+            c ? c.gistId : '—');
   checkCompat();
 }
 $('saveTargets').onclick = function(){
@@ -2055,53 +2745,212 @@ $('openBox').onclick = openBox;
 /* ---------- 启动 ---------- */
 function renderAll(){
   renderToday();          /* 内部会刷新顶栏养成面板 */
+  renderWords();
+  renderVocabStats();
+  renderBagPreview();
   if(!lsOK){
     setTimeout(function(){ toast('提示：当前打开方式不支持本地存储，请用「设置 → 导出备份」保存数据'); }, 900);
   }
 }
 
 /* 图标 + manifest（内联生成，离线可用）
-   iOS 的 apple-touch-icon 不认 SVG，所以用 canvas 生成 PNG 再喂给它 */
+   造型：三花猫从书边探头 · 夜空 + 小星星 + 月牙
+   iOS 的 apple-touch-icon 不认 SVG，所以用 canvas 生成 PNG */
 function makeIcon(size){
   try{
     var c = document.createElement('canvas');
     c.width = c.height = size;
     var g = c.getContext('2d');
     if(!g) return null;
-    var grd = g.createLinearGradient(0, 0, size, size);
-    grd.addColorStop(0, '#5b9dff');
-    grd.addColorStop(1, '#7c5cff');
-    g.fillStyle = grd;
-    if(g.roundRect){ g.beginPath(); g.roundRect(0, 0, size, size, size*0.22); g.fill(); }
-    else { g.fillRect(0, 0, size, size); }
+    g.scale(size / 512, size / 512);
+    g.clearRect(0, 0, 512, 512);
+
+    /* 圆角矩形（手写，兼容老版 Safari） */
+    function rr(x, y, w, h, r){
+      g.beginPath();
+      g.moveTo(x + r, y);
+      g.lineTo(x + w - r, y); g.quadraticCurveTo(x + w, y, x + w, y + r);
+      g.lineTo(x + w, y + h - r); g.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      g.lineTo(x + r, y + h); g.quadraticCurveTo(x, y + h, x, y + h - r);
+      g.lineTo(x, y + r); g.quadraticCurveTo(x, y, x + r, y);
+      g.closePath();
+    }
+    function ell(cx, cy, rx, ry, rot){
+      g.beginPath();
+      if(g.ellipse){ g.ellipse(cx, cy, rx, ry, rot || 0, 0, 6.2832); }
+      else { g.save(); g.translate(cx, cy); g.rotate(rot || 0); g.scale(rx, ry); g.arc(0, 0, 1, 0, 6.2832); g.restore(); }
+    }
+    function dot(cx, cy, r){ g.beginPath(); g.arc(cx, cy, r, 0, 6.2832); g.fill(); }
+
+    /* ---- 1. 夜空底 ---- */
+    rr(0, 0, 512, 512, 112);
+    g.save(); g.clip();
+    var sky = g.createLinearGradient(0, 0, 60, 512);
+    sky.addColorStop(0, '#33205e');
+    sky.addColorStop(0.5, '#3d2a70');
+    sky.addColorStop(1, '#1b1136');
+    g.fillStyle = sky; g.fillRect(0, 0, 512, 512);
+
+    /* ---- 2. 小星星 ---- */
+    function spark(cx, cy, r, a){
+      g.globalAlpha = a; g.fillStyle = '#fff4d4';
+      g.beginPath();
+      g.moveTo(cx, cy - r);
+      g.quadraticCurveTo(cx, cy, cx + r, cy);
+      g.quadraticCurveTo(cx, cy, cx, cy + r);
+      g.quadraticCurveTo(cx, cy, cx - r, cy);
+      g.quadraticCurveTo(cx, cy, cx, cy - r);
+      g.fill();
+      g.globalAlpha = 1;
+    }
+    spark(92, 92, 18, .95);
+    spark(178, 48, 11, .7);
+    spark(392, 200, 13, .8);
+    spark(60, 232, 9, .5);
+    spark(452, 296, 9, .5);
+    spark(302, 42, 8, .5);
+    spark(122, 300, 7, .35);
     g.fillStyle = '#ffffff';
-    g.font = 'bold ' + Math.round(size*0.62) + 'px -apple-system,"PingFang SC",sans-serif';
-    g.textAlign = 'center';
-    g.textBaseline = 'middle';
-    g.fillText('升', size/2, size*0.54);
+    [[216, 108, 3.6, .5], [350, 118, 3, .45], [46, 158, 3, .4], [470, 148, 3.4, .4],
+     [268, 218, 2.6, .35], [148, 188, 2.6, .3], [404, 252, 2.6, .3], [78, 348, 3, .3],
+     [246, 74, 2.4, .35], [430, 58, 2.6, .4]].forEach(function(p){
+      g.globalAlpha = p[3]; dot(p[0], p[1], p[2]); g.globalAlpha = 1;
+    });
+
+    /* ---- 3. 月牙 ---- */
+    g.fillStyle = '#ffeaa8';
+    g.beginPath();
+    g.arc(410, 92, 38, 0, 6.2832);
+    g.arc(427, 77, 32, 0, 6.2832, true);
+    g.fill();
+
+    /* ---- 4. 三花猫（探头） ---- */
+    var HY = 292, HRX = 116, HRY = 108;
+    function catPath(){
+      g.beginPath();
+      if(g.ellipse){ g.ellipse(256, HY, HRX, HRY, 0, 0, 6.2832); }
+      else { g.save(); g.translate(256, HY); g.scale(HRX, HRY); g.arc(0, 0, 1, 0, 6.2832); g.restore(); }
+      g.moveTo(160, 242); g.lineTo(172, 140); g.lineTo(240, 196); g.closePath();
+      g.moveTo(352, 242); g.lineTo(340, 140); g.lineTo(272, 196); g.closePath();
+    }
+    /* 白底 */
+    catPath();
+    g.fillStyle = '#fdfbff'; g.fill();
+
+    /* 橘 / 深斑块（裁剪在猫轮廓内）——左橘、右深、中间白，三花经典分布 */
+    g.save(); catPath(); g.clip();
+    g.fillStyle = '#f4a259';
+    ell(170, 252, 76, 74, -0.32); g.fill();
+    g.fillStyle = '#3a2f4a';
+    ell(350, 262, 60, 76, 0.28); g.fill();
+    g.restore();
+
+    /* 内耳 */
+    g.fillStyle = '#ffb0c8';
+    g.beginPath(); g.moveTo(177, 215); g.lineTo(182, 169); g.lineTo(213, 194); g.closePath(); g.fill();
+    g.beginPath(); g.moveTo(335, 215); g.lineTo(330, 169); g.lineTo(299, 194); g.closePath(); g.fill();
+
+    /* 眼睛（先铺一圈浅色，保证压在深色斑块上也看得清） */
+    function eye(cx){
+      g.fillStyle = '#ece5f7';
+      ell(cx, 296, 31, 37); g.fill();
+      g.fillStyle = '#2b2140';
+      ell(cx, 296, 27, 33); g.fill();
+      g.fillStyle = '#ffffff';
+      dot(cx - 9, 283, 9.5);
+      dot(cx + 8, 308, 4.5);
+    }
+    eye(207); eye(305);
+
+    /* 腮红 */
+    g.globalAlpha = 0.45; g.fillStyle = '#ff9fb8';
+    ell(176, 340, 19, 11); g.fill();
+    ell(336, 340, 19, 11); g.fill();
+    g.globalAlpha = 1;
+
+    /* 鼻子 */
+    g.fillStyle = '#ff8fb0';
+    g.beginPath();
+    g.moveTo(256, 326); g.lineTo(245, 338);
+    g.quadraticCurveTo(256, 344, 267, 338);
+    g.closePath(); g.fill();
+
+    /* 嘴（w 形） */
+    g.strokeStyle = '#4a3d63'; g.lineWidth = 3.4; g.lineCap = 'round';
+    g.beginPath();
+    g.moveTo(256, 341); g.quadraticCurveTo(248, 354, 238, 345);
+    g.moveTo(256, 341); g.quadraticCurveTo(264, 354, 274, 345);
+    g.stroke();
+
+    /* 胡须（细一点、短一点，不要像小棍） */
+    g.strokeStyle = 'rgba(255,255,255,.78)'; g.lineWidth = 2.6; g.lineCap = 'round';
+    [[166, 318, 104, 305], [166, 336, 98, 336], [166, 354, 104, 367],
+     [346, 318, 408, 305], [346, 336, 414, 336], [346, 354, 408, 367]].forEach(function(w){
+      g.beginPath(); g.moveTo(w[0], w[1]); g.lineTo(w[2], w[3]); g.stroke();
+    });
+
+    /* ---- 5. 书边台面（盖住猫的下半） ---- */
+    g.fillStyle = '#4a3a72'; g.fillRect(0, 392, 512, 120);
+    g.fillStyle = '#6d58a8'; g.fillRect(0, 392, 512, 7);
+    g.fillStyle = '#392c5b'; g.fillRect(0, 399, 512, 9);
+
+    /* ---- 6. 两只前爪搭在书边上（压暗底色 + 加粗描边，小尺寸也能分清） ---- */
+    function paw(cx, spot){
+      g.fillStyle = '#ece3f9';
+      ell(cx, 397, 43, 30); g.fill();
+      g.fillStyle = spot;
+      ell(cx + 13, 390, 19, 12, 0.2); g.fill();
+      g.strokeStyle = 'rgba(76,58,116,.55)'; g.lineWidth = 5;
+      ell(cx, 397, 43, 30); g.stroke();
+      g.strokeStyle = 'rgba(76,58,116,.38)'; g.lineWidth = 3.4; g.lineCap = 'round';
+      g.beginPath(); g.moveTo(cx - 8, 402); g.lineTo(cx - 8, 384); g.stroke();
+      g.beginPath(); g.moveTo(cx + 4, 402); g.lineTo(cx + 4, 384); g.stroke();
+    }
+    paw(200, '#f4a259');
+    paw(312, '#3a2f4a');
+
+    g.restore();
+
+    /* ---- 7. 内描边 ---- */
+    rr(5, 5, 502, 502, 108);
+    g.strokeStyle = 'rgba(255,255,255,.15)'; g.lineWidth = 7; g.stroke();
+
     return c.toDataURL('image/png');
   }catch(e){ return null; }
 }
 (function(){
   try{
-    var icon180 = makeIcon(180);
-    var icon512 = makeIcon(512) || icon180;
-    if(icon180) $('ai').href = icon180;
+    /* manifest 用绝对地址，这样 Blob 形式的 manifest 也能找到图标文件 */
+    var base = location.href.replace(/[^\/]*$/, '');
     var mf = {
-      name:'专升本作战室', short_name:'作战室', start_url:'.', display:'standalone',
-      background_color:'#0d1017', theme_color:'#0d1017',
-      icons: icon512 ? [
-        { src:icon512, sizes:'512x512', type:'image/png', purpose:'any' },
-        { src:icon512, sizes:'512x512', type:'image/png', purpose:'maskable' }
-      ] : []
+      name:'知喵 · 专升本备考', short_name:'知喵', start_url:'.', display:'standalone',
+      background_color:'#1a1030', theme_color:'#1a1030',
+      icons: [
+        { src: base + 'icon-180.png', sizes:'180x180', type:'image/png' },
+        { src: base + 'icon-512.png', sizes:'512x512', type:'image/png', purpose:'any maskable' }
+      ]
     };
     $('mf').href = URL.createObjectURL(new Blob([JSON.stringify(mf)], { type:'application/json' }));
+
+    /* 图标文件在就用文件；万一只传了 index.html，就用 canvas 现画一个兜底 */
+    var probe = new Image();
+    probe.onload = function(){ $('iconPrev').src = 'icon-180.png'; };
+    probe.onerror = function(){
+      var c = makeIcon(180);
+      if(c){ $('ai').href = c; $('iconPrev').src = c; }
+    };
+    probe.src = 'icon-180.png';
   }catch(e){}
 })();
 
 if(get('light', false)) document.body.classList.add('light');
 renderAll();
 maybeEvent();
+/* 已连过云同步的话，打开就自动拉一次 */
+(function(){
+  var c = syncCfg();
+  if(c && c.token && c.gistId) setTimeout(function(){ syncPull(true); }, 900);
+})();
 setInterval(function(){ renderHero(); }, 60000);
 </script>
 </body>
