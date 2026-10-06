@@ -843,9 +843,12 @@ select{background:var(--bg3);border:1px solid var(--line);border-radius:10px;col
     <div id="syHelp"></div>
     <div class="mk"><label>Token</label>
       <input id="syToken" type="password" placeholder="ghp_xxxx（只勾 gist 权限）"
-        autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off">
+        autocapitalize="off" autocorrect="off" spellcheck="false"
+        autocomplete="new-password" data-lpignore="true" name="zhimiao-token">
       <button class="btn sm" id="syTokenEye" type="button" style="flex:0 0 auto">显示</button>
     </div>
+    <button class="btn" id="syTest" style="margin-top:9px">🔍 测试这个 Token（先点这个）</button>
+    <div class="hint" id="syTokenInfo" style="margin-top:7px"></div>
     <div class="row" style="margin-top:9px">
       <button class="btn pri" id="syJoin">① 连接已有空间</button>
       <button class="btn" id="syCreate">② 新建空间</button>
@@ -2402,9 +2405,45 @@ function ghHeaders(tk){
   return { 'Authorization': 'Bearer ' + tk, 'Accept': 'application/vnd.github+json',
            'Content-Type': 'application/json' };
 }
+/* Token 清理：iOS 粘贴时经常带上尾部空格、换行，或把首字母自动大写，
+   偶尔还会混进零宽字符和智能引号。这些都会让 GitHub 返回 401，
+   所以用之前一律先清一遍。 */
+function cleanToken(t){
+  return String(t === null || t === undefined ? '' : t)
+    .replace(/[\s\u00A0\u1680\u2000-\u200D\u202F\u205F\u3000\uFEFF]/g, '')
+    .replace(/[\u2018\u2019\u201C\u201D\u2032\u2033]/g, '')
+    .trim();
+}
+function tokenFromInput(){ return cleanToken($('syToken').value); }
+/* Token 自检：把长度、是否有杂质、GitHub 的真实回执全显示出来 */
+function tokenInfo(extra){
+  var el = $('syTokenInfo');
+  if(!el) return;
+  var raw = $('syToken').value || '';
+  var tk = cleanToken(raw);
+  if(!tk){ el.innerHTML = extra || 'Token 框是空的。'; return; }
+  var masked = tk.slice(0, 7) + '…' + tk.slice(-4);
+  var h = '长度 <b style="color:var(--acc)">' + tk.length + '</b> 字符 · ' + escH(masked);
+  if(raw !== tk){
+    h += '<br><span style="color:var(--warn)">⚠️ 检测到多余的空格/换行/零宽字符，使用时已自动清理</span>';
+  }
+  if(tk.length !== 40 && tk.length !== 93 && tk.length !== 82){
+    h += '<br><span style="color:var(--warn)">⚠️ 长度不对。`ghp_` 开头的应该是 40 位，' +
+         '`github_pat_` 开头的应该是 82 或 93 位。少了说明没复制全。</span>';
+  }
+  if(/^[GHP]/.test(tk) && tk.slice(0, 4).toLowerCase() === 'ghp_'){
+    h += '<br><span style="color:var(--bad)">⚠️ 开头的字母被系统改成了大写，Token 区分大小写，必须是 `ghp_`（全小写）</span>';
+  }
+  el.innerHTML = h + (extra ? ('<br>' + extra) : '');
+}
+/* 上云 / 导出的数据快照。
+   ⚠️ 必须排除 sync —— 它里面存着 GitHub Token。
+   之前只排除了导出、没排除云同步，导致 Token 被明文写进 Gist，
+   GitHub 的密钥扫描一旦发现就会自动撤销该 Token（这就是 Token「用一会儿就失效」的原因）。*/
 function collectRaw(){
   var out = {};
   allKeys().forEach(function(k){
+    if(k === KEY + 'sync') return;
     var v = mem[k] !== undefined ? mem[k] : (lsOK ? localStorage.getItem(k) : null);
     if(v !== null && v !== undefined) out[k] = v;
   });
@@ -2420,12 +2459,16 @@ function applyRaw(obj){
 }
 /* 语义合并：打卡并集、进度取大、配置以本地为准 */
 function mergeVal(full, aRaw, bRaw){
+  var k = full.replace(KEY, '');
+  /* sync 里是 GitHub Token：不参与合并、更不写回 Gist。
+     必须放在最前面 —— 否则会被下面的「一方为空就取另一方」提前返回绕过去，
+     把旧 Gist 里残留的 Token 又带回来。*/
+  if(k === 'sync') return undefined;
   var a, b;
   try{ a = aRaw === undefined ? undefined : JSON.parse(aRaw); }catch(e){ a = undefined; }
   try{ b = bRaw === undefined ? undefined : JSON.parse(bRaw); }catch(e){ b = undefined; }
   if(a === undefined) return b;
   if(b === undefined) return a;
-  var k = full.replace(KEY, '');
   if(k.indexOf('done_') === 0 && a && b && typeof a === 'object' && typeof b === 'object'){
     var o = {};
     Object.keys(a).forEach(function(x){ o[x] = a[x]; });
@@ -2590,9 +2633,9 @@ document.addEventListener('visibilitychange', function(){
 window.addEventListener('pagehide', syncFlush);
 
 $('syCreate').onclick = function(){
-  var tk = $('syToken').value.trim();
+  var tk = tokenFromInput();
   if(!tk){ toast('先粘贴 Token'); return; }
-  if(!/^(ghp_|github_pat_)/.test(tk)){ toast('Token 应该以 ghp_ 或 github_pat_ 开头'); return; }
+  if(!/^(ghp_|github_pat_)/.test(tk)){ toast('Token 应该以 ghp_ 或 github_pat_ 开头（全小写）'); return; }
   if(syncCfg() && !window.confirm('你已经连着一个同步空间了。\n再点「创建」会新建一个空的，两台设备就对不上了。\n\n确定要新建吗？（推荐点「连接已有」）')) return;
   setSyncUI('创建中…', null, null);
   var files = {}; files[GIST_FILE] = { content: JSON.stringify(collectRaw()) };
@@ -2607,10 +2650,22 @@ $('syCreate').onclick = function(){
     SYNC_HASH = '';
     setSyncUI('已连接 ✓', fmtTime(Date.now()), g.id);
     $('syHelp').innerHTML = gistHelpHTML(g.id);
-    toast('同步空间已创建。另一台设备粘同一个 Token → 点「连接已有」');
+    /* 防御性检查：万一这个空间被建成了公开的，Token 就会暴露在互联网上，
+       GitHub 扫到会直接把 Token 撤销掉 —— 这正是之前「Token 用一会儿就失效」的原因 */
+    if(g.public){
+      tokenInfo('<span style="color:var(--bad)">⚠️ 这个同步空间是「公开」的！</span><br>' +
+        '公开 Gist 任何人都能看，里面的数据会被 GitHub 扫描。请去 ' +
+        '<a href="https://gist.github.com/' + escH(g.id) + '" target="_blank" rel="noopener" ' +
+        'style="color:var(--acc)">GitHub 打开它</a> → 右上角 <b>Edit</b> → 点 <b>Make secret</b>，或直接删掉重建。');
+      toast('⚠️ 同步空间是公开的，请去 GitHub 改成 secret');
+    }else{
+      tokenInfo('<span style="color:var(--ok)">✓ 已创建同步空间</span>（secret 私有，只有知道链接的人能读）');
+    }
+    toast('同步空间已创建。另一台设备粘同一个 Token → 点「连接已有空间」');
   }).catch(function(e){
     var m = ghErr(e, '创建');
     setSyncUI('创建失败：' + m, null, null);
+    tokenInfo('<span style="color:var(--bad)">✕ ' + escH(m) + '</span>');
     toast('创建失败：' + m);
   });
 };
@@ -2653,10 +2708,11 @@ function gistHelpHTML(id){
     '</div>';
 }
 $('syJoin').onclick = function(){
-  var tk = $('syToken').value.trim();
+  var tk = tokenFromInput();
   if(!tk){ toast('先粘贴 Token'); return; }
   $('syPick').innerHTML = '';
   setSyncUI('查找中…', null, null);
+  tokenInfo('查找中…');
   fetch('https://api.github.com/gists?per_page=100', { headers: ghHeaders(tk) })
     .then(function(r){
       if(!r.ok){ var e = new Error('HTTP ' + r.status); e.status = r.status; throw e; }
@@ -2677,15 +2733,18 @@ $('syJoin').onclick = function(){
         SYNC_HASH = '';
         setSyncUI('已连接 ✓', '—', g.id);
         $('syHelp').innerHTML = gistHelpHTML(g.id);
+        tokenInfo('<span style="color:var(--ok)">✓ Token 有效，已找到 1 个同步空间</span>');
         toast('已连接，正在拉取数据…');
         syncPull(false);
         return;
       }
+      tokenInfo('<span style="color:var(--ok)">✓ Token 有效，找到 ' + hits.length + ' 个同步空间，请在下面选一个</span>');
       showGistPicker(tk, hits);
     })
     .catch(function(e){
       var m = ghErr(e, '连接');
       setSyncUI('连接失败：' + m, null, null);
+      tokenInfo('<span style="color:var(--bad)">✕ ' + escH(m.replace(/<[^>]+>/g, '')) + '</span>');
       toast('连接失败：' + m.replace(/<[^>]+>/g, ''));
     });
 };
@@ -2705,6 +2764,51 @@ $('syTokenEye').onclick = function(){
   var show = i.type === 'password';
   i.type = show ? 'text' : 'password';
   this.textContent = show ? '隐藏' : '显示';
+  tokenInfo();
+};
+$('syToken').oninput = tokenInfo;
+/* 一键自检：直接问 GitHub「这个 Token 是谁的、有没有 gist 权限」，
+   把结果原样显示出来，不用再靠肉眼比字符串 */
+$('syTest').onclick = function(){
+  var tk = tokenFromInput();
+  if(!tk){ toast('先把 Token 粘进来'); return; }
+  tokenInfo('正在向 GitHub 验证…');
+  fetch('https://api.github.com/user', { headers: ghHeaders(tk) })
+    .then(function(r){
+      if(r.status === 401){
+        tokenInfo('<span style="color:var(--bad)">✕ GitHub 说这个 Token 无效（401）</span><br>' +
+          '三种可能，按顺序排查：<br>' +
+          '① <b>这串已经被撤销了</b> —— 去 <code>github.com/settings/tokens</code> 看列表里还在不在。<br>' +
+          '&nbsp;&nbsp;&nbsp;<span style="color:var(--tx3)">注：Token 绝不会自己消失，除非被撤销或你手删过。</span><br>' +
+          '② <b>复制时少了一段或多带了字符</b> —— 重新整串复制一次，注意长度对不对。<br>' +
+          '③ <b>两台设备用的不是同一串</b> —— 确认都是从同一条记录里复制的。');
+        return null;
+      }
+      if(r.status === 403){
+        tokenInfo('<span style="color:var(--bad)">✕ Token 有效但权限不够（403）</span><br>' +
+          '生成 Token 时没勾 <code>gist</code>。重新生成一条，<b>只勾 gist</b> 这一个权限。');
+        return null;
+      }
+      if(!r.ok){
+        tokenInfo('<span style="color:var(--bad)">✕ GitHub 返回 HTTP ' + r.status + '</span>');
+        return null;
+      }
+      return r.json();
+    })
+    .then(function(u){
+      if(!u) return;
+      tokenInfo('<span style="color:var(--ok)">✓ Token 有效</span> · 账号 <b>' + escH(u.login || '?') + '</b><br>' +
+        '<span style="color:var(--tx3)">这个 Token 可用。接下来点「① 连接已有空间」。</span>');
+      toast('Token 有效 ✓');
+    })
+    .catch(function(){
+      tokenInfo('<span style="color:var(--bad)">✕ 请求没能发出去</span><br>' +
+        '不是 Token 的问题。可能原因：<br>' +
+        '① 没联网 / 网络不稳定<br>' +
+        '② iPad 上的 Safari 装了<b>广告拦截或隐私插件</b>，把 api.github.com 拦了 → ' +
+        '去「设置 → Safari → 扩展」临时关掉<br>' +
+        '③ 开了某些 VPN / 代理');
+    });
 };
 
 /* ---------- 渲染：进度 ---------- */
@@ -3253,6 +3357,7 @@ function fillSettings(){
   var c = syncCfg();
   $('syToken').value = (c && c.token) ? c.token : '';
   $('syHelp').innerHTML = (c && c.gistId) ? gistHelpHTML(c.gistId) : '';
+  if($('syTokenInfo')) $('syTokenInfo').innerHTML = '';
   setSyncUI(c ? '已连接' : '未连接',
             c && c.last ? fmtTime(c.last) : '—',
             c ? c.gistId : '—');
