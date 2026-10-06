@@ -106,7 +106,8 @@ body.light{
 .btn.pri{background:linear-gradient(135deg,#5b9dff,#7c5cff);color:#fff;box-shadow:0 6px 22px -8px rgba(91,157,255,.8)}
 .btn.gold{background:linear-gradient(135deg,#ffcf5c,#ff9f43);color:#3a2500;box-shadow:0 6px 22px -8px rgba(255,176,32,.8)}
 .btn:disabled{opacity:.42;cursor:not-allowed;box-shadow:none}
-.btn.sm{padding:9px 14px;font-size:13px;width:auto;display:inline-block;border-radius:10px}
+.btn.sm{padding:11px 16px;font-size:13px;width:auto;display:inline-flex;align-items:center;
+  justify-content:center;min-height:44px;border-radius:10px}
 .btn.done{background:rgba(51,214,159,.16);color:var(--ok);border:1px solid rgba(51,214,159,.4)}
 
 /* 盲盒开出的奖励详情 */
@@ -149,11 +150,11 @@ body.light .pdetail{background:rgba(255,255,255,.6)}
 .pg .adj>*{margin-right:6px}
 .pg .adj>*:last-child{margin-right:0}
 .pg .adj button{
-  flex:0 0 32px;height:28px;border-radius:8px;border:1px solid var(--line);
-  background:var(--bg3);color:var(--tx2);font-size:15px;font-family:inherit;cursor:pointer;
+  flex:0 0 46px;height:44px;border-radius:10px;border:1px solid var(--line);
+  background:var(--bg3);color:var(--tx2);font-size:17px;font-family:inherit;cursor:pointer;
 }
-.pg .adj .num{flex:1;background:var(--bg3);border:1px solid var(--line);border-radius:8px;
-  color:var(--tx);text-align:center;font-size:16px;font-family:inherit;height:28px;padding:0 4px;
+.pg .adj .num{flex:1;background:var(--bg3);border:1px solid var(--line);border-radius:10px;
+  color:var(--tx);text-align:center;font-size:16px;font-family:inherit;height:44px;padding:0 4px;
   -webkit-appearance:none;appearance:none;min-width:0}
 
 /* ---------- 阶段时间轴 ---------- */
@@ -175,7 +176,7 @@ body.light .pdetail{background:rgba(255,255,255,.6)}
 .mk>*{margin-right:8px}
 .mk>*:last-child{margin-right:0}
 .mk label{flex:0 0 96px;font-size:12.5px;color:var(--tx2)}
-.mk input{flex:1;background:var(--bg3);border:1px solid var(--line);border-radius:10px;
+.mk input{flex:1;background:var(--bg3);border:1px solid var(--line);border-radius:10px;min-height:44px;
   color:var(--tx);padding:9px 11px;font-size:16px;font-family:inherit;min-width:0;
   -webkit-appearance:none;appearance:none}
 .mk .tgt{flex:0 0 auto;font-size:11.5px;color:var(--tx3)}
@@ -193,8 +194,9 @@ nav{
 }
 body.light nav{background:rgba(255,255,255,.9)}
 nav button{
-  flex:1;background:0;border:0;padding:9px 0 10px;color:var(--tx3);
-  font-size:10.5px;font-family:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;
+  flex:1;background:0;border:0;padding:9px 0 10px;color:var(--tx3);min-height:52px;
+  font-size:10.5px;font-family:inherit;cursor:pointer;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
   -webkit-appearance:none;appearance:none;
 }
 nav button i{font-size:19px;font-style:normal;line-height:1;display:block;margin-bottom:3px}
@@ -223,13 +225,15 @@ body.light .infobox{color:#1b4b96}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 .tabs{display:flex;margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tabs button{
-  flex:0 0 auto;padding:7px 14px;border-radius:99px;border:1px solid var(--line);
+  flex:0 0 auto;padding:0 15px;border-radius:99px;border:1px solid var(--line);min-height:44px;
   background:var(--bg2);color:var(--tx2);font-size:12.5px;font-family:inherit;cursor:pointer;
-  margin-right:6px;-webkit-appearance:none;appearance:none;
+  margin-right:6px;display:inline-flex;align-items:center;
+  -webkit-appearance:none;appearance:none;
 }
 .tabs button.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
 details{background:var(--bg3);border-radius:12px;padding:11px 13px;margin-bottom:9px}
-details summary{font-size:13.5px;font-weight:600;cursor:pointer;list-style:none}
+details summary{font-size:13.5px;font-weight:600;cursor:pointer;list-style:none;
+  min-height:44px;display:flex;align-items:center}
 details summary::-webkit-details-marker{display:none}
 details summary:before{content:'▸ ';color:var(--tx3)}
 details[open] summary:before{content:'▾ '}
@@ -311,16 +315,33 @@ details .dc{font-size:12.5px;color:var(--tx2);margin-top:9px;line-height:1.7}
 .pill.out{color:var(--warn);border-color:rgba(255,176,32,.45);background:rgba(255,176,32,.1)}
 .pill.on{color:var(--acc);border-color:rgba(91,157,255,.5);background:rgba(91,157,255,.12)}
 .pill.x{color:var(--purple);border-color:rgba(192,132,252,.45);background:rgba(192,132,252,.12)}
-.wact{margin-top:9px}
-.wact button{font-size:11.5px;padding:5px 11px;border-radius:8px;border:1px solid var(--line);
+.wact{margin-top:9px;display:flex}
+.wact button{flex:1;font-size:12px;padding:0 11px;min-height:44px;border-radius:10px;border:1px solid var(--line);
   background:var(--bg2);color:var(--tx2);font-family:inherit;cursor:pointer;margin-right:6px}
 .wact button:last-child{margin-right:0}
 select{background:var(--bg3);border:1px solid var(--line);border-radius:10px;color:var(--tx);
-  padding:9px 11px;font-size:16px;font-family:inherit;flex:1;min-width:0;
+  padding:9px 11px;font-size:16px;font-family:inherit;flex:1;min-width:0;min-height:44px;
   -webkit-appearance:none;appearance:none}
 .syncrow{display:flex;align-items:center;font-size:12.5px;padding:7px 0}
 .syncrow .k{flex:0 0 92px;color:var(--tx3)}
 .syncrow .v{flex:1;color:var(--tx2);word-break:break-all}
+
+/* ---------- 撤销条 / 二选一列表 / 向导 ---------- */
+.undobar{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:rgba(91,157,255,.12);border:1px solid rgba(91,157,255,.35);border-radius:12px;
+  padding:10px 12px;font-size:12.5px;color:var(--tx2);margin-top:9px;line-height:1.5}
+.undobar button{flex:0 0 auto;min-height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--line);
+  background:var(--bg2);color:var(--tx);font-size:12.5px;font-family:inherit;cursor:pointer}
+.pick{background:var(--bg3);border:1px solid var(--line);border-radius:12px;padding:11px 12px;
+  margin-bottom:8px;cursor:pointer}
+.pick:active{transform:scale(.99)}
+.pick b{font-size:13px}
+.pick .m{font-size:11px;color:var(--tx3);margin-top:3px;word-break:break-all}
+.wz{background:var(--bg3);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:9px}
+.wz .q{font-size:13px;color:var(--tx2);margin-bottom:10px;line-height:1.6}
+.schrow{background:var(--bg3);border:1px solid var(--line);border-radius:12px;padding:11px 12px;margin-bottom:8px}
+.schrow .hd{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;font-weight:600}
+.schrow .dt{font-size:11.5px;color:var(--tx3);margin-top:5px}
 
 /* ---------- iPad / 宽屏两栏布局 ---------- */
 @media (min-width: 860px){
@@ -363,6 +384,7 @@ select{background:var(--bg3);border:1px solid var(--line);border-radius:10px;col
     <h2><span id="todayLabel">今天</span><span id="restTag"></span></h2>
     <div id="motto" style="font-size:13.5px;color:var(--tx2);margin:-4px 0 12px"></div>
     <div id="tasks"></div>
+    <div id="taskNote"></div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px">
       <span class="muted">完成度 <b id="prog" style="color:var(--acc)">0/4</b></span>
       <span class="muted" id="streak"></span>
@@ -393,13 +415,11 @@ select{background:var(--bg3);border:1px solid var(--line);border-radius:10px;col
         ★★★★☆ 摸鱼 / 小额购物：今晚砍半、50 元随便买<br>
         ★★★★★ 大额购物 / 全天放假：300 元随便买、一整天不学<br><br>
         <b style="color:var(--tx2)">稀有度 = 多久能见到一次</b><br>
-        普通 —— 基本每天都能开到（合计 82%）<br>
-        稀有 —— 平均约 7 天一次（合计 15%）<br>
-        史诗 —— 平均约 50 天一次（2%）<br>
-        传说 —— 平均约 100 天一次（1%）<br><br>
+        <span id="tierOdds"></span><br>
         <b style="color:var(--tx2)">连续打卡的加成</b><br>
         3 天 ×1.4 · 7 天 ×2.0 · 14 天 ×2.8 · 21 天 ×3.5<br>
-        攒得越久，开出高力度奖励的几率越大。
+        攒得越久，开出高力度奖励的几率越大。<br>
+        <span style="color:var(--tx3)">上面的百分比已经把连击加成算进去了，合计永远是 100%。</span>
       </div>
     </details>
     <div class="hint" id="boxLog"></div>
@@ -660,63 +680,202 @@ select{background:var(--bg3);border:1px solid var(--line);border-radius:10px;col
   </div>
 
   <div class="card">
-    <h2>每日任务量 <span>随机区间</span></h2>
-    <div class="mk"><label>新词下限</label><input type="number" id="w_min"></div>
-    <div class="mk"><label>新词上限</label><input type="number" id="w_max"></div>
-    <div class="mk"><label>复习下限</label><input type="number" id="r_min"></div>
-    <div class="mk"><label>复习上限</label><input type="number" id="r_max"></div>
-    <button class="btn pri" id="saveWord" style="margin-top:8px">保存词量区间</button>
+    <h2>每日任务量 <span>新词 + 复习</span></h2>
+    <div class="mk"><label>新词方式</label>
+      <select id="w_mode">
+        <option value="fixed">固定数量（每天一样）</option>
+        <option value="range">区间随机（每天抽）</option>
+      </select>
+    </div>
+    <div id="w_fixBox">
+      <div class="mk"><label>每天新词</label><input type="number" id="w_fix" min="1" max="200"><span class="tgt">个</span></div>
+    </div>
+    <div id="w_rngBox" style="display:none">
+      <div class="mk"><label>新词下限</label><input type="number" id="w_min" min="1" max="200"><span class="tgt">个</span></div>
+      <div class="mk"><label>新词上限</label><input type="number" id="w_max" min="1" max="200"><span class="tgt">个</span></div>
+    </div>
+    <div class="mk"><label>复习下限</label><input type="number" id="r_min" min="0" max="500"><span class="tgt">个</span></div>
+    <div class="mk"><label>复习上限</label><input type="number" id="r_max" min="0" max="500"><span class="tgt">个</span></div>
+    <button class="btn pri" id="saveWord" style="margin-top:8px">保存词量</button>
     <div class="hint">
-      <b style="color:var(--tx2)">按新计划，新词建议 18-22（平均 20 个/天）</b><br>
-      依据：课本 16 课约 560 个真生词，10 周学完 → 每天约 9 个；<br>
-      《考前对策》剩 528 个 → 每天约 11 个。合计 20 个/天。<br>
-      复习量 0-50 不设下限，抽到 0 就当放假。
+      <b style="color:var(--tx2)">建议每天固定 20 个新词</b>（课本 9 个 + 考前对策 11 个）。<br>
+      固定值的好处是每天时间可预期，不会被随机数量打乱节奏；复习量仍然随机，抽到 0 就当放假。
     </div>
   </div>
 
   <div class="card">
-    <h2>数据</h2>
+    <h2>打卡标准 <span>连续天数怎么算</span></h2>
+    <div class="mk"><label>最低完成数</label>
+      <select id="s_need">
+        <option value="4">4 个全做完（最严格）</option>
+        <option value="3">做满 3 个就算</option>
+        <option value="2">做满 2 个就算</option>
+        <option value="1">做满 1 个就算</option>
+      </select>
+    </div>
+    <button class="btn pri" id="saveNeed" style="margin-top:8px">保存打卡标准</button>
+    <div class="hint">
+      非周日每天有 4 个任务：识日单词 / 主课A / 生词本滚动 / 主课B（或政治直播）。<br>
+      周日是休息日：<b>不增加连续天数，也不会中断连续</b>。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>关键日期 <span>改了会自动平移阶段</span></h2>
+    <div class="mk"><label>备考第 1 天</label><input type="date" id="s_start"></div>
+    <div class="mk"><label>考试第 1 天</label><input type="date" id="s_exam"></div>
+    <button class="btn pri" id="saveDates" style="margin-top:8px">保存日期</button>
+    <div class="hint">
+      改「备考第 1 天」时，五阶段和关键节点会按天数差<b>整体平移</b>，不用手改几十个日期。<br>
+      当前平移：<b id="shiftTag">0 天</b>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>打卡 → 养成自动同步 <span>省掉手动 +</span></h2>
+    <div class="mk"><label>自动推进</label>
+      <select id="a_on">
+        <option value="1">开（打卡时自动更新进度）</option>
+        <option value="0">关（完全手动）</option>
+      </select>
+    </div>
+    <div class="mk"><label>确认方式</label>
+      <select id="a_confirm">
+        <option value="0">直接推进，显示撤销条</option>
+        <option value="1">每次弹窗让我确认</option>
+      </select>
+    </div>
+    <div class="mk"><label>新词推进到</label>
+      <select id="a_word"></select>
+    </div>
+    <div class="mk"><label>每次推进</label>
+      <input type="number" id="a_wordStep" min="0" max="200">
+      <span class="tgt">个</span>
+    </div>
+    <div class="hint" style="margin-top:-4px;margin-bottom:9px">
+      填 <b>0</b> = 按当天实际新词数推进（例如今天背了 20 个，进度就 +20）。<br>
+      填 <b>11</b> = 固定每次 +11（按你的计划，每天 20 个新词里约 11 个属于《考前对策N3词汇》，其余是课本词）。<br>
+      填 <b>0</b> 更省事，填具体数字更贴近真实进度。
+    </div>
+    <div id="aSubBox"></div>
+    <button class="btn pri" id="saveAuto" style="margin-top:8px">保存同步规则</button>
+    <div class="hint">
+      规则：识日新词任务按<b>上面设的数量</b>推进你选的项目；<br>
+      主课A 按<b>科目</b>推进对应主线项目各 +1；生词本滚动和主课B 不推进（纯复习/刷题，不好量化）。<br>
+      推进到项目上限时会自动停住（不会超过总章数）。<br>
+      每次推进都会在任务下面出现一条<b>带「撤销」的提示</b>，点错了一键退回，打卡本身不受影响。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>政治课排期 <span>老师通知后随时加</span></h2>
+    <div class="hint" style="margin-top:0;margin-bottom:11px">
+      排期内的日子，晚上 19:30 自动排「政治直播」任务，主课A 也会自动压缩半小时。<br>
+      不在排期里也能用今天页的按钮临时安排，所以漏排不会影响你用。
+    </div>
+    <div id="polList"></div>
+    <details style="margin-top:10px">
+      <summary>添加一段课期</summary>
+      <div class="dc">
+        <div class="mk"><label>课程名称</label><input id="polName" placeholder="例：大题课"></div>
+        <div class="mk"><label>开始日期</label><input type="date" id="polS"></div>
+        <div class="mk"><label>结束日期</label><input type="date" id="polE"></div>
+        <div class="mk"><label>上课星期</label><input id="polDays" value="1,2,3,4,5,6" placeholder="1,2,3,4,5,6"></div>
+        <div class="hint">星期用数字：0=周日 1=周一 … 6=周六，逗号分隔。默认周一到周六。</div>
+        <button class="btn pri" id="polAdd" style="margin-top:9px">添加</button>
+      </div>
+    </details>
+    <div class="hint" style="color:var(--warn)">
+      还没通知的阶段：<span id="polTodo"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>进度校准向导 <span>每月跑一次</span></h2>
+    <div class="hint" style="margin-top:0;margin-bottom:11px">
+      一屏一屏问你「现在到哪了」，填完自动回写养成进度。<br>
+      程序里的数字和现实对不上时，跑一遍就好。
+    </div>
+    <div id="wzBody"></div>
+    <button class="btn pri" id="wzStart">▶ 开始进度校准</button>
+  </div>
+
+  <div class="card">
+    <h2>数据 <span>导出 / 导入</span></h2>
     <div class="row" style="margin-bottom:9px">
-      <button class="btn" id="exportBtn">导出备份</button>
+      <button class="btn pri" id="exportFileBtn">⬇️ 导出为文件</button>
+      <button class="btn" id="importFileBtn">⬆️ 从文件导入</button>
+    </div>
+    <input type="file" id="importFile" accept=".json,.txt,application/json,text/plain" style="display:none">
+    <div class="row" style="margin-bottom:9px">
+      <button class="btn" id="exportBtn">导出到文本框</button>
       <button class="btn" id="copyBtn">复制到剪贴板</button>
     </div>
     <div class="row" style="margin-bottom:9px">
-      <button class="btn" id="importBtn">从下方文本导入</button>
+      <button class="btn" id="importBtn">从文本框导入</button>
       <button class="btn" id="clearArea">清空文本框</button>
+    </div>
+    <div class="mk"><label>导入方式</label>
+      <select id="impMode">
+        <option value="merge">合并（推荐，两边都不丢）</option>
+        <option value="over">覆盖（用备份完全替换本机）</option>
+      </select>
     </div>
     <button class="btn" id="rerollBtn" style="margin-bottom:9px">🎁 重置今日盲盒（重新抽一次）</button>
     <textarea id="ioArea" style="width:100%;height:100px;background:var(--bg3);border:1px solid var(--line);
       border-radius:11px;color:var(--tx);padding:10px;font-family:ui-monospace,monospace;resize:vertical"
-      placeholder="点「导出备份」把数据生成到这里 →「复制到剪贴板」存到备忘录。换手机时粘回这里 →「从下方文本导入」"></textarea>
+      placeholder="文件方式更省事：点「⬇️ 导出为文件」存到 iCloud / 微信，另一台点「⬆️ 从文件导入」。&#10;&#10;文本框方式：点「导出到文本框」→「复制到剪贴板」存备忘录，换手机时粘回这里 →「从文本框导入」"></textarea>
     <div class="hint" id="lsWarn"></div>
-    <div class="hint">「重置今日盲盒」只清掉今天的开盒记录，不影响打卡、进度和背包里其他卡。</div>
+    <div class="hint">
+      <b style="color:var(--acc)">导出的内容里不包含 GitHub Token</b>，可以放心分享。<br>
+      「合并」= 打卡记录取并集、进度取较大值，两台设备轮流用不会互相覆盖；<br>
+      「覆盖」= 完全用备份替换本机数据，适合重装后恢复。<br>
+      「重置今日盲盒」只清掉今天的开盒记录，不影响打卡、进度和背包里其他卡。
+    </div>
   </div>
 
   <div class="card">
     <h2>云同步 <span>iPhone ↔ iPad</span></h2>
     <div class="infobox" style="margin-bottom:12px">
       数据存在你自己的 GitHub 私有 Gist 里，不经过任何第三方。<br>
-      两台设备填同一个 Token 就连上了，之后自动双向同步。
+      <b>两台设备必须填「同一个 Token」+ 连「同一个同步空间」</b>，少一个都通不了。
     </div>
+    <div id="syHelp"></div>
     <div class="mk"><label>Token</label>
-      <input id="syToken" placeholder="ghp_xxxx（只勾 gist 权限）" autocapitalize="off" autocorrect="off" spellcheck="false">
+      <input id="syToken" type="password" placeholder="ghp_xxxx（只勾 gist 权限）"
+        autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off">
+      <button class="btn sm" id="syTokenEye" type="button" style="flex:0 0 auto">显示</button>
     </div>
     <div class="row" style="margin-top:9px">
-      <button class="btn pri" id="syCreate">创建同步空间</button>
-      <button class="btn" id="syJoin">连接已有</button>
+      <button class="btn pri" id="syJoin">① 连接已有空间</button>
+      <button class="btn" id="syCreate">② 新建空间</button>
     </div>
     <div class="row" style="margin-top:9px">
       <button class="btn" id="syNow">立即同步</button>
       <button class="btn" id="syOff">断开</button>
     </div>
+    <div id="syPick"></div>
     <div style="margin-top:12px;border-top:1px solid var(--line);padding-top:10px">
       <div class="syncrow"><span class="k">状态</span><span class="v" id="syState">未连接</span></div>
       <div class="syncrow"><span class="k">上次同步</span><span class="v" id="syLast">—</span></div>
       <div class="syncrow"><span class="k">同步空间</span><span class="v" id="syId">—</span></div>
+      <div class="syncrow"><span class="k">查看</span><span class="v">
+        <a id="syLink" href="#" target="_blank" rel="noopener" style="color:var(--acc);display:none">在 GitHub 里打开这个空间 →</a>
+      </span></div>
     </div>
     <div class="hint">
-      合并规则：打卡记录取并集（两边打过的勾都不会丢）、科目进度取较大值、连续打卡取较大值、
-      目标分以当前设备为准。所以两台设备轮流用不会互相覆盖。
+      <b style="color:var(--tx2)">两台设备怎么配对（照着做就行）</b><br>
+      1. <b>有数据的那台</b>：填 Token → 点「② 新建空间」（已连过的就不用再点）<br>
+      2. 记下页面上那串<b>同步空间 ID</b>，抄到备忘录里<br>
+      3. <b>另一台</b>：填<b>同一个 Token</b> → 点「① 连接已有空间」<br>
+      4. 如果找到多个空间，会列出来让你选 —— 选「条数最多 / 最近更新」的那个<br>
+      5. 连上后状态显示「已同步」就成了，以后打开自动同步<br><br>
+      <b style="color:var(--tx2)">合并规则</b><br>
+      打卡记录取并集（两边打过的勾都不会丢）、科目进度取较大值、连续打卡取较大值、
+      目标分和词量以当前设备为准。所以两台轮流用不会互相覆盖。<br><br>
+      <b style="color:var(--warn)">⚠️ 最重要的一条</b><br>
+      千万不要在第二台上点「新建空间」—— 那会建出一个新的空空间，两台就永远对不上了。
+      这正是你之前「同步失败」的原因。
     </div>
     <details style="margin-top:10px"><summary>怎么拿 Token（3 分钟）</summary>
       <div class="dc">
@@ -727,10 +886,9 @@ select{background:var(--bg3);border:1px solid var(--line);border-radius:10px;col
         ⑤ 权限<b>只勾一个 <code>gist</code></b>，其它全部不要勾<br>
         ⑥ 点最下面 <b>Generate token</b>，复制那串 <code>ghp_</code> 开头的字符<br>
         <span style="color:var(--warn)">它只显示这一次，先存到备忘录。</span><br><br>
-        <b style="color:var(--tx2)">两台设备怎么连</b><br>
-        · 第一台：粘贴 Token → 点「创建同步空间」<br>
-        · 第二台：粘贴<b>同一个</b> Token → 点「连接已有」<br>
-        之后打开就自动同步，不用再管。
+        <b style="color:var(--tx2)">Token 会消失是怎么回事</b><br>
+        iOS 把主屏图标删掉重加时，会清空这个 App 的本地存储，Token 和最终同步空间 ID 都会没。
+        所以：<b>图标更新时别删旧的</b>，或者把 Token 和空间 ID 抄在备忘录里，随时填回来。
       </div>
     </details>
   </div>
@@ -903,7 +1061,22 @@ var JLPT_DATA = [
 ].join("\n");
 
 /* ---------- 固定配置 ---------- */
-var START = new Date('2026-09-21T00:00:00');   /* 备考第 1 天（周一） */
+/* 备考第 1 天 / 考试第 1 天：可在「设置 → 关键日期」里改。
+   改起始日时，五阶段和关键节点会整体跟着平移，不用手改几十个日期。 */
+var START_DEFAULT = '2026-09-21';   /* 备考第 1 天（周一） */
+var EXAM_DEFAULT  = '2027-03-27';   /* 考试第 1 天 */
+
+function cfgStart(){ return get('startdate', START_DEFAULT); }
+function cfgExam(){  return get('examdate',  EXAM_DEFAULT); }
+/* 相对默认起始日的平移天数（正数=整体往后挪） */
+function stageShift(){
+  try{ return dayDiff(parseD(START_DEFAULT), parseD(cfgStart())); }catch(e){ return 0; }
+}
+function shiftDate(s, days){
+  if(!days) return s;
+  try{ var d = parseD(s); d.setDate(d.getDate() + days); return ymd(d); }catch(e){ return s; }
+}
+function startDate(){ return parseD(cfgStart()); }
 
 /* 五阶段 */
 var STAGES = [
@@ -956,16 +1129,36 @@ var STAGES = [
            '⭐ 3/27-28 考试'] }
 ];
 
-/* 政治直播课日历（按欢姐课表推算，实际以群通知为准）
-   rate = 该阶段每晚开播的概率（课时数 ÷ 可上课天数），周一到周六生效 */
-var POLITICS = [
-  { s:'2026-09-21', e:'2026-10-04', name:'刷题课',     note:'约10课时 · 待通知上课时间', rate:0.83 },
-  { s:'2026-11-02', e:'2026-11-29', name:'大题课',     note:'约25课时',                rate:1.0  },
-  { s:'2026-11-30', e:'2026-12-27', name:'真题课',     note:'约10课时',                rate:0.42 },
-  { s:'2026-12-28', e:'2027-01-31', name:'冲刺课',     note:'约15课时',                rate:0.5  },
-  { s:'2027-02-01', e:'2027-02-28', name:'时政课',     note:'约3课时',                 rate:0.13 },
-  { s:'2027-03-01', e:'2027-03-27', name:'考前技巧课', note:'约10课时',                rate:0.42 }
+/* 政治直播课排期 —— 默认只放「老师已确认」的日期，其余等通知后再加。
+   可在「设置 → 政治课排期」里随时增删改（名称 / 起止日期 / 星期几上课）。
+   days: 0=周日 1=周一 … 6=周六；不写 = 周一到周六
+   每天晚上 19:30 开播（小鹅通 / huanjie666.cn），有回放。 */
+var POL_DEFAULT = [
+  { name:'刷题课', s:'2026-09-26', e:'2026-09-30', days:[1,2,3,4,5,6] },
+  { name:'刷题课', s:'2026-10-06', e:'2026-10-10', days:[1,2,3,4,5,6] }
 ];
+/* 后续阶段（老师还没给具体日期）—— 在设置页里补上日期就会自动生效 */
+var POL_TODO = [
+  '大题课（11月 · 约25课时）',
+  '真题课（12月 · 约10课时）',
+  '冲刺课（1月 · 约15课时）',
+  '时政课（2月 · 约3课时）',
+  '考前技巧课（3月 · 约10课时）'
+];
+function polSched(){
+  var v = get('polsch', null);
+  return (v && v.length !== undefined) ? v : POL_DEFAULT;
+}
+function setPolSched(list){ set('polsch', list || []); }
+
+/* 周日固定小福利：不占奖池概率，休息日专属 */
+var SUNDAY_GIFT = {
+  icon:'🛋️', name:'休息日小卡', tier:'普通', power:1, days:1,
+  items:['多睡 30 分钟，不设闹钟',
+         '今天不碰课本，彻底放空',
+         '出门走走 / 看一集番，不带负罪感'],
+  use:'休息日专属，周日当天有效。休息是计划的一部分，不是偷懒。'
+};
 
 /* 主课A：周一至周六固定主线，按阶段切换
    铁律：先上完课/新课，课上完再刷题，每天总时长不超过 5.5h */
@@ -1097,6 +1290,7 @@ var PRIZE_ALIAS = { '小确幸卡':'犒劳卡', '休息卡':'提前收工卡' };
 function findPrize(name){
   if(!name) return null;
   name = PRIZE_ALIAS[name] || name;
+  if(name === SUNDAY_GIFT.name) return SUNDAY_GIFT;   /* 周日固定小福利，不占奖池 */
   for(var i=0;i<PRIZES.length;i++){
     if(PRIZES[i].name === name) return PRIZES[i];
   }
@@ -1152,8 +1346,12 @@ function set(k, v){
   var raw = JSON.stringify(v);
   mem[full] = raw;
   if(lsOK){ try{ localStorage.setItem(full, raw); }catch(e){ lsOK = false; } }
+  statsBump();                     /* 数据变了，统计缓存作废 */
   if(k !== 'sync') syncSoon();     /* 数据变了，稍后自动推送到云端 */
 }
+/* 统计缓存版本号：任何写操作都 +1，computeStats() 用它判断要不要重算 */
+var _statV = 0;
+function statsBump(){ _statV++; }
 
 /* ---------- 日期工具 ---------- */
 function ymd(d){
@@ -1173,30 +1371,37 @@ function today(){ return new Date(); }
 function isSunday(d){ return d.getDay()===0; }
 
 function stageOf(d){
-  var t = d.getTime();
+  var t = d.getTime(), sh = stageShift();
   for(var i=0;i<STAGES.length;i++){
-    if(t >= parseD(STAGES[i].start).getTime() && t <= parseD(STAGES[i].end).getTime()+86399000) return STAGES[i];
+    var s = parseD(shiftDate(STAGES[i].start, sh)).getTime();
+    var e = parseD(shiftDate(STAGES[i].end,   sh)).getTime();
+    if(t >= s && t <= e + 86399000) return STAGES[i];
   }
-  return t < parseD(STAGES[0].start).getTime() ? STAGES[0] : STAGES[STAGES.length-1];
+  var first = parseD(shiftDate(STAGES[0].start, sh)).getTime();
+  return t < first ? STAGES[0] : STAGES[STAGES.length-1];
 }
+/* 今天在不在政治课排期内（且今天是不是上课的星期）。
+   返回排期条目；在课期内但今天不上课、或不在任何课期内 → null */
 function politicsOf(d){
-  var s = ymd(d);
-  for(var i=0;i<POLITICS.length;i++){
-    if(s >= POLITICS[i].s && s <= POLITICS[i].e) return POLITICS[i];
+  var ds = ymd(d), w = d.getDay();
+  var list = polSched();
+  for(var i=0;i<list.length;i++){
+    var p = list[i];
+    if(!p || !p.s || !p.e) continue;
+    if(ds >= p.s && ds <= p.e){
+      var days = (p.days && p.days.length) ? p.days : [1,2,3,4,5,6];
+      return days.indexOf(w) >= 0 ? p : null;
+    }
   }
   return null;
 }
-/* 是否政治直播日：周一到周六 + 处于上课月份 + 当天抽中开播 + 用户没手动取消 */
+/* 是否政治直播日：周日不算；排期内按排期，手动开关优先 */
 function isLiveDay(d){
   if(isSunday(d)) return false;
-  var p = politicsOf(d);
-  if(!p) return false;
   var ds = ymd(d);
-  var off = get('liveoff', {});
-  if(off[ds]) return false;
-  var force = get('liveon', {});
-  if(force[ds]) return true;
-  return seedRand(ds, 'live') < p.rate;
+  if(get('liveoff', {})[ds]) return false;
+  if(get('liveon',  {})[ds]) return true;
+  return !!politicsOf(d);
 }
 
 /* ---------- 随机 ---------- */
@@ -1226,19 +1431,163 @@ function toast(msg){
   toastT = setTimeout(function(){ el.classList.remove('on'); }, 2200);
 }
 
+/* ---------- 每日词量配置 ---------- */
+/* mode='fixed' → 每天固定 fix 个；mode='range' → 在 min~max 之间按日期随机
+   旧存档没有 mode 字段，默认按「固定 20 个」处理，原有区间值保留不丢 */
+function wordCfg(){
+  var w = get('word', null) || {};
+  var o = {
+    mode: w.mode || 'fixed',
+    fix:  (+w.fix  > 0) ? +w.fix  : 20,
+    min:  (+w.min  > 0) ? +w.min  : 18,
+    max:  (+w.max  > 0) ? +w.max  : 22,
+    rmin: (+w.rmin >= 0) ? +w.rmin : 0,
+    rmax: (+w.rmax > 0) ? +w.rmax : 50
+  };
+  if(o.max  < o.min)  o.max  = o.min;
+  if(o.rmax < o.rmin) o.rmax = o.rmin;
+  if(o.mode !== 'range') o.mode = 'fixed';
+  return o;
+}
+function newWordCount(ds){
+  var w = wordCfg();
+  if(w.mode === 'fixed') return Math.max(1, Math.min(200, Math.round(w.fix)));
+  return seededInt(ds, 'nw', w.min, w.max);
+}
+function reviewWordCount(ds){
+  var w = wordCfg();
+  return seededInt(ds, 'rv', w.rmin, w.rmax);
+}
+/* 老存档补一个 mode 字段，让设置页能正确显示 */
+function migrate(){
+  var w = get('word', null);
+  if(w && !w.mode){
+    w.mode = 'fixed';
+    if(!(+w.fix > 0)) w.fix = 20;
+    set('word', w);
+  }
+}
+
+/* ---------- 打卡 → 养成「各科目推进」自动同步 ---------- */
+/* 默认规则：
+   · 识日新词任务 → 按当天新词数量推进「考前对策N3词汇」
+   · 主课A        → 按科目推进对应的主线项目 1 个单位
+   · 生词本滚动 / 主课B → 不推进（纯复习和刷题，不好量化）
+   完成时把「实际推进了多少」存进 done 记录里的 ap 字段，
+   取消勾选时按 ap 原样退回，所以来回点也不会算错。 */
+var AUTO_DEFAULT = {
+  on: true,          /* 总开关 */
+  confirm: false,    /* true = 每次打卡弹窗让你先确认 */
+  byWord: 'j3',      /* 新词任务推进到哪个项目（'' = 不推进） */
+  wordStep: 0,       /* 0 = 按当天实际新词数；>0 = 每次固定推进这么多 */
+  bySub: { '日语':'j1', '汉语言':'c1', '语文':'y1', '政治':'z1' },
+  ids: ['w1','a']    /* 参与自动推进的任务 id */
+};
+function autoCfg(){
+  var a = get('automap', null) || {};
+  var o = { on: a.on !== false, confirm: !!a.confirm,
+            byWord: a.byWord === undefined ? 'j3' : a.byWord,
+            wordStep: (+a.wordStep > 0) ? Math.round(+a.wordStep) : 0,
+            ids: (a.ids && a.ids.length) ? a.ids : AUTO_DEFAULT.ids.slice(),
+            bySub: {} };
+  var src = a.bySub || AUTO_DEFAULT.bySub;
+  Object.keys(AUTO_DEFAULT.bySub).forEach(function(k){
+    o.bySub[k] = (src[k] === undefined) ? AUTO_DEFAULT.bySub[k] : src[k];
+  });
+  return o;
+}
+function pgItem(k){
+  for(var i=0;i<PG_DEF.length;i++){ if(PG_DEF[i].k === k) return PG_DEF[i]; }
+  return null;
+}
+function pgName(k){ var it = pgItem(k); return it ? it.name : k; }
+function pgBase(k){ var it = pgItem(k); return it ? it.cur : 0; }
+/* 算出这个任务该推进哪些项目：返回 {j1:1} 这样的对象；不需要推进则返回 null */
+function autoPlan(t){
+  var c = autoCfg();
+  if(!c.on) return null;
+  if(c.ids.indexOf(t.id) < 0) return null;
+  var plan = {};
+  if(t.id === 'w1'){
+    /* wordStep>0 时按固定值推进（更贴近「只有一部分新词属于这个项目」的实情） */
+    var step = c.wordStep > 0 ? c.wordStep : (t.words || 0);
+    if(c.byWord && step > 0) plan[c.byWord] = (plan[c.byWord] || 0) + step;
+  }else{
+    var k = c.bySub[t.sub];
+    if(k) plan[k] = (plan[k] || 0) + 1;
+  }
+  return Object.keys(plan).length ? plan : null;
+}
+/* 真正写进去，返回本次实际写入的 {k:delta}（会被上限截断，所以要回传实际值） */
+function autoApply(plan){
+  if(!plan) return null;
+  var applied = {};
+  Object.keys(plan).forEach(function(k){
+    var it = pgItem(k);
+    if(!it) return;
+    var cur = +pgVal(k, it.cur) || 0;
+    var nv  = Math.max(0, Math.min(it.max, cur + plan[k]));
+    var real = nv - cur;
+    if(real > 0){ set('pg_'+k, nv); applied[k] = real; }
+  });
+  return Object.keys(applied).length ? applied : null;
+}
+function autoRollback(applied){
+  if(!applied) return;
+  Object.keys(applied).forEach(function(k){
+    var it = pgItem(k);
+    if(!it) return;
+    var cur = +pgVal(k, it.cur) || 0;
+    set('pg_'+k, Math.max(0, cur - applied[k]));
+  });
+}
+function planText(applied){
+  if(!applied) return '';
+  return Object.keys(applied).map(function(k){
+    return pgName(k) + ' +' + applied[k];
+  }).join(' · ');
+}
+/* 撤销条：本次会话里最后一次自动推进，渲染在今天页任务下面 */
+var LAST_UNDO = null;
+function showUndo(ds, id, applied){
+  LAST_UNDO = applied ? { ds:ds, id:id, applied:applied } : null;
+}
+function renderUndo(){
+  var host = $('taskNote');
+  if(!host) return;
+  host.innerHTML = '';
+  if(!LAST_UNDO || LAST_UNDO.ds !== ymd(today())) return;
+  var u = LAST_UNDO;
+  var el = document.createElement('div');
+  el.className = 'undobar';
+  el.innerHTML = '<span>已同步到养成：<b style="color:var(--acc)">' + escH(planText(u.applied)) +
+    '</b><br>打卡本身保留，只退回养成进度</span><button type="button">撤销</button>';
+  el.querySelector('button').onclick = function(){
+    var done = get('done_'+u.ds, {});
+    if(done[u.id] && done[u.id].ap){
+      autoRollback(done[u.id].ap);
+      delete done[u.id].ap;
+      set('done_'+u.ds, done);
+    }
+    LAST_UNDO = null;
+    toast('已撤销养成进度同步');
+    renderToday(); renderProg();
+  };
+  host.appendChild(el);
+}
+
 /* ---------- 今日任务生成 ---------- */
 function buildTasks(d){
   var ds = ymd(d);
   var st = stageOf(d);
   var live = isLiveDay(d);
-  var w = get('word', { min:18, max:22, rmin:0, rmax:50 });
 
   if(isSunday(d)){
     return { sunday:true, list:[] };
   }
 
-  var newW = seededInt(ds, 'nw', w.min, w.max);
-  var revW = seededInt(ds, 'rv', w.rmin, w.rmax);
+  var newW = newWordCount(ds);
+  var revW = reviewWordCount(ds);
 
   /* 主课A 科目（按阶段切换主线） */
   var a = (MAIN_A[st.id] || MAIN_A[1])[(d.getDay()+6)%7];
@@ -1269,8 +1618,8 @@ function buildTasks(d){
     var p = politicsOf(d);
     list.push({
       id:'b', time:'19:30 - 21:30', live:true, sub:'政治',
-      title:'政治直播 · ' + p.name,
-      desc:'小鹅通学员版 App 或 huanjie666.cn · ' + p.note + ' · 课后 10 分钟整理笔记',
+      title:'政治直播 · ' + ((p && p.name) ? p.name : '政治课'),
+      desc:'小鹅通学员版 App 或 huanjie666.cn · 每晚 19:30 直播（有回放）· 课后 10 分钟整理笔记',
       hours:2, key:'b'
     });
   }else{
@@ -1309,8 +1658,8 @@ function renderToday(){
       '<div class="td">每周固定 1 天休息，是计划的一部分，不是偷懒。睡饱、出门走走、把脑子放空。</div></div></div>';
     $('prog').textContent = '休息日';
     $('taskbar').style.width = '100%';
-    $('boxHint').textContent = '';
-    renderBox(true);
+    renderUndo();
+    renderBox(null);          /* 周日：发固定小福利，不占奖池概率 */
     updateStreak();
     renderStreak();
     renderHero();
@@ -1346,14 +1695,36 @@ function renderToday(){
         renderToday();
         return;
       }
+
+      /* 取消打卡：把之前自动推进的养成进度原样退回 */
       if(done[t.id]){
+        var prev = done[t.id] && done[t.id].ap;
+        if(prev){ autoRollback(prev); toast('已取消，养成进度退回：' + planText(prev)); }
+        else toast('已取消打卡');
+        if(prev) LAST_UNDO = null;
         delete done[t.id];
-      }else{
-        done[t.id] = { h:t.hours, s:t.sub, n:t.words || 0 };
-        toast('+' + t.hours + 'h ✓ 累计经验 +' + Math.round(t.hours*20));
+        set('done_'+ds, done);
+        renderToday(); renderProg();
+        return;
       }
+
+      /* 打卡：算一下要不要同步到养成 */
+      var plan = autoPlan(t);
+      var c = autoCfg();
+      if(plan && c.confirm && !window.confirm('这个任务会同时推进养成进度：\n' + planText(plan) + '\n\n确定吗？')){
+        plan = null;
+      }
+      var applied = autoApply(plan);
+      done[t.id] = { h:t.hours, s:t.sub, n:t.words || 0 };
+      if(applied) done[t.id].ap = applied;
       set('done_'+ds, done);
+
+      var msg = '+' + t.hours + 'h ✓ 累计经验 +' + Math.round(t.hours*20);
+      if(applied) msg += ' · 已同步 ' + planText(applied);
+      toast(msg);
+      showUndo(ds, t.id, applied);
       renderToday();
+      if(applied) renderProg();
     };
     host.appendChild(el);
   });
@@ -1361,27 +1732,39 @@ function renderToday(){
   var n = data.list.filter(function(t){ return done[t.id]; }).length;
   $('prog').textContent = n + '/' + data.list.length;
   $('taskbar').style.width = (n/data.list.length*100) + '%';
+  renderUndo();
 
-  /* 政治直播日纠错：真实课表以群通知为准，可手动切换 */
+  /* 政治课纠错：排期只是预估，真实以群通知为准，所以每天都能手动改。
+     不在课期内也能改 —— 老师临时加课/调课都应付得来。 */
   var pol = politicsOf(d);
+  var isOn = data.live;
   var tog = document.createElement('div');
-  if(pol){
-    var isOn = data.live;
-    tog.style.cssText = 'margin-top:10px;display:flex;justify-content:space-between;align-items:center';
-    tog.innerHTML = '<span class="muted">政治「' + pol.name + '」' + (isOn ? '今天有课' : '今天没课') + '</span>';
-    var tb = document.createElement('button');
-    tb.className = 'btn sm';
-    tb.textContent = isOn ? '改成今天没课' : '改成今天有课';
-    tb.onclick = function(){
-      var off = get('liveoff', {}), on = get('liveon', {});
-      if(isOn){ off[ds] = 1; delete on[ds]; }
-      else { on[ds] = 1; delete off[ds]; }
-      set('liveoff', off); set('liveon', on);
-      renderToday();
-    };
-    tog.appendChild(tb);
-    host.appendChild(tog);
+  tog.style.cssText = 'margin-top:12px;padding-top:11px;border-top:1px solid var(--line)';
+  tog.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">' +
+    '<span class="muted">政治课：' + (isOn
+      ? ('<b style="color:var(--warn)">今天有课</b> · ' + escH((pol && pol.name) || '直播') + ' 19:30')
+      : '今天没课') + '</span></div>';
+  var tb = document.createElement('button');
+  tb.className = 'btn sm';
+  tb.style.marginTop = '9px';
+  tb.style.width = '100%';
+  tb.textContent = isOn ? '改成今天没课' : '改成今天有课';
+  tb.onclick = function(){
+    var off = get('liveoff', {}), on = get('liveon', {});
+    if(isOn){ off[ds] = 1; delete on[ds]; }
+    else { on[ds] = 1; delete off[ds]; }
+    set('liveoff', off); set('liveon', on);
+    renderToday();
+  };
+  tog.appendChild(tb);
+  if(!pol){
+    var tip = document.createElement('div');
+    tip.className = 'hint';
+    tip.style.marginTop = '7px';
+    tip.innerHTML = '不在排期内。老师通知后可在「设置 → 政治课排期」里加日期，或直接点上面按钮临时安排。';
+    tog.appendChild(tip);
   }
+  host.appendChild(tog);
 
   renderBox(n === data.list.length);
   updateStreak();
@@ -1390,7 +1773,7 @@ function renderToday(){
 }
 
 function weekNo(d){
-  return Math.floor(dayDiff(START, d)/7) + 1;
+  return Math.floor(dayDiff(startDate(), d)/7) + 1;
 }
 
 function renderStreak(){
@@ -1400,16 +1783,20 @@ function renderStreak(){
 
 function renderBox(unlocked){
   var d = today(), ds = ymd(d);
+  var sunday = isSunday(d);          /* 周日：发固定小福利，不抽奖、不占奖池概率 */
   var got = resolvePrize(get('box_'+ds, null));
   var used = get('used_'+ds, false);
   var btn = $('openBox'), useBtn = $('useBox'), box = $('box');
   var tx = $('prizeTx'), det = $('prizeDetail');
 
   /* 连击加成提示 */
-  $('boostTag').textContent = boostLabel();
+  $('boostTag').textContent = sunday
+    ? '休息日：今天发固定小福利，不占奖池概率'
+    : boostLabel();
 
   /* 奖池清单：力度星级 + 具体能拿到什么 + 当前概率 */
-  $('odds').innerHTML = curOdds().map(function(o){
+  var ODDS = curOdds();
+  $('odds').innerHTML = ODDS.map(function(o){
     var p = o.p;
     var col = p.tier==='传说'?'var(--gold)':p.tier==='史诗'?'var(--purple)':p.tier==='稀有'?'var(--cyan)':'var(--tx2)';
     var star = '';
@@ -1428,6 +1815,17 @@ function renderBox(unlocked){
     '</div>';
   }).join('');
 
+  /* 各稀有度的实际合计：随连击加成变化，所以动态算，不写死 */
+  var grp = {};
+  ODDS.forEach(function(o){ grp[o.p.tier] = (grp[o.p.tier] || 0) + o.pct; });
+  var to = $('tierOdds');
+  if(to){
+    to.innerHTML = ['普通','稀有','史诗','传说'].map(function(t){
+      var v = grp[t] || 0;
+      return t + ' —— 合计 <b style="color:var(--tx2)">' + v.toFixed(1) + '%</b>' +
+        (v > 0 && v < 100 ? ('，平均约 ' + Math.round(100 / v) + ' 天开到一次') : '');
+    }).join('<br>');
+  }
   /* 已开出的奖励：具体清单 + 力度 + 怎么用 */
   if(got){
     var gcol = got.tier==='传说'?'var(--gold)':got.tier==='史诗'?'var(--purple)':got.tier==='稀有'?'var(--cyan)':'var(--tx2)';
@@ -1450,27 +1848,29 @@ function renderBox(unlocked){
         '已存进 <b style="color:var(--acc)">🎒 奖励背包</b>，随时可以去用。</div>' +
       '<div class="tiernote">' + (TIER_INFO[got.tier] || '') + '</div>';
     btn.disabled = true;
-    btn.textContent = '今日已开启';
+    btn.textContent = sunday ? '今日福利已领取' : '今日已开启';
     useBtn.style.display = '';
     useBtn.className = 'btn' + (used ? ' done' : '');
     useBtn.textContent = used ? '✓ 已用掉' : '标记为已用掉';
     useBtn.onclick = function(){
       set('used_'+ds, !get('used_'+ds, false));
-      renderBox(unlocked); renderBagPreview();
+      renderBox(null); renderBagPreview();
       toast(get('used_'+ds, false) ? '已用掉，记得真的去做' : '已改回未使用');
     };
     $('boxHint').textContent = used ? '已用掉' : '待使用';
     box.classList.add('pop');
   }else{
     box.classList.remove('pop');
-    $('gift').textContent = '🎁';
-    tx.textContent = unlocked ? '今天全部完成了，开吧' : '完成任务后开启';
+    $('gift').textContent = sunday ? SUNDAY_GIFT.icon : '🎁';
+    tx.textContent = sunday ? '休息日福利，随时可以领'
+                            : (unlocked ? '今天全部完成了，开吧' : '完成任务后开启');
     tx.style.color = '';
     det.style.display = 'none';
     useBtn.style.display = 'none';
-    $('boxHint').textContent = unlocked ? '已解锁' : '';
-    btn.disabled = !unlocked;
-    btn.textContent = unlocked ? '🎁 开启盲盒' : '🔒 锁定中';
+    $('boxHint').textContent = sunday ? '休息日' : (unlocked ? '已解锁' : '');
+    btn.disabled = sunday ? false : !unlocked;
+    btn.textContent = sunday ? '🛋️ 领取休息日小卡'
+                             : (unlocked ? '🎁 开启盲盒' : '🔒 锁定中');
   }
 
   /* 背包预览 + 还没用掉的奖励汇总 */
@@ -1529,6 +1929,7 @@ function rollPrize(){
 function openBox(){
   var d = today(), ds = ymd(d);
   if(get('box_'+ds, null)) return;
+  var sunday = isSunday(d);
   var box = $('box'), btn = $('openBox');
   btn.disabled = true;
   box.classList.add('shake');
@@ -1538,7 +1939,8 @@ function openBox(){
     if(n >= 16){
       clearInterval(iv);
       box.classList.remove('shake');
-      var pz = rollPrize();
+      /* 周日发固定小福利，不抽奖；其余日子走奖池 */
+      var pz = sunday ? SUNDAY_GIFT : rollPrize();
       set('box_'+ds, { name: pz.name });      /* 只存名字，渲染时从奖池实时取 */
       burst();
       /* 记录开盒次数 */
@@ -1546,7 +1948,7 @@ function openBox(){
       logs.unshift({ d:ds, name:pz.name });
       set('boxlog', logs.slice(0,60));
       renderToday();
-      toast(pz.icon + ' ' + pz.name + ' · ' + pz.tier);
+      toast(pz.icon + ' ' + pz.name + (sunday ? ' · 休息日福利' : (' · ' + pz.tier)));
     }
   }, 70);
 }
@@ -1718,7 +2120,35 @@ function jlptIndex(){
   return JLPT_MAP;
 }
 /* 假名反查：词表里有些词只收假名形（きれい），用户却输汉字形（綺麗），
-   反过来也有：词表收汉字形（お金），用户输假名（おかね）——这层兜住后一种 */
+   反过来也有：词表收汉字形（お金），用户输假名（おかね）——这一层兜住后一种。
+   另外配一张常见「汉字 → 假名」小表，离线兜住前一种。 */
+/* 汉字形 → 假名形 的常见对应（离线补齐用）。
+   官方词表里有些词只收假名形（きれい / おかね），用户输入的是汉字形（綺麗 / お金），
+   只靠精确匹配就会漏判。这里不引入外部词典，只硬编码课本/真题里高频的那一批。*/
+var KANJI2KANA = {
+  '綺麗':'きれい','お金':'おかね','眼鏡':'めがね','眼鏡をかける':'めがねをかける',
+  '一緒':'いっしょ','大人':'おとな','上手':'じょうず','下手':'へた','綺麗な':'きれいな',
+  '一人':'ひとり','二人':'ふたり','今日':'きょう','明日':'あした','昨日':'きのう',
+  '今朝':'けさ','今晩':'こんばん','毎日':'まいにち','毎朝':'まいあさ','毎晩':'まいばん',
+  '去年':'きょねん','来年':'らいねん','今年':'ことし','先週':'せんしゅう','来週':'らいしゅう',
+  '今週':'こんしゅう','先月':'せんげつ','来月':'らいげつ','今月':'こんげつ',
+  '時間':'じかん','時々':'ときどき','人々':'ひとびと','色々':'いろいろ','様々':'さまざま',
+  '出口':'でぐち','入口':'いりぐち','売店':'ばいてん','財布':'さいふ','切符':'きっぷ',
+  '宿題':'しゅくだい','天気':'てんき','電車':'でんしゃ','自転車':'じてんしゃ',
+  '新聞':'しんぶん','手紙':'てがみ','写真':'しゃしん','映画':'えいが','音楽':'おんがく',
+  '料理':'りょうり','野菜':'やさい','果物':'くだもの','飲物':'のみもの','食べ物':'たべもの',
+  '建物':'たてもの','着物':'きもの','乗物':'のりもの','履物':'はきもの',
+  '砂糖':'さとう','醤油':'しょうゆ','味噌':'みそ','胡椒':'こしょう','塩':'しお',
+  '小説':'しょうせつ','作家':'さっか','病院':'びょういん','医者':'いしゃ','看護師':'かんごし',
+  '大丈夫':'だいじょうぶ','丈夫':'じょうぶ','楽しい':'たのしい','嬉しい':'うれしい',
+  '悲しい':'かなしい','寂しい':'さびしい','難しい':'むずかしい','易しい':'やさしい',
+  '優しい':'やさしい','厳しい':'きびしい','親しい':'したしい','詳しい':'くわしい',
+  '忙しい':'いそがしい','恥ずかしい':'はずかしい','素晴らしい':'すばらしい',
+  '有難う':'ありがとう','御免':'ごめん','失礼':'しつれい','無理':'むり','無駄':'むだ',
+  '大切':'たいせつ','大変':'たいへん','切手':'きって','葉書':'はがき','封筒':'ふうとう',
+  '眼':'め','耳':'みみ','鼻':'はな','口':'くち','歯':'は','首':'くび','背':'せ','腹':'はら',
+  '腕':'うで','指':'ゆび','爪':'つめ','顔':'かお','頭':'あたま','体':'からだ','心':'こころ'
+};
 function jlptReadIndex(){
   if(JLPT_READ) return JLPT_READ;
   JLPT_READ = {};
@@ -1727,14 +2157,29 @@ function jlptReadIndex(){
     var r = idx[w].r;
     if(r && !JLPT_READ[r]) JLPT_READ[r] = idx[w];
   });
+  /* 把汉字形也塞进「假名索引」里（用同一张表），这样词表收假名形时也能命中 */
+  Object.keys(KANJI2KANA).forEach(function(k){
+    var kana = KANJI2KANA[k];
+    if(JLPT_READ[kana] && !JLPT_READ[k]) JLPT_READ[k] = JLPT_READ[kana];
+  });
   return JLPT_READ;
 }
-function jlptLookup(word){
-  if(!word) return null;
+/* 查考纲等级。命中优先级：
+   ① 词本身在词表里 ② 用户填的假名在词表里 ③ 假名反查 ④ 汉字→假名映射再查
+   全部离线完成，不联网。查不到就返回 null（在界面里显示「词表未收录」，可一键提升） */
+function jlptLookup(word, read){
+  if(!word && !read) return null;
   var idx = jlptIndex();
-  if(idx[word]) return idx[word];
+  if(word && idx[word]) return idx[word];
+  if(read && idx[read]) return idx[read];
   var ri = jlptReadIndex();
-  if(ri[word]) return ri[word];
+  if(read && ri[read]) return ri[read];
+  if(word && ri[word]) return ri[word];
+  var k = word ? KANJI2KANA[word] : null;
+  if(k){
+    if(idx[k]) return idx[k];
+    if(ri[k]) return ri[k];
+  }
   return null;
 }
 function isKana(s){
@@ -1753,7 +2198,7 @@ function addWord(word, read, mean, src){
   if(!word) return null;
   var w = getWords();
   if(w[word]) return { dup: true, word: word, rec: w[word] };
-  var hit = jlptLookup(word);
+  var hit = jlptLookup(word, (read || '').trim());
   w[word] = {
     r: (read || '').trim() || (hit ? hit.r : ''),
     m: (mean || '').trim(),
@@ -1907,13 +2352,19 @@ function exportWords(){
 $('wWord').oninput = function(){
   var v = $('wWord').value.trim();
   if(!v){ $('wAuto').innerHTML = ''; return; }
-  var hit = jlptLookup(v);
+  /* 假名框里已经填了就带上一起查，汉字形也能对上只收假名的词表 */
+  var hit = jlptLookup(v, ($('wRead').value || '').trim());
   if(hit){
-    $('wRead').value = hit.r;
+    if(!$('wRead').value.trim()) $('wRead').value = hit.r;
     $('wAuto').innerHTML = '<span style="color:var(--ok)">✓ 考纲内 ' + hit.lv + '</span> · 假名已自动填入';
   }else{
-    $('wAuto').innerHTML = '<span style="color:var(--warn)">词表未收录</span>（可能是 N2+ 或超纲，也可能只是词表用假名形收录）· 加入后默认「不背」';
+    $('wAuto').innerHTML = '<span style="color:var(--warn)">词表未收录</span>（可能是 N2+ 或超纲）' +
+      '。如果你知道假名，填到下面的「假名」框里会自动重查一次；加入后默认「不背」，可在「词表未收录」里一键提升。';
   }
+};
+$('wRead').oninput = function(){
+  var w = $('wWord').value.trim();
+  if(w) $('wWord').oninput();
 };
 $('wAdd').onclick = function(){
   var r = addWord($('wWord').value, $('wRead').value, $('wMean').value, $('wSrc').value);
@@ -1965,6 +2416,7 @@ function applyRaw(obj){
     mem[k] = obj[k];
     if(lsOK){ try{ localStorage.setItem(k, obj[k]); }catch(e){} }
   });
+  statsBump();
 }
 /* 语义合并：打卡并集、进度取大、配置以本地为准 */
 function mergeVal(full, aRaw, bRaw){
@@ -2004,8 +2456,15 @@ function mergeVal(full, aRaw, bRaw){
     return an >= bn ? a : b;
   }
   if(k.indexOf('used_') === 0) return !!(a || b);
-  if(k.indexOf('box_') === 0) return a || b;
-  return a;   /* targets / word / light 等配置以当前设备为准 */
+  /* 同一天两台设备可能各开过一次盲盒：优先保留有名字的那条，别把记录丢掉。
+     两个都有名字时以当前设备为准（合并后两台会推到同一个结果，不会来回抖） */
+  if(k.indexOf('box_') === 0){
+    var an = a && a.name, bn = b && b.name;
+    if(an && !bn) return a;
+    if(bn && !an) return b;
+    return a || b;
+  }
+  return a;   /* targets / word / light / cfg 等配置以当前设备为准 */
 }
 function mergeData(local, remote){
   var out = {}, ks = {};
@@ -2026,6 +2485,34 @@ function setSyncUI(state, last, id){
   if(state !== null) $('syState').textContent = state;
   if(last !== null) $('syLast').textContent = last;
   if(id !== null) $('syId').textContent = id;
+  var a = $('syLink');
+  if(a && id !== null){
+    if(id && id !== '—'){
+      a.style.display = '';
+      a.href = 'https://gist.github.com/' + id;
+    }else{
+      a.style.display = 'none';
+    }
+  }
+}
+/* 刷新当前正在看的标签页（同步拉完数据后要用，不然界面还是旧的） */
+function refreshTab(){
+  renderAll();
+  var b = document.querySelector('nav button.on');
+  var t = b ? b.dataset.tab : 'today';
+  if(t === 'words') renderWords();
+  if(t === 'prog'){ renderProg(); renderBagPreview(); renderBag(); }
+  if(t === 'stage') renderStages();
+  if(t === 'mock') renderMock();
+  if(t === 'set') fillSettings();
+}
+/* 统一的错误提示：把「接下来该做什么」直接写进状态栏 */
+function ghErr(e, ctx){
+  if(e && e.status === 401) return 'Token 无效或已过期 → 去 GitHub 重新生成一条';
+  if(e && e.status === 404) return '找不到同步空间 → 可能被删了，或 Gist ID 不对';
+  if(e && e.status === 403) return 'GitHub 拒绝访问（403）→ Token 权限不够，需要勾上 gist';
+  if(e && e.message) return e.message;
+  return '网络异常（' + (ctx || '同步') + '），稍后自动重试';
 }
 function syncPull(silent){
   var c = syncCfg();
@@ -2035,9 +2522,7 @@ function syncPull(silent){
   setSyncUI('同步中…', null, null);
   fetch('https://api.github.com/gists/' + c.gistId, { headers: ghHeaders(c.token) })
     .then(function(r){
-      if(r.status === 401) throw new Error('Token 无效或已过期');
-      if(r.status === 404) throw new Error('找不到同步空间');
-      if(!r.ok) throw new Error('HTTP ' + r.status);
+      if(!r.ok){ var e = new Error('HTTP ' + r.status); e.status = r.status; throw e; }
       return r.json();
     })
     .then(function(g){
@@ -2046,23 +2531,24 @@ function syncPull(silent){
       if(f && f.content){ try{ remote = JSON.parse(f.content); }catch(e){ remote = {}; } }
       var merged = mergeData(collectRaw(), remote);
       applyRaw(merged);
-      var body = JSON.stringify({ files: {} });
-      body = JSON.stringify({ files: (function(){ var o = {}; o[GIST_FILE] = { content: JSON.stringify(merged) }; return o; })() });
+      var body = JSON.stringify({ files: (function(){ var o = {}; o[GIST_FILE] = { content: JSON.stringify(merged) }; return o; })() });
       SYNC_HASH = body;
       return fetch('https://api.github.com/gists/' + c.gistId, {
         method: 'PATCH', headers: ghHeaders(c.token), body: body
+      }).then(function(r){
+        if(!r.ok){ var e = new Error('HTTP ' + r.status); e.status = r.status; throw e; }
+        return r;
       });
     })
-    .then(function(r){
-      if(!r.ok) throw new Error('写回失败 HTTP ' + r.status);
+    .then(function(){
       c.last = Date.now(); setSyncCfg(c);
       setSyncUI('已同步', fmtTime(c.last), c.gistId);
-      renderAll(); renderWords(); renderBagPreview(); renderBag();
+      refreshTab();
       if(!silent) toast('同步完成');
     })
     .catch(function(e){
-      setSyncUI('失败：' + e.message, null, null);
-      if(!silent) toast('同步失败：' + e.message);
+      setSyncUI('失败：' + ghErr(e, '同步'), null, null);
+      if(!silent) toast('同步失败：' + ghErr(e, '同步'));
     })
     .then(function(){ SYNC_BUSY = false; });
 }
@@ -2078,12 +2564,12 @@ function syncPush(){
   fetch('https://api.github.com/gists/' + c.gistId, {
     method: 'PATCH', headers: ghHeaders(c.token), body: body
   }).then(function(r){
-    if(!r.ok) throw new Error('HTTP ' + r.status);
+    if(!r.ok){ var e = new Error('HTTP ' + r.status); e.status = r.status; throw e; }
     SYNC_HASH = body;
     c.last = Date.now(); setSyncCfg(c);
     setSyncUI('已同步', fmtTime(c.last), c.gistId);
   }).catch(function(e){
-    setSyncUI('上传失败：' + e.message, null, null);
+    setSyncUI('上传失败：' + ghErr(e, '上传'), null, null);
   }).then(function(){ SYNC_BUSY = false; });
 }
 function syncSoon(){
@@ -2091,62 +2577,134 @@ function syncSoon(){
   clearTimeout(SYNC_TIMER);
   SYNC_TIMER = setTimeout(syncPush, 6000);
 }
+/* 关页 / 切到后台时立刻推一次 —— iOS 上 App 随时可能被冻住，
+   等不到 6 秒 debounce，所以这里必须马上发。*/
+function syncFlush(){
+  if(!syncCfg()) return;
+  clearTimeout(SYNC_TIMER);
+  syncPush();
+}
+document.addEventListener('visibilitychange', function(){
+  if(document.visibilityState === 'hidden') syncFlush();
+});
+window.addEventListener('pagehide', syncFlush);
+
 $('syCreate').onclick = function(){
   var tk = $('syToken').value.trim();
   if(!tk){ toast('先粘贴 Token'); return; }
   if(!/^(ghp_|github_pat_)/.test(tk)){ toast('Token 应该以 ghp_ 或 github_pat_ 开头'); return; }
+  if(syncCfg() && !window.confirm('你已经连着一个同步空间了。\n再点「创建」会新建一个空的，两台设备就对不上了。\n\n确定要新建吗？（推荐点「连接已有」）')) return;
   setSyncUI('创建中…', null, null);
   var files = {}; files[GIST_FILE] = { content: JSON.stringify(collectRaw()) };
   fetch('https://api.github.com/gists', {
     method: 'POST', headers: ghHeaders(tk),
     body: JSON.stringify({ description: '知喵 · 专升本备考数据（请勿删除）', public: false, files: files })
   }).then(function(r){
-    if(r.status === 401) throw new Error('Token 无效');
-    if(r.status === 403) throw new Error('Token 权限不足，确认勾了 gist');
-    if(!r.ok) throw new Error('HTTP ' + r.status);
+    if(!r.ok){ var e = new Error('HTTP ' + r.status); e.status = r.status; throw e; }
     return r.json();
   }).then(function(g){
     setSyncCfg({ token: tk, gistId: g.id, last: Date.now() });
-    setSyncUI('已连接', fmtTime(Date.now()), g.id);
-    toast('同步空间已创建，去另一台设备点「连接已有」');
+    SYNC_HASH = '';
+    setSyncUI('已连接 ✓', fmtTime(Date.now()), g.id);
+    $('syHelp').innerHTML = gistHelpHTML(g.id);
+    toast('同步空间已创建。另一台设备粘同一个 Token → 点「连接已有」');
   }).catch(function(e){
-    setSyncUI('创建失败：' + e.message, null, null);
-    toast('创建失败：' + e.message);
+    var m = ghErr(e, '创建');
+    setSyncUI('创建失败：' + m, null, null);
+    toast('创建失败：' + m);
   });
 };
+/* 找到多个同步空间时让用户自己选，不再靠代码猜 */
+function showGistPicker(tk, hits){
+  var host = $('syPick');
+  host.innerHTML = '<div class="hint" style="margin-top:10px;color:var(--warn)">' +
+    '这个 Token 名下找到 <b>' + hits.length + '</b> 个「知喵」同步空间。' +
+    '请选<b>有数据的那一个</b>（一般是最上面、最近更新过的）：</div>' +
+    hits.map(function(g, i){
+      var n = 0;
+      try{ n = Object.keys(JSON.parse(g.files[GIST_FILE].content)).length; }catch(e){ n = 0; }
+      return '<div class="pick" data-i="' + i + '">' +
+        '<b>' + (i + 1) + '. ' + escH(g.id.slice(0, 8)) + '… · ' + (n ? (n + ' 条数据') : '空') + '</b>' +
+        '<div class="m">最后更新：' + escH((g.updated_at || '').replace('T', ' ').slice(0, 16)) + '<br>' +
+        'https://gist.github.com/' + escH(g.id) + '</div></div>';
+    }).join('') +
+    '<div class="hint" style="color:var(--tx3)">选错也没事：连上之后点「立即同步」可以再换。</div>';
+  host.querySelectorAll('.pick').forEach(function(el){
+    el.onclick = function(){
+      var g = hits[+el.dataset.i];
+      host.innerHTML = '';
+      setSyncCfg({ token: tk, gistId: g.id, last: 0 });
+      SYNC_HASH = '';
+      setSyncUI('已连接 ✓', '—', g.id);
+      $('syHelp').innerHTML = gistHelpHTML(g.id);
+      toast('已连接，正在拉取数据…');
+      syncPull(false);
+    };
+  });
+}
+function gistHelpHTML(id){
+  return '<div class="infobox" style="margin-bottom:12px">' +
+    '<b>这台设备和另一台要对上，靠的是这两样：</b><br>' +
+    '① 同一个 <b>Token</b>（GitHub 上生成的那串）<br>' +
+    '② 同一个 <b>同步空间 ID</b>：<code style="word-break:break-all">' + escH(id) + '</code><br>' +
+    '<a href="https://gist.github.com/' + escH(id) + '" target="_blank" rel="noopener" ' +
+    'style="color:var(--acc)">在 GitHub 里打开看 →</a><br>' +
+    '<span style="color:var(--tx3)">换手机 / 误删图标后数据没了，就用这个 ID + Token 重新连回来。</span>' +
+    '</div>';
+}
 $('syJoin').onclick = function(){
   var tk = $('syToken').value.trim();
   if(!tk){ toast('先粘贴 Token'); return; }
+  $('syPick').innerHTML = '';
   setSyncUI('查找中…', null, null);
   fetch('https://api.github.com/gists?per_page=100', { headers: ghHeaders(tk) })
     .then(function(r){
-      if(r.status === 401) throw new Error('Token 无效');
-      if(!r.ok) throw new Error('HTTP ' + r.status);
+      if(!r.ok){ var e = new Error('HTTP ' + r.status); e.status = r.status; throw e; }
       return r.json();
     })
     .then(function(list){
-      var hit = null;
-      (list || []).forEach(function(g){
-        if(g.files && g.files[GIST_FILE]) hit = g;
+      var hits = (list || []).filter(function(g){ return g.files && g.files[GIST_FILE]; });
+      /* 按最后更新时间倒序：有数据的那个通常最靠前 */
+      hits.sort(function(a, b){
+        return new Date(b.updated_at || 0) - new Date(a.updated_at || 0);
       });
-      if(!hit) throw new Error('没找到同步空间，请先在另一台设备点「创建同步空间」');
-      setSyncCfg({ token: tk, gistId: hit.id, last: 0 });
-      setSyncUI('已连接', '—', hit.id);
-      toast('已连接，正在拉取数据…');
-      syncPull(false);
+      if(!hits.length){
+        throw new Error('这个 Token 名下没有「知喵」同步空间。请先在<b>有数据的那台设备</b>上点「创建同步空间」');
+      }
+      if(hits.length === 1){
+        var g = hits[0];
+        setSyncCfg({ token: tk, gistId: g.id, last: 0 });
+        SYNC_HASH = '';
+        setSyncUI('已连接 ✓', '—', g.id);
+        $('syHelp').innerHTML = gistHelpHTML(g.id);
+        toast('已连接，正在拉取数据…');
+        syncPull(false);
+        return;
+      }
+      showGistPicker(tk, hits);
     })
     .catch(function(e){
-      setSyncUI('连接失败：' + e.message, null, null);
-      toast('连接失败：' + e.message);
+      var m = ghErr(e, '连接');
+      setSyncUI('连接失败：' + m, null, null);
+      toast('连接失败：' + m.replace(/<[^>]+>/g, ''));
     });
 };
-$('syNow').onclick = function(){ syncPull(false); };
+$('syNow').onclick = function(){ SYNC_HASH = ''; syncPull(false); };
 $('syOff').onclick = function(){
   if(!syncCfg()){ toast('当前没有连接'); return; }
+  if(!window.confirm('断开后这台设备不再自动同步（本地数据不动）。\n\n确定断开吗？')) return;
   setSyncCfg(null);
+  SYNC_HASH = '';
   setSyncUI('未连接', '—', '—');
   $('syToken').value = '';
+  $('syPick').innerHTML = '';
   toast('已断开。本地数据不受影响。');
+};
+$('syTokenEye').onclick = function(){
+  var i = $('syToken');
+  var show = i.type === 'password';
+  i.type = show ? 'text' : 'password';
+  this.textContent = show ? '隐藏' : '显示';
 };
 
 /* ---------- 渲染：进度 ---------- */
@@ -2207,7 +2765,11 @@ var BADGES = [
   { ic:'💯', nm:'模考 3 次',     cond:'在「模考」页录入 3 次模考成绩',    cur:function(){ return get('mocks', []).length; }, max:3 }
 ];
 
+/* 统计结果缓存：一次渲染里 renderHero / renderProg 会各调一次，
+   数据没变就直接返回上次的结果，不用把 localStorage 全量遍历两遍 */
+var _statCache = null, _statCacheV = -1;
 function computeStats(){
+  if(_statCache && _statCacheV === _statV) return _statCache;
   var st = { hours:0, days:0, full:0, words:0, boxes:0, rare:0, legend:false,
              exp:0, bySub:{}, byDay:{}, best:get('bestStreak', 0) };
   allKeys().forEach(function(k){
@@ -2247,6 +2809,7 @@ function computeStats(){
   }
   st.levelName = LEVELS[st.level-1].name;
   st.nextAt = LEVELS[st.level] ? LEVELS[st.level].n : null;
+  _statCache = st; _statCacheV = _statV;
   return st;
 }
 
@@ -2418,19 +2981,22 @@ function stepOf(it){
 function renderStages(){
   var cur = stageOf(today());
   var host = $('stages');
+  var sh = stageShift();
   host.innerHTML = '';
   STAGES.forEach(function(s){
-    var cls = s.id === cur.id ? 'now' : (parseD(s.end) < today() ? 'past' : '');
+    var ss = shiftDate(s.start, sh), ee = shiftDate(s.end, sh);
+    var cls = s.id === cur.id ? 'now' : (parseD(ee) < today() ? 'past' : '');
     var el = document.createElement('div');
     el.className = 'stg ' + cls;
     el.innerHTML = '<div class="dot"></div><div class="bd">'+
       '<div class="nm">阶段'+s.id+' · '+s.name+'</div>'+
-      '<div class="dt">'+s.start+' → '+s.end+' · '+s.weeks+'</div>'+
+      '<div class="dt">'+ss+' → '+ee+' · '+s.weeks+'</div>'+
       '<ul class="gl">'+ s.goals.map(function(g){ return '<li>'+g+'</li>'; }).join('') +'</ul>'+
       '</div>';
     host.appendChild(el);
   });
 
+  /* 关键节点：日期跟着「备考第 1 天」整体平移 */
   $('milestones').innerHTML = [
     ['2026-09-21','计划启动，建三本（生词/错题/作文）'],
     ['2026-10-31','《考前对策N3词汇》背完 1044'],
@@ -2442,8 +3008,8 @@ function renderStages(){
     ['2027-01-15','⭐ 湛江科技校考时间公布 → 判断撞期'],
     ['2027-02-06','春节，低强度：只做背诵滚动'],
     ['2027-03-01','全真限时模考阶段'],
-    ['2027-03-27','⭐ 考试第 1 天（预估）'],
-    ['2027-03-28','⭐ 考试第 2 天（预估）']
+    [shiftDate('2027-03-27', sh),'⭐ 考试第 1 天'],
+    [shiftDate('2027-03-28', sh),'⭐ 考试第 2 天']
   ].map(function(m){
     return '<div style="display:flex;padding:8px 0;border-bottom:1px solid var(--line);font-size:12.5px">'+
       '<b style="flex:0 0 84px;color:var(--acc);font-variant-numeric:tabular-nums">'+m[0]+'</b>'+
@@ -2499,6 +3065,29 @@ function renderMock(){
     };
   });
 }
+/* 录入模考成绩（原来这个按钮没有接逻辑，点了没反应，这里补上） */
+$('saveMock').onclick = function(){
+  var d = $('mkDate').value || ymd(today());
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(d)){ toast('先选一个日期'); return; }
+  var rec = { d:d,
+    zz: +$('mk_zz').value || 0, yw: +$('mk_yw').value || 0, yr: +$('mk_yr').value || 0,
+    jp: +$('mk_jp').value || 0, cn: +$('mk_cn').value || 0 };
+  if(!rec.zz && !rec.yw && !rec.yr && !rec.jp && !rec.cn){ toast('至少填一科成绩'); return; }
+  var recs = get('mocks', []);
+  var i = -1;
+  for(var k = 0; k < recs.length; k++){ if(recs[k].d === d){ i = k; break; } }
+  if(i >= 0){
+    if(!window.confirm(d + ' 已经录过一次了，用这次的覆盖吗？')) return;
+    recs[i] = rec;
+  }else{
+    recs.push(rec);
+  }
+  recs.sort(function(a, b){ return a.d < b.d ? 1 : -1; });
+  set('mocks', recs);
+  ['mk_zz','mk_yw','mk_yr','mk_jp','mk_cn'].forEach(function(id){ $(id).value = ''; });
+  toast('已保存 ' + d + ' 的模考成绩');
+  renderMock(); renderProg();
+};
 
 /* ---------- 顶栏（养成面板） ---------- */
 function renderHero(){
@@ -2535,20 +3124,46 @@ function renderHero(){
 }
 
 /* ---------- 连续打卡 ---------- */
+/* 判定规则：
+   · 周日是休息日 —— 不增加连续天数，但也不中断（只把 last 推进到周日）
+     前提是周六确实打过卡；如果周六就没打，那连续本来就断了，不做补救
+   · 非周日 —— 完成的任务数达到「设置里的最低完成数」（默认 4 = 全部）才算打卡成功
+   · 跨过周日的那一天照样接得上（周六 → 周一 gap=2 且中间那天是周日 → 连续） */
+function streakNeed(){
+  var n = +get('need', 4);
+  if(!(n >= 1)) n = 4;
+  return Math.min(4, Math.max(1, Math.round(n)));
+}
 function updateStreak(){
   var d = today(), ds = ymd(d);
   var s = get('streak', { n:0, last:'' });
   if(s.last === ds) return;
-  var ok;
+
+  /* 休息日：只推进日期，天数不动 */
   if(isSunday(d)){
-    ok = true;                       /* 休息日不算断，是计划的一部分 */
-  }else{
-    var done = get('done_'+ds, {});
-    ok = Object.keys(done).filter(function(k){ return done[k]; }).length >= 3;
+    if(s.last && dayDiff(parseD(s.last), d) === 1){
+      s.last = ds;
+      set('streak', s);
+    }
+    return;
   }
-  if(!ok) return;
-  var gap = dayDiff(parseD(s.last || '2000-01-01'), d);
-  s.n = (s.last && gap === 1) ? s.n + 1 : 1;
+
+  var done = get('done_'+ds, {});
+  var n = Object.keys(done).filter(function(k){ return done[k]; }).length;
+  if(n < streakNeed()) return;
+
+  var keep = false;
+  if(s.last){
+    var gap = dayDiff(parseD(s.last), d);
+    if(gap === 1) keep = true;
+    else if(gap === 2){
+      /* 中间空的那一天是周日（休息日）→ 不算断 */
+      var mid = parseD(s.last);
+      mid.setDate(mid.getDate() + 1);
+      keep = isSunday(mid);
+    }
+  }
+  s.n = keep ? s.n + 1 : 1;
   s.last = ds;
   set('streak', s);
   if(s.n > get('bestStreak', 0)) set('bestStreak', s.n);
@@ -2567,36 +3182,88 @@ function maybeEvent(){
 }
 
 /* ---------- 标签页 ---------- */
+function showTab(t){
+  document.querySelectorAll('nav button').forEach(function(x){
+    x.classList.toggle('on', x.dataset.tab === t);
+  });
+  ['today','words','prog','stage','mock','set'].forEach(function(x){
+    $('tab-'+x).style.display = (x === t) ? '' : 'none';
+  });
+  if(t === 'words') renderWords();
+  if(t === 'prog'){ renderProg(); renderBagPreview(); renderBag(); }
+  if(t === 'stage') renderStages();
+  if(t === 'mock'){
+    renderMock();
+    /* 模考日期默认填今天，省一步操作 */
+    if($('mkDate') && !$('mkDate').value) $('mkDate').value = ymd(today());
+  }
+  if(t === 'set') fillSettings();
+  window.scrollTo(0,0);
+}
 document.querySelectorAll('nav button').forEach(function(b){
-  b.onclick = function(){
-    document.querySelectorAll('nav button').forEach(function(x){ x.classList.remove('on'); });
-    b.classList.add('on');
-    ['today','words','prog','stage','mock','set'].forEach(function(t){
-      $('tab-'+t).style.display = (t === b.dataset.tab) ? '' : 'none';
-    });
-    if(b.dataset.tab === 'words') renderWords();
-    if(b.dataset.tab === 'prog') renderProg();
-    if(b.dataset.tab === 'stage') renderStages();
-    if(b.dataset.tab === 'mock') renderMock();
-    if(b.dataset.tab === 'set') fillSettings();
-    window.scrollTo(0,0);
-  };
+  b.onclick = function(){ showTab(b.dataset.tab); };
 });
 
 /* ---------- 设置 ---------- */
+var A_SUBS = ['日语','汉语言','语文','政治'];
+function pgOptions(sel, withNone){
+  var h = withNone ? '<option value="">不推进</option>' : '';
+  return h + PG_DEF.map(function(it){
+    return '<option value="' + it.k + '"' + (sel === it.k ? ' selected' : '') + '>' +
+      it.name + '</option>';
+  }).join('');
+}
+/* 设置页的下拉选项只在第一次构建，之后只改 value，避免每次进设置都重建 DOM */
+function buildSettingSelects(){
+  $('a_word').innerHTML = pgOptions(autoCfg().byWord, true);
+  $('aSubBox').innerHTML = A_SUBS.map(function(s){
+    return '<div class="mk"><label>主课A · ' + s + '</label>' +
+      '<select id="a_sub_' + s + '">' + pgOptions('', true) + '</select></div>';
+  }).join('');
+}
 function fillSettings(){
-  var t = targets(), w = get('word', { min:18, max:22, rmin:0, rmax:50 });
+  var t = targets(), w = wordCfg();
   $('s_zz').value = t.zz; $('s_yw').value = t.yw; $('s_yr').value = t.yr;
   $('s_jp').value = t.jp; $('s_cn').value = t.cn;
-  $('w_min').value = w.min; $('w_max').value = w.max;
-  $('r_min').value = w.rmin; $('r_max').value = w.rmax;
+
+  $('w_mode').value = w.mode;
+  $('w_fix').value  = w.fix;
+  $('w_min').value  = w.min;  $('w_max').value = w.max;
+  $('r_min').value  = w.rmin; $('r_max').value = w.rmax;
+  wModeUI();
+
+  $('s_need').value  = streakNeed();
+  $('s_start').value = cfgStart();
+  $('s_exam').value  = cfgExam();
+  var sh = stageShift();
+  $('shiftTag').textContent = sh === 0 ? '0 天（默认）' : (sh > 0 ? ('整体后移 ' + sh + ' 天') : ('整体前移 ' + (-sh) + ' 天'));
+
+  var a = autoCfg();
+  $('a_on').value = a.on ? '1' : '0';
+  $('a_confirm').value = a.confirm ? '1' : '0';
+  $('a_word').value = a.byWord;
+  $('a_wordStep').value = a.wordStep || 0;
+  A_SUBS.forEach(function(s){
+    var el = $('a_sub_' + s);
+    if(el) el.value = a.bySub[s] || '';
+  });
+
+  renderPolEditor();
+
   var c = syncCfg();
   $('syToken').value = (c && c.token) ? c.token : '';
+  $('syHelp').innerHTML = (c && c.gistId) ? gistHelpHTML(c.gistId) : '';
   setSyncUI(c ? '已连接' : '未连接',
             c && c.last ? fmtTime(c.last) : '—',
             c ? c.gistId : '—');
   checkCompat();
 }
+function wModeUI(){
+  var fixed = $('w_mode').value === 'fixed';
+  $('w_fixBox').style.display = fixed ? '' : 'none';
+  $('w_rngBox').style.display = fixed ? 'none' : '';
+}
+$('w_mode').onchange = wModeUI;
 $('saveTargets').onclick = function(){
   set('targets', {
     zz:+$('s_zz').value||75, yw:+$('s_yw').value||70, yr:+$('s_yr').value||70,
@@ -2606,30 +3273,241 @@ $('saveTargets').onclick = function(){
   renderMock();
 };
 $('saveWord').onclick = function(){
-  var a = +$('w_min').value, b = +$('w_max').value, c = +$('r_min').value, d = +$('r_max').value;
+  var w = wordCfg();
+  var fix = Math.max(1, Math.min(200, parseInt($('w_fix').value, 10) || 20));
+  var a = Math.max(1, Math.min(200, parseInt($('w_min').value, 10) || 18));
+  var b = Math.max(1, Math.min(200, parseInt($('w_max').value, 10) || 22));
+  var c = Math.max(0, Math.min(500, parseInt($('r_min').value, 10) || 0));
+  var d = Math.max(0, Math.min(500, parseInt($('r_max').value, 10) || 50));
   if(b < a) b = a;
   if(d < c) d = c;
-  set('word', { min:a, max:b, rmin:c, rmax:d });
-  toast('词量区间已更新');
+  set('word', { mode: $('w_mode').value === 'range' ? 'range' : 'fixed',
+                fix:fix, min:a, max:b, rmin:c, rmax:d });
+  toast($('w_mode').value === 'range'
+        ? ('词量已更新：新词每天在 ' + a + '-' + b + ' 之间随机')
+        : ('词量已更新：每天固定 ' + fix + ' 个新词'));
   renderToday();
 };
+$('saveNeed').onclick = function(){
+  set('need', Math.max(1, Math.min(4, parseInt($('s_need').value, 10) || 4)));
+  toast('打卡标准已更新');
+  updateStreak(); renderToday();
+};
+$('saveDates').onclick = function(){
+  var s = $('s_start').value, e = $('s_exam').value;
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(s || '')){ toast('备考起始日格式不对'); return; }
+  if(e && !/^\d{4}-\d{2}-\d{2}$/.test(e)){ toast('考试日期格式不对'); return; }
+  var old = cfgStart();
+  set('startdate', s);
+  if(e) set('examdate', e);
+  var sh = stageShift();
+  toast('已保存。五阶段和关键节点' + (sh === 0 ? '保持原位' :
+        (sh > 0 ? ('整体后移 ' + sh + ' 天') : ('整体前移 ' + (-sh) + ' 天'))));
+  fillSettings(); renderStages(); renderToday();
+};
+$('saveAuto').onclick = function(){
+  var bySub = {};
+  A_SUBS.forEach(function(s){
+    var el = $('a_sub_' + s);
+    bySub[s] = el ? el.value : '';
+  });
+  set('automap', { on: $('a_on').value === '1',
+                   confirm: $('a_confirm').value === '1',
+                   byWord: $('a_word').value,
+                   wordStep: Math.max(0, Math.min(200, parseInt($('a_wordStep').value, 10) || 0)),
+                   bySub: bySub,
+                   ids: AUTO_DEFAULT.ids.slice() });
+  toast('自动同步规则已保存');
+};
+/* ---------- 政治课排期编辑器 ---------- */
+function renderPolEditor(){
+  var list = polSched();
+  $('polTodo').textContent = POL_TODO.join(' · ');
+  if(!list.length){
+    $('polList').innerHTML = '<div class="muted">还没排任何课期。</div>';
+    return;
+  }
+  $('polList').innerHTML = list.map(function(p, i){
+    var wd = (p.days && p.days.length) ? p.days : [1,2,3,4,5,6];
+    var names = ['日','一','二','三','四','五','六'];
+    var ds = wd.map(function(x){ return names[x]; }).join('');
+    return '<div class="schrow"><div class="hd"><span>' + escH(p.name || '政治课') + '</span>' +
+      '<button class="btn sm" data-pol="' + i + '">删除</button></div>' +
+      '<div class="dt">' + escH(p.s) + ' → ' + escH(p.e) + ' · 每周' + ds + '</div></div>';
+  }).join('');
+  $('polList').querySelectorAll('button[data-pol]').forEach(function(b){
+    b.onclick = function(){
+      var list = polSched().slice();
+      var removed = list[+b.dataset.pol];
+      list.splice(+b.dataset.pol, 1);
+      setPolSched(list);
+      toast('已删除「' + ((removed && removed.name) || '课期') + '」');
+      renderPolEditor(); renderToday();
+    };
+  });
+}
+$('polAdd').onclick = function(){
+  var nm = $('polName').value.trim() || '政治课';
+  var s = $('polS'), e = $('polE');
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(s.value || '') || !/^\d{4}-\d{2}-\d{2}$/.test(e.value || '')){
+    toast('开始和结束日期都要填，格式 2026-11-02'); return;
+  }
+  if(e.value < s.value){ toast('结束日期不能早于开始日期'); return; }
+  var days = ($('polDays').value || '').split(/[,\s，]+/).map(function(x){ return parseInt(x, 10); })
+    .filter(function(x){ return x >= 0 && x <= 6; });
+  if(!days.length) days = [1,2,3,4,5,6];
+  days = days.filter(function(x, i){ return days.indexOf(x) === i; }).sort();
+  var list = polSched().slice();
+  list.push({ name:nm, s:s.value, e:e.value, days:days });
+  list.sort(function(a, b){ return a.s < b.s ? -1 : a.s > b.s ? 1 : 0; });
+  setPolSched(list);
+  var added = nm + ' ' + s.value + ' → ' + e.value;
+  $('polName').value = ''; s.value = ''; e.value = ''; $('polDays').value = '1,2,3,4,5,6';
+  toast('已添加：' + added);
+  renderPolEditor(); renderToday();
+};
+/* ---------- 进度校准向导 ---------- */
+var WZ_STEPS = [
+  { t:'日语 · 主战场（300 分）', keys:['j1','j2','j3','j4','j5'] },
+  { t:'汉语言文学 · 200 分',     keys:['c1','c2','c3','c4','c5'] },
+  { t:'大学语文 · 100 分',       keys:['y1','y2','y3','y4'] },
+  { t:'政治理论 · 100 分',       keys:['z1'] }
+];
+var wzStep = -1, wzData = null;
+function wzRender(){
+  var host = $('wzBody');
+  if(wzStep < 0){ host.innerHTML = ''; return; }
+  if(wzStep >= WZ_STEPS.length){
+    /* 汇总确认 */
+    host.innerHTML = '<div class="wz"><div class="q">确认一下，我按这个写进养成进度：</div>' +
+      PG_DEF.filter(function(it){ return wzData[it.k] !== undefined; }).map(function(it){
+        var v = wzData[it.k];
+        return '<div style="font-size:12.5px;padding:5px 0;border-bottom:1px solid var(--line)">' +
+          '<b>' + it.name + '</b>：' + it.cur + ' → <b style="color:var(--acc)">' + v + '</b> ' + it.unit + '</div>';
+      }).join('') + '</div>' +
+      '<div class="row"><button class="btn" id="wzBack">← 上一步</button>' +
+      '<button class="btn pri" id="wzSave">保存</button></div>';
+    $('wzBack').onclick = function(){ wzStep--; wzRender(); };
+    $('wzSave').onclick = function(){
+      Object.keys(wzData).forEach(function(k){
+        var it = pgItem(k);
+        if(!it) return;
+        set('pg_'+k, Math.max(0, Math.min(it.max, +wzData[k] || 0)));
+      });
+      toast('进度已校准');
+      wzStep = -1; wzData = null; $('wzBody').innerHTML = '';
+      renderProg(); renderToday(); fillSettings();
+    };
+    return;
+  }
+  var step = WZ_STEPS[wzStep];
+  host.innerHTML = '<div class="wz"><div class="q">第 ' + (wzStep+1) + '/' + WZ_STEPS.length + ' 步 · ' +
+    step.t + '<br><span style="color:var(--tx3)">现在实际到哪了？不确定就照估算填，之后还能再跑一次。</span></div>' +
+    step.keys.map(function(k){
+      var it = pgItem(k);
+      var cur = (wzData[k] !== undefined) ? wzData[k] : (+pgVal(k, it.cur) || 0);
+      return '<div class="mk"><label>' + it.name + '</label>' +
+        '<input type="number" id="wz_' + k + '" value="' + cur + '" min="0" max="' + it.max + '">' +
+        '<span class="tgt">/' + it.max + ' ' + it.unit + '</span></div>';
+    }).join('') + '</div>' +
+    '<div class="row"><button class="btn" id="wzBack">← 上一步</button>' +
+    '<button class="btn pri" id="wzNext">下一步 →</button></div>';
+  $('wzBack').onclick = function(){ wzStep--; wzRender(); };
+  $('wzNext').onclick = function(){
+    step.keys.forEach(function(k){
+      var el = $('wz_' + k);
+      wzData[k] = Math.max(0, parseInt(el.value, 10) || 0);
+    });
+    wzStep++; wzRender();
+  };
+}
+$('wzStart').onclick = function(){
+  wzStep = 0; wzData = {}; wzRender(); $('wzStart').textContent = '↻ 重新开始';
+};
+
 function allKeys(){
   var ks = [];
   if(lsOK){ for(var i=0;i<localStorage.length;i++){ var k = localStorage.key(i); if(k && k.indexOf(KEY)===0) ks.push(k); } }
   Object.keys(mem).forEach(function(k){ if(ks.indexOf(k) < 0) ks.push(k); });
   return ks;
 }
-function dumpData(){
+/* 备份内容：排除 sync（里面有 GitHub Token），避免用户分享备份时泄露 */
+function dumpObj(){
   var out = {};
   allKeys().forEach(function(k){
+    if(k === KEY + 'sync') return;
     var v = mem[k] !== undefined ? mem[k] : (lsOK ? localStorage.getItem(k) : null);
     if(v !== null && v !== undefined) out[k] = v;
   });
-  return JSON.stringify(out);
+  return out;
+}
+function dumpData(){ return JSON.stringify(dumpObj()); }
+/* 导入：合并（默认）或覆盖。两种都会忽略备份里的 Token */
+function doImport(raw, mode){
+  var o;
+  try{ o = JSON.parse(raw); }catch(e){ toast('导入失败：内容不是有效的备份格式'); return; }
+  if(!o || typeof o !== 'object' || Array.isArray(o)){ toast('导入失败：格式不对'); return; }
+  var keys = Object.keys(o).filter(function(k){ return k.indexOf(KEY) === 0; });
+  if(!keys.length){ toast('导入失败：这个文件里没有知知的备份数据'); return; }
+
+  var hadToken = keys.indexOf(KEY + 'sync') >= 0;
+  /* 备份里的 Token 一律不导入：Token 是和设备绑的，导过来只会互相打架 */
+  var incoming = {};
+  keys.forEach(function(k){ if(k !== KEY + 'sync') incoming[k] = o[k]; });
+
+  if(mode === 'over'){
+    if(!window.confirm('覆盖会把本机现有的打卡、进度、背包全部替换成备份里的内容。\n本机今天之后新做的记录会丢失。\n\n确定覆盖吗？')) return;
+    allKeys().forEach(function(k){
+      if(k === KEY + 'sync') return;       /* 保留本机的同步配置 */
+      delete mem[k];
+      if(lsOK){ try{ localStorage.removeItem(k); }catch(e){} }
+    });
+    applyRaw(incoming);
+    setSyncCfg(syncCfg());
+  }else{
+    applyRaw(mergeData(collectRaw(), incoming));
+  }
+  statsBump();
+  toast('已导入 ' + Object.keys(incoming).length + ' 条记录（' +
+        (mode === 'over' ? '覆盖' : '合并') + '）' + (hadToken ? '，已跳过 Token' : ''));
+  refreshTab();
+  renderToday();
 }
 $('exportBtn').onclick = function(){
   $('ioArea').value = dumpData();
-  toast('已生成，点「复制到剪贴板」保存');
+  toast('已生成到文本框，点「复制到剪贴板」保存');
+};
+/* 导出成真正的文件：iOS 上会弹「存储到文件 / 分享」 */
+$('exportFileBtn').onclick = function(){
+  var txt = dumpData();
+  var name = '知喵备份_' + ymd(new Date()) + '.json';
+  try{
+    var blob = new Blob([txt], { type:'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 5000);
+    toast('已生成 ' + name + '，选「存储到文件」存起来');
+  }catch(e){
+    $('ioArea').value = txt;
+    toast('这个浏览器不支持直接下载，已放进下面的文本框，用「复制到剪贴板」');
+  }
+};
+$('importFileBtn').onclick = function(){ $('importFile').click(); };
+$('importFile').onchange = function(){
+  var f = this.files && this.files[0];
+  if(!f) return;
+  var fr = new FileReader();
+  fr.onload = function(){
+    doImport(String(fr.result || ''), $('impMode').value);
+    $('importFile').value = '';
+  };
+  fr.onerror = function(){ toast('文件读取失败'); };
+  fr.readAsText(f, 'utf-8');
 };
 $('copyBtn').onclick = function(){
   var t = $('ioArea').value || dumpData();
@@ -2671,6 +3549,7 @@ $('rerollBtn').onclick = function(){
   if(lsOK){
     try{ localStorage.removeItem(KEY+'box_'+ds); localStorage.removeItem(KEY+'used_'+ds); }catch(e){}
   }
+  statsBump();
   renderToday();
   renderBagPreview();
   renderBag();
@@ -2679,20 +3558,7 @@ $('rerollBtn').onclick = function(){
 $('importBtn').onclick = function(){
   var raw = $('ioArea').value.trim();
   if(!raw){ toast('文本框是空的，先粘贴备份内容'); return; }
-  try{
-    var o = JSON.parse(raw);
-    var n = 0;
-    Object.keys(o).forEach(function(k){
-      if(k.indexOf(KEY) === 0){
-        mem[k] = o[k];
-        if(lsOK){ try{ localStorage.setItem(k, o[k]); }catch(e){} }
-        n++;
-      }
-    });
-    toast('已导入 ' + n + ' 条记录');
-    renderAll();
-    fillSettings();
-  }catch(e){ toast('导入失败：内容不是有效的备份格式'); }
+  doImport(raw, $('impMode').value);
 };
 
 /* 兼容性自检：把每一项能力直接显示给用户看 */
@@ -2732,11 +3598,13 @@ $('themeBtn').onclick = function(){
   toast(l ? '已切浅色' : '已切深色');
 };
 $('resetBtn').onclick = function(){
-  if(!confirm('确定清空所有打卡、进度、模考记录？此操作不可撤销。')) return;
+  if(!confirm('确定清空所有打卡、进度、模考记录？\n（同步设置会保留，不用重新填 Token）\n此操作不可撤销。')) return;
   allKeys().forEach(function(k){
+    if(k === KEY + 'sync') return;
     delete mem[k];
     if(lsOK) localStorage.removeItem(k);
   });
+  statsBump();
   toast('已清空');
   renderAll();
 };
@@ -2944,6 +3812,8 @@ function makeIcon(size){
 })();
 
 if(get('light', false)) document.body.classList.add('light');
+migrate();               /* 老存档补齐新字段（词量模式等），不改动已有数据 */
+buildSettingSelects();   /* 设置页的自动推进下拉，只建一次 */
 renderAll();
 maybeEvent();
 /* 已连过云同步的话，打开就自动拉一次 */
